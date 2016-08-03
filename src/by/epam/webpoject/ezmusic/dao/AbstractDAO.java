@@ -8,6 +8,6 @@ import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 public interface AbstractDAO<T, K> {
     boolean create(T instance) throws DAOException;
     T find(K id) throws DAOException;
-    boolean delete(K id) throws DAOException;
-    boolean update(T instance) throws DAOException;
+    void delete(K id) throws DAOException;
+    void update(T instance) throws DAOException;
 }

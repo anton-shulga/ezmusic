@@ -3,6 +3,7 @@ package by.epam.webpoject.ezmusic.dao.factory;
 import by.epam.webpoject.ezmusic.connection.DBManager;
 import by.epam.webpoject.ezmusic.connection.DBParameter;
 import by.epam.webpoject.ezmusic.dao.AbstractDAO;
+import by.epam.webpoject.ezmusic.dao.impl.MySqlSongDAO;
 import by.epam.webpoject.ezmusic.dao.impl.MySqlUserDAO;
 import by.epam.webpoject.ezmusic.enumeration.type.DBType;
 
@@ -13,12 +14,21 @@ public class DAOFactory {
 
     private final static DBType DB_TYPE = DBType.valueOf(DBManager.getInstance().getValue(DBParameter.DB_TYPE).toUpperCase());
 
-    public static AbstractDAO createUserDao(){
+    public static AbstractDAO createUserDAO(){
         switch (DB_TYPE){
             case MYSQL:
                 return MySqlUserDAO.getInstance();
             default:
                 return MySqlUserDAO.getInstance();
+        }
+    }
+
+    public static AbstractDAO createSongDAO(){
+        switch (DB_TYPE){
+            case MYSQL:
+                return MySqlSongDAO.getInstance();
+            default:
+                return MySqlSongDAO.getInstance();
         }
     }
 

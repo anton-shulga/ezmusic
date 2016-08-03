@@ -10,7 +10,7 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
  */
 public class CheckLoginAvailabilityService {
     public static boolean isLoginExist(String login) throws ServiceException {
-        UserDAO userDAO = (UserDAO) DAOFactory.createUserDao();
+        UserDAO userDAO = (UserDAO) DAOFactory.createUserDAO();
         try {
             return userDAO.isLoginExist(login);
         } catch (DAOException e) {

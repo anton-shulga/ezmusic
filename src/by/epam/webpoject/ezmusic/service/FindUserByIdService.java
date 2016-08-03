@@ -11,7 +11,7 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
  */
 public class FindUserByIdService {
     public static User execute(Long id) throws ServiceException {
-        UserDAO dao = (UserDAO) DAOFactory.createUserDao();
+        UserDAO dao = (UserDAO) DAOFactory.createUserDAO();
         try {
             return dao.find(id);
         } catch (DAOException e) {

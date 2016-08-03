@@ -60,7 +60,7 @@ public class ProxyConnection implements Connection{
 
     @Override
     public void close(){
-        ConnectionPool.getInstance().closeConnection(connection);
+        ConnectionPool.getInstance().returnConnection(connection);
     }
 
     void closeConnection(){

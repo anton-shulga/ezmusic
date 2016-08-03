@@ -12,7 +12,7 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
  */
 public class RegisterUserService {
     public static boolean register(User instance) throws ServiceException {
-        UserDAO userDAO = (UserDAO) DAOFactory.createUserDao();
+        UserDAO userDAO = (UserDAO) DAOFactory.createUserDAO();
         String userPassword = instance.getPassword();
         String md5hash = MD5Encryptor.getMD5(userPassword);
         instance.setPassword(md5hash);

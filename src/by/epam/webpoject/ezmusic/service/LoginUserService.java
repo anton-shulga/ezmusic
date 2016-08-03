@@ -13,7 +13,7 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 public class LoginUserService {
 
     public static User execute(String username, String password) throws ServiceException {
-        UserDAO userDAO = (UserDAO) DAOFactory.createUserDao();
+        UserDAO userDAO = (UserDAO) DAOFactory.createUserDAO();
         try {
             String md5Hash = MD5Encryptor.getMD5(password);
             return userDAO.login(username, md5Hash);

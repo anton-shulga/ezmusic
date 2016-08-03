@@ -38,7 +38,6 @@ public class MySqlUserDAO extends UserDAO {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
         PreparedStatement statement = null;
-        Long generatedUserId = null;
         try {
             if(!isLoginExist(instance.getLogin())) {
                 statement = connection.prepareStatement(CREATE_USER_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -64,7 +63,7 @@ public class MySqlUserDAO extends UserDAO {
             throw new DAOException(e);
         }finally {
             closeStatement(statement);
-            connectionPool.closeConnection(connection);
+            connectionPool.returnConnection(connection);
         }
         return false;
     }
@@ -97,35 +96,32 @@ public class MySqlUserDAO extends UserDAO {
             throw new DAOException(e);
         }finally {
             closeStatement(statement);
-            connectionPool.closeConnection(connection);
+            connectionPool.returnConnection(connection);
         }
-        return null;
+        return user;
     }
 
     @Override
-    public boolean delete(Long id) throws DAOException {
+    public void delete(Long id) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
-        boolean result;
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(DELETE_USER_BY_ID);
-            result = statement.execute();
+            statement.executeUpdate();
         } catch (SQLException e) {
            throw new DAOException(e);
         }finally {
             closeStatement(statement);
-            connectionPool.closeConnection(connection);
+            connectionPool.returnConnection(connection);
         }
-        return result;
     }
 
     @Override
-    public boolean update(User instance) throws DAOException {
+    public void update(User instance) throws DAOException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
         PreparedStatement statement = null;
-        boolean result;
         try {
             statement = connection.prepareStatement(UPDATE_USER_QUERY);
             statement.setString(1, instance.getName());
@@ -139,11 +135,10 @@ public class MySqlUserDAO extends UserDAO {
             statement.setBoolean(9, instance.isAdmin());
             statement.setBoolean(10, instance.isBanned());
             statement.setLong(11, instance.getUserId());
-            result = statement.execute();
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return result;
     }
 
     @Override
@@ -175,7 +170,7 @@ public class MySqlUserDAO extends UserDAO {
             throw new DAOException(e);
         }finally {
             closeStatement(statement);
-            connectionPool.closeConnection(connection);
+            connectionPool.returnConnection(connection);
         }
         return user;
     }
@@ -195,7 +190,7 @@ public class MySqlUserDAO extends UserDAO {
             throw new DAOException(e);
         }finally {
             closeStatement(statement);
-            connectionPool.closeConnection(connection);
+            connectionPool.returnConnection(connection);
         }
         return false;
 

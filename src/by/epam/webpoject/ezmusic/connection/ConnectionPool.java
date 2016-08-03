@@ -95,7 +95,7 @@ public class ConnectionPool {
         return connection;
     }
 
-    public void closeConnection(Connection connection){
+    public void returnConnection(Connection connection){
         if(connection.getClass() == ProxyConnection.class){
             connectionQueue.offer((ProxyConnection) connection);
         }
