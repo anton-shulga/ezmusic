@@ -8,4 +8,5 @@ import by.epam.webpoject.ezmusic.exception.dao.DAOException;
  */
 public abstract class UserDAO implements AbstractDAO<User, Long> {
     public abstract User login(String userLogin, String userPassword) throws DAOException;
+    public abstract boolean isLoginExist(String login) throws DAOException;
 }

@@ -7,6 +7,7 @@ import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.service.RegisterUserService;
+import by.epam.webpoject.ezmusic.validator.RegisterRequestValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,27 +17,35 @@ import javax.servlet.http.HttpServletRequest;
 public class RegisterUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        Long userId;
+        boolean isRegistered = false;
+        String login = request.getParameter(RequestParameter.USER_LOGIN);
+        String password = request.getParameter(RequestParameter.USER_PASSWORD);
+        String firstName = request.getParameter(RequestParameter.USER_FIRST_NAME);
+        String surname = request.getParameter(RequestParameter.USER_SURNAME);
+        String email = request.getParameter(RequestParameter.USER_EMAIL);
+        String phone = request.getParameter(RequestParameter.USER_PHONE);
         try {
             User user = new User();
-            user.setName(request.getParameter(RequestParameter.USER_NAME));
-            user.setSurname(request.getParameter(RequestParameter.USER_SURNAME));
-            user.setLogin(request.getParameter(RequestParameter.USER_LOGIN));
-            user.setPassword(RequestParameter.USER_PASSWORD);
-            user.setEmail(RequestParameter.USER_EMAIL);
-            user.setPhone(RequestParameter.USER_PHONE);
-            user.setBalance(Double.parseDouble(RequestParameter.USER_BALANCE));
-            user.setAdmin(Boolean.parseBoolean(RequestParameter.USER_IS_ADMIN));
-            user.setBanned(Boolean.parseBoolean(RequestParameter.USER_IS_BANNED));
-            userId = RegisterUserService.execute(user);
+            boolean isValidRequest = RegisterRequestValidator.validate(login, password, firstName, surname, email, phone);
+            if(isValidRequest) {
+                user.setName(firstName);
+                user.setSurname(surname);
+                user.setLogin(login);
+                user.setPassword(password);
+                user.setEmail(email);
+                user.setPhone(phone);
+                isRegistered = RegisterUserService.register(user);
+            }
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
 
-        if(userId != null) {
-            return JspPageName.USER_HOME;
+        if(isRegistered) {
+            request.setAttribute(RequestParameter.MESSAGE, "Successfully registered!");
+            return JspPageName.LOGIN;
         }else {
-            return JspPageName.INDEX;
+            request.setAttribute(RequestParameter.MESSAGE, "Login is already exist!");
+            return JspPageName.REGISTER;
         }
     }
 }

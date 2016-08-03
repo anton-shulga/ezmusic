@@ -1,5 +1,8 @@
 package by.epam.webpoject.ezmusic.connection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
@@ -9,6 +12,7 @@ import java.util.concurrent.Executor;
  * Created by Антон on 21.07.2016.
  */
 public class ProxyConnection implements Connection{
+    private final Logger LOGGER = LogManager.getLogger(ProxyConnection.class);
     private final Connection connection;
 
     ProxyConnection(Connection connection){
@@ -55,11 +59,16 @@ public class ProxyConnection implements Connection{
     }
 
     @Override
-    public void close() throws SQLException {
+    public void close(){
         ConnectionPool.getInstance().closeConnection(connection);
     }
-    void closeConnection() throws SQLException {
-        connection.close();
+
+    void closeConnection(){
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            LOGGER.error("Connection close error", e);
+        }
     }
     @Override
     public boolean isClosed() throws SQLException {

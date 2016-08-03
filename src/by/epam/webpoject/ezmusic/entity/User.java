@@ -1,5 +1,7 @@
 package by.epam.webpoject.ezmusic.entity;
 
+import java.util.ArrayList;
+
 /**
  * Created by Антон on 16.07.2016.
  */
@@ -15,6 +17,7 @@ public class User {
     private double balance;
     private boolean isAdmin;
     private boolean isBanned;
+    private ArrayList<Song> songList;
 
     public User(){}
 
@@ -104,5 +107,13 @@ public class User {
 
     public void setBanned(boolean banned) {
         isBanned = banned;
+    }
+
+    public ArrayList<Song> getSongList() {
+        return songList;
+    }
+
+    public void setSongList(ArrayList<Song> songList) {
+        this.songList = songList;
     }
 }

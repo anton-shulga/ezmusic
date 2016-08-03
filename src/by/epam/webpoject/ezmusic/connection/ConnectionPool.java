@@ -1,6 +1,8 @@
 package by.epam.webpoject.ezmusic.connection;
 
 import by.epam.webpoject.ezmusic.exception.connectionpool.ConnectionPoolException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by Антон on 16.07.2016.
  */
 public class ConnectionPool {
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static final int DEFAULT_POOL_SIZE = 5;
 
     private static ConnectionPool instance;
@@ -30,6 +33,7 @@ public class ConnectionPool {
     }
 
     private void initialize() {
+
         try {
             DBManager dbResourceManager = DBManager.getInstance();
 
@@ -39,32 +43,38 @@ public class ConnectionPool {
             String password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
 
             poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
-            poolSize = DEFAULT_POOL_SIZE;
 
             Class.forName(driverName);
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
-            while (!isFull()) {
-                Connection connection = DriverManager.getConnection(url, username, password);
-                ProxyConnection proxyConnection = new ProxyConnection(connection);
-                connectionQueue.add(proxyConnection);
+            int createdConnectionNumber = 0;
+            for(int i = 0; i < poolSize; i++){
+                try {
+                    Connection connection = DriverManager.getConnection(url, username, password);
+                    ProxyConnection proxyConnection = new ProxyConnection(connection);
+                    connectionQueue.add(proxyConnection);
+                    createdConnectionNumber++;
+                } catch (SQLException e) {
+                    LOGGER.error("Connection creation error", e);
+                }
+            }
+            if(createdConnectionNumber <= DEFAULT_POOL_SIZE){
+                LOGGER.fatal("OMG! FATAL PIPEC!");
+                throw new RuntimeException("DataBase connection error");
             }
         }catch (NumberFormatException e){
             poolSize = DEFAULT_POOL_SIZE;
-        } catch (ClassNotFoundException | SQLException | MissingResourceException e) {
+        } catch (ClassNotFoundException | MissingResourceException e) {
+            LOGGER.fatal("OMG! FATAL PIPEC!", e);
             throw new RuntimeException(e);
         }
 
     }
 
-    private boolean isFull(){
-        return connectionQueue.size() >= poolSize;
-    }
-
     public static ConnectionPool getInstance(){
-        if(!instanceCreated.get()) {//null
+        if(!instanceCreated.get()) {
             lock.lock();
             try {
-                if (!instanceCreated.get() && instance == null) {
+                if (instance == null) {
                     instance = new ConnectionPool();
                     instanceCreated.set(true);
                 }
@@ -80,25 +90,20 @@ public class ConnectionPool {
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
-          //log
+            LOGGER.fatal(e);
         }
         return connection;
     }
 
     public void closeConnection(Connection connection){
-        if(connection instanceof ProxyConnection){
+        if(connection.getClass() == ProxyConnection.class){
             connectionQueue.offer((ProxyConnection) connection);
         }
     }
 
-    public void close() throws ConnectionPoolException {
+    public void closePool() throws ConnectionPoolException {
         for (ProxyConnection connection: connectionQueue) {
-            try {
-                connection.closeConnection();
-            } catch (SQLException e) {
-                throw new ConnectionPoolException(e);
-            }
-
+            connection.closeConnection();
         }
     }
 }

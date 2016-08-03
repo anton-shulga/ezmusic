@@ -2,22 +2,17 @@ package by.epam.webpoject.ezmusic.service;
 
 import by.epam.webpoject.ezmusic.dao.UserDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
-import by.epam.webpoject.ezmusic.encryptor.MD5Encryptor;
-import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 
 /**
- * Created by Антон on 24.07.2016.
+ * Created by Антон on 02.08.2016.
  */
-public class RegisterUserService {
-    public static boolean register(User instance) throws ServiceException {
+public class CheckLoginAvailabilityService {
+    public static boolean isLoginExist(String login) throws ServiceException {
         UserDAO userDAO = (UserDAO) DAOFactory.createUserDao();
-        String userPassword = instance.getPassword();
-        String md5hash = MD5Encryptor.getMD5(userPassword);
-        instance.setPassword(md5hash);
         try {
-            return userDAO.create(instance);
+            return userDAO.isLoginExist(login);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

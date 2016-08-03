@@ -9,5 +9,6 @@ public enum CommandName {
     GO_HOME,
     DELETE_USER,
     UPDATE_USER,
-    FIND_USER
+    FIND_USER,
+    CHECK_LOGIN_AVAILABILITY
 }

@@ -1,12 +1,13 @@
 package by.epam.webpoject.ezmusic.command.impl;
 
+import by.epam.webpoject.ezmusic.command.Command;
+import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.command.Command;
-import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.service.LoginUserService;
+import by.epam.webpoject.ezmusic.validator.LoginRequestValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,8 +18,14 @@ public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         User user;
+        String login = request.getParameter(RequestParameter.USER_LOGIN);
+        String password = request.getParameter(RequestParameter.USER_PASSWORD);
         try {
-            user = LoginUserService.execute(request.getParameter(RequestParameter.USER_LOGIN), request.getParameter(RequestParameter.USER_PASSWORD));
+            boolean isValidRequest = LoginRequestValidator.validate(login, password);
+            if(isValidRequest) {
+                user = LoginUserService.execute(request.getParameter(RequestParameter.USER_LOGIN), request.getParameter(RequestParameter.USER_PASSWORD));
+                request.getSession().setAttribute(RequestParameter.USER, user);
+            }else return JspPageName.ERROR;
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
@@ -27,7 +34,7 @@ public class LoginCommand implements Command {
             request.getSession(true).setAttribute(RequestParameter.USER, user);
             return JspPageName.USER_HOME;
         }else {
-            request.getSession().setAttribute(RequestParameter.MESSAGE, "The username or password you entered is incorrect");
+            request.setAttribute(RequestParameter.MESSAGE, "The username or password you entered is incorrect");
             return JspPageName.INDEX;
         }
 
