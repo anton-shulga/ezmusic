@@ -1,7 +1,6 @@
 package by.epam.webpoject.ezmusic.entity;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 
 /**
@@ -12,7 +11,6 @@ public class Song {
     private String name;
     private int year;
     private Album album;
-    private ArrayList<Comment> commentList;
     private double cost;
     private String filePath;
     private Date publicationDate;
@@ -47,14 +45,6 @@ public class Song {
 
     public void setAlbum(Album album) {
         this.album = album;
-    }
-
-    public ArrayList<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(ArrayList<Comment> commentList) {
-        this.commentList = commentList;
     }
 
     public double getCost() {

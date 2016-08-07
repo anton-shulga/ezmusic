@@ -1,13 +1,13 @@
 package by.epam.webpoject.ezmusic.dao.impl;
 
 import by.epam.webpoject.ezmusic.connection.ConnectionPool;
+import by.epam.webpoject.ezmusic.connection.ProxyConnection;
 import by.epam.webpoject.ezmusic.dao.UserDAO;
 import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,6 +26,7 @@ public class MySqlUserDAO extends UserDAO {
     private static final String DELETE_USER_BY_ID = "DELETE  FROM USER WHERE user_id = ?";
     private static final String UPDATE_USER_QUERY = "UPDATE USER SET user_name = ?, user_surname = ?, user_login = ?, user_password = ?, user_email = ?, user_phone = ?, user_photo_path = ?, user_balance = ?, user_is_admin = ?, user_is_banned = ? WHERE user_id = ?";
     private static final String FIND_USER_BY_LOGIN_QUERY = "SELECT user_id FROM USER WHERE user_login = ?";
+
     private MySqlUserDAO() {
     }
 
@@ -35,8 +36,7 @@ public class MySqlUserDAO extends UserDAO {
 
     @Override
     public boolean create(User instance) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             if(!isLoginExist(instance.getLogin())) {
@@ -56,22 +56,19 @@ public class MySqlUserDAO extends UserDAO {
                 if (resultSet.next()) {
                    return true;
                 }
-            }else {
-                return false;
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Creating user error", e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
         return false;
     }
 
     @Override
     public User find(Long id) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         User user = null;
         try {
@@ -93,34 +90,32 @@ public class MySqlUserDAO extends UserDAO {
                 user.setBanned(resultSet.getBoolean(11));
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Finding user error", e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
         return user;
     }
 
     @Override
     public void delete(Long id) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(DELETE_USER_BY_ID);
             statement.executeUpdate();
         } catch (SQLException e) {
-           throw new DAOException(e);
+           throw new DAOException("Deleting user error", e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
     }
 
     @Override
     public void update(User instance) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(UPDATE_USER_QUERY);
@@ -137,14 +132,16 @@ public class MySqlUserDAO extends UserDAO {
             statement.setLong(11, instance.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Updating user error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
         }
     }
 
     @Override
     public User login(String userLogin, String userPassword) throws DAOException {
-        ConnectionPool connectionPool= ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         User user = null;
         try {
@@ -167,17 +164,16 @@ public class MySqlUserDAO extends UserDAO {
                 user.setBanned(resultSet.getBoolean(11));
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Login user error", e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
         return user;
     }
 
     public boolean isLoginExist(String login) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try{
             statement = connection.prepareStatement(FIND_USER_BY_LOGIN_QUERY);
@@ -190,7 +186,7 @@ public class MySqlUserDAO extends UserDAO {
             throw new DAOException(e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
         return false;
 

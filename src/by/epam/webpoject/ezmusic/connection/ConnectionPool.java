@@ -43,6 +43,9 @@ public class ConnectionPool {
             String password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
 
             poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
+            if(poolSize < DEFAULT_POOL_SIZE){
+                poolSize = DEFAULT_POOL_SIZE;
+            }
 
             Class.forName(driverName);
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
@@ -85,20 +88,18 @@ public class ConnectionPool {
         return instance;
     }
 
-    public Connection getConnection() {
+    public ProxyConnection getConnection() {
         ProxyConnection connection = null;
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
-            LOGGER.fatal(e);
+            LOGGER.error(e);
         }
         return connection;
     }
 
-    public void returnConnection(Connection connection){
-        if(connection.getClass() == ProxyConnection.class){
-            connectionQueue.offer((ProxyConnection) connection);
-        }
+    public void returnConnection(ProxyConnection connection){
+            connectionQueue.offer(connection);
     }
 
     public void closePool() throws ConnectionPoolException {

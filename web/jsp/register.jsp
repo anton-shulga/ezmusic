@@ -10,7 +10,7 @@
 <html>
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/styles.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../css/styles.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8">
 </head>
@@ -20,14 +20,14 @@
     <nav class="nav-wrapper cyan darken-4">
         <a href="#" class="brand-logo">EZMusic</a>
         <div class="row right">
-            <a href="login.jsp" class="waves-effect waves-light btn  green accent-4">Sign in</a>
-            <a href="register.jsp" class="waves-effect waves-light btn  green accent-4">Sign up</a>
+            <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="waves-effect waves-light btn  green accent-4">Sign in</a>
+            <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="waves-effect waves-light btn  green accent-4">Sign up</a>
         </div>
     </nav>
 
     <div class="container col s6" >
         <div class="card s6">
-            <form method="POST" action="controller">
+            <form method="POST" action="${pageContext.request.contextPath}/controller">
                 <input name="command" type="hidden" value="register"/>
                 <div class="card-content">
                     <span class="card-title grey-text text-darken-2">Registration</span>
@@ -115,7 +115,7 @@
 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="js/bin/materialize.min.js"></script>
+<script type="text/javascript" src="../js/bin/materialize.min.js"></script>
 
 <script>
     $( document ).ready(function(){

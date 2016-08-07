@@ -17,4 +17,5 @@ public class RequestParameter {
     public static final String USER_IS_BANNED = "user-is-banned";
     public static final String COMMAND =  "command";
     public static final String MESSAGE = "message";
+    public static final String LOCALE = "locale";
 }

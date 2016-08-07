@@ -1,13 +1,13 @@
 package by.epam.webpoject.ezmusic.dao.impl;
 
 import by.epam.webpoject.ezmusic.connection.ConnectionPool;
+import by.epam.webpoject.ezmusic.connection.ProxyConnection;
 import by.epam.webpoject.ezmusic.dao.SongDAO;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,6 +26,7 @@ public class MySqlSongDAO extends SongDAO {
     private static final String UPDATE_SONG_QUERY = "UPDATE SONG SET song_name = ?, song_year = ?, song_file_path = ?, song_publication_date = ?, song_cost = ? WHERE song_id = ?";
     private static final String  FIND_SONG_BY_USER_ID_QUERY = "SELECT song_id, song_name, song_year, song_file_path, song_publication_date, song_cost FROM SONG INNER JOIN USER_SONG ON SONG.song_id = SONG_USER.id_song WHERE SONG.song_id = ?";
 
+    private MySqlSongDAO(){}
 
     public static MySqlSongDAO getInstance(){
         return instance;
@@ -33,8 +34,7 @@ public class MySqlSongDAO extends SongDAO {
 
     @Override
     public boolean create(Song instance) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = ConnectionPool.getInstance().getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(CREATE_SONG_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -49,18 +49,17 @@ public class MySqlSongDAO extends SongDAO {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Creating song error", e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
         return false;
     }
 
     @Override
     public Song find(Long id) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         Song song = null;
         try {
@@ -75,38 +74,35 @@ public class MySqlSongDAO extends SongDAO {
                 song.setFilePath(resultSet.getString(4));
                 song.setPublicationDate(resultSet.getDate(5));
                 song.setCost(resultSet.getDouble(6));
-                return song;
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Finding song error", e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
         return song;
     }
 
     @Override
     public void delete(Long id) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(DELETE_SONG_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException("Deleting song error", e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
     }
 
     @Override
     public void update(Song instance) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(UPDATE_SONG_QUERY);
@@ -117,18 +113,17 @@ public class MySqlSongDAO extends SongDAO {
             statement.setDouble(5, instance.getCost());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Updating song error", e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
 
     }
 
     @Override
     public Song findByUserId(Long userId) throws DAOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         Song song = null;
         try {
@@ -143,13 +138,12 @@ public class MySqlSongDAO extends SongDAO {
                 song.setFilePath(resultSet.getString(4));
                 song.setPublicationDate(resultSet.getDate(5));
                 song.setCost(resultSet.getDouble(6));
-                return song;
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Finding song error", e);
         }finally {
             closeStatement(statement);
-            connectionPool.returnConnection(connection);
+            connection.close();
         }
         return song;
     }

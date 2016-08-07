@@ -9,7 +9,7 @@ import java.io.IOException;
  * Created by Антон on 03.08.2016.
  */
 public class EncodingFilter implements Filter {
-    String code;
+    private String code;
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         code = filterConfig.getInitParameter(FilterParameter.ENCODING);
