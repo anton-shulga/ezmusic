@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Антон on 10.08.2016.
  */
-public class FindCommentBySongId {
+public class FindCommentBySongIdService {
     public static ArrayList<Comment> find(Long songId) throws ServiceException {
         CommentDAO dao = (CommentDAO) DAOFactory.createCommentDAO();
         try {

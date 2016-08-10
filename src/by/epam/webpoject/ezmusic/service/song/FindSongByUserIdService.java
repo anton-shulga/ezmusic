@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Антон on 10.08.2016.
  */
-public class FindSongByUserId {
+public class FindSongByUserIdService {
     public static ArrayList<Song> find(Long userId) throws ServiceException {
         SongDAO dao = (SongDAO) DAOFactory.createSongDAO();
         try {
