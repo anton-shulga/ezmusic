@@ -20,6 +20,7 @@ public class CommandManager {
         availableCommands.put(CommandName.FIND_USER, new FindUserCommand());
         availableCommands.put(CommandName.UPDATE_USER, new UpdateUserCommand());
         availableCommands.put(CommandName.CHECK_LOGIN_AVAILABILITY, new CheckLoginAvailabilityCommand());
+        availableCommands.put(CommandName.CHANGE_LANGUAGE, new ChangeLanguageCommand());
     }
 
     public static Command getCommand(String commandName) throws CommandException {

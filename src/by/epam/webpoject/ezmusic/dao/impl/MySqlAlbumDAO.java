@@ -136,12 +136,4 @@ public class MySqlAlbumDAO extends AlbumDAO {
         return albumList;
     }
 
-    private void closeStatement(PreparedStatement statement) {
-        try {
-            if(statement != null)
-                statement.close();
-        } catch (SQLException e) {
-            LOGGER.error(e);
-        }
-    }
 }

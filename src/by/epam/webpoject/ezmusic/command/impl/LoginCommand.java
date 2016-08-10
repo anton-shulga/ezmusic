@@ -24,7 +24,6 @@ public class LoginCommand implements Command {
             boolean isValidRequest = LoginRequestValidator.validate(login, password);
             if(isValidRequest) {
                 user = LoginUserService.execute(request.getParameter(RequestParameter.USER_LOGIN), request.getParameter(RequestParameter.USER_PASSWORD));
-                request.getSession().setAttribute(RequestParameter.USER, user);
             }else return JspPageName.ERROR;
         } catch (ServiceException e) {
             throw new CommandException(e);

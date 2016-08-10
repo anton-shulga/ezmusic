@@ -5,6 +5,8 @@ package by.epam.webpoject.ezmusic.entity;
  */
 public class Comment {
     private long commentId;
+    private long songId;
+    private long userId;
     private int rating;
     private String text;
 
@@ -16,6 +18,22 @@ public class Comment {
 
     public void setCommentId(long commentId) {
         this.commentId = commentId;
+    }
+
+    public long getSongId() {
+        return songId;
+    }
+
+    public void setSongId(long songId) {
+        this.songId = songId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public int getRating() {

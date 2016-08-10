@@ -1,3 +1,6 @@
+<%@ taglib prefix="ctg" uri="customtags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -11,6 +14,9 @@
     <title>User home</title>
 </head>
 <body>
-
+    <c:import url="header.jsp"/>
+    <ctg:hello user="${user}"/>
+    <c:import url="footer.jsp"/>
+    <a href="error.jsp" hreflang="en"
 </body>
 </html>

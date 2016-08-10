@@ -2,6 +2,9 @@ package by.epam.webpoject.ezmusic.dao;
 
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 
+import java.sql.Statement;
+
+
 /**
  * Created by Антон on 16.07.2016.
  */
@@ -10,4 +13,5 @@ public interface AbstractDAO<T, K> {
     T find(K id) throws DAOException;
     void delete(K id) throws DAOException;
     void update(T instance) throws DAOException;
+    void closeStatement(Statement statement);
 }

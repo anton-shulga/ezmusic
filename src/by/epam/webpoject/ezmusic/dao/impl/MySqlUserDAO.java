@@ -20,9 +20,9 @@ public class MySqlUserDAO extends UserDAO {
     private final static Logger LOGGER = LogManager.getLogger(MySqlUserDAO.class);
 
     private static final MySqlUserDAO instance = new MySqlUserDAO();
-    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD_QUERY = "SELECT user_id, user_login, user_password, user_name, user_surname, user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned FROM USER WHERE user_login = ? AND user_password = ?";
+    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD_QUERY = "SELECT user_id, user_name, user_surname, user_login,   user_password, user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned FROM USER WHERE user_login = ? AND user_password = ?";
     private static final String CREATE_USER_QUERY = "INSERT INTO USER (user_name, user_surname, user_login, user_password, user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned) VALUES (?,?,?,?,?,?,?,?,?,?)";
-    private static final String FIND_USER_BY_ID_QUERY = "SELECT user_id, user_login, user_password, user_name, user_surname, user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned FROM USER WHERE user_id = ? ";
+    private static final String FIND_USER_BY_ID_QUERY = "SELECT user_id, user_name, user_surname, user_login, user_password user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned FROM USER WHERE user_id = ? ";
     private static final String DELETE_USER_BY_ID = "DELETE  FROM USER WHERE user_id = ?";
     private static final String UPDATE_USER_QUERY = "UPDATE USER SET user_name = ?, user_surname = ?, user_login = ?, user_password = ?, user_email = ?, user_phone = ?, user_photo_path = ?, user_balance = ?, user_is_admin = ?, user_is_banned = ? WHERE user_id = ?";
     private static final String FIND_USER_BY_LOGIN_QUERY = "SELECT user_id FROM USER WHERE user_login = ?";
@@ -190,13 +190,5 @@ public class MySqlUserDAO extends UserDAO {
         }
         return false;
 
-    }
-    private void closeStatement(PreparedStatement statement) {
-        try {
-            if(statement != null)
-                statement.close();
-        } catch (SQLException e) {
-           LOGGER.error(e);
-        }
     }
 }

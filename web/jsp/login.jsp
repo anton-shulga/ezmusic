@@ -22,14 +22,7 @@
 
 <body>
 <div class="wrapper">
-    <nav class="nav-wrapper cyan darken-4">
-        <a href="#" class="brand-logo">PARSE ME</a>
-        <div class="row right">
-            <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="waves-effect waves-light btn  green accent-4"><fmt:message key="button.sign_in"/></a>
-            <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="waves-effect waves-light btn  green accent-4"><fmt:message key="button.sign_up"/></a>
-        </div>
-    </nav>
-
+   <c:import url="header.jsp"/>
     <div class="container">
         <div class="card">
             <form method="POST" action="${pageContext.request.contextPath}/controller">
@@ -63,14 +56,7 @@
         </div>
     </c:if>
 </div>
-
-<footer class="page-footer cyan darken-4">
-    <div class="footer-copyright">
-        <div class="container center">
-            <p>© 2016 EZMusic inc.</p>
-        </div>
-    </div>
-</footer>
+<c:import url="footer.jsp"/>
 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

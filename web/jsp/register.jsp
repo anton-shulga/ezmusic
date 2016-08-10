@@ -17,13 +17,7 @@
 
 <body>
 <div class="wrapper">
-    <nav class="nav-wrapper cyan darken-4">
-        <a href="#" class="brand-logo">EZMusic</a>
-        <div class="row right">
-            <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="waves-effect waves-light btn  green accent-4">Sign in</a>
-            <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="waves-effect waves-light btn  green accent-4">Sign up</a>
-        </div>
-    </nav>
+   <c:import url="header.jsp"/>
 
     <div class="container col s6" >
         <div class="card s6">
@@ -33,14 +27,14 @@
                     <span class="card-title grey-text text-darken-2">Registration</span>
                     <div class="row">
                         <div class="input-field col s12 required">
-                            <i class="material-icons prefix">account_box</i><input id="id-user-login" name="user-login" type="text" required minlength="3">
+                            <i class="material-icons prefix"></i><input id="id-user-login" name="user-login" type="text" required minlength="3">
                             <label for="id-user-login">Username</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12 required" >
-                            <i class="material-icons prefix">email</i><input id="id-user-email" name="user-email" type="email" required>
+                            <i class="material-icons prefix"></i><input id="id-user-email" name="user-email" type="email" required>
                             <label for="id-user-email" class="">Email Address</label>
                         </div>
                     </div>
@@ -49,7 +43,7 @@
                         <div class="col s12 m6">
                             <div class="row">
                                 <div class="input-field col s12 required">
-                                    <i class="material-icons prefix">lock_open</i><input id="id-user-password" name="user-password" type="password" required>
+                                    <i class="material-icons prefix"></i><input id="id-user-password" name="user-password" type="password" required>
                                     <label for="id-user-password" class="">Password</label>
                                 </div>
                             </div>
@@ -105,13 +99,7 @@
 
 
 
-<footer class="page-footer cyan darken-4">
-    <div class="footer-copyright">
-        <div class="container center">
-            <p>© 2016 EZMusic inc.</p>
-        </div>
-    </div>
-</footer>
+<c:import url="footer.jsp"/>
 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -136,7 +124,7 @@
                 $(".status").html("Checking availability...");
                 $.ajax({
                     type: "POST",
-                    url: "LoginAvailabilityController",
+                    url: "${pageContext.request.contextPath}/LoginAvailabilityController",
                     data: "user-login=" + login + "&" +
                     "command=" + "check_login_availability",
                     success: function(msg) {

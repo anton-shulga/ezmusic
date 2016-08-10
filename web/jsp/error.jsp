@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -11,6 +12,7 @@
     <title>Ooops! Something is wrong!</title>
 </head>
 <body>
-
+    <c:import url="header.jsp"/>
+    <c:import url="footer.jsp"/>
 </body>
 </html>
