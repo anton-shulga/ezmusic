@@ -1,4 +1,4 @@
-package by.epam.webpoject.ezmusic.service;
+package by.epam.webpoject.ezmusic.service.user;
 
 import by.epam.webpoject.ezmusic.dao.UserDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;

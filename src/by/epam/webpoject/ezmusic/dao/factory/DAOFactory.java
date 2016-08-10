@@ -3,6 +3,8 @@ package by.epam.webpoject.ezmusic.dao.factory;
 import by.epam.webpoject.ezmusic.connection.DBManager;
 import by.epam.webpoject.ezmusic.connection.DBParameter;
 import by.epam.webpoject.ezmusic.dao.AbstractDAO;
+import by.epam.webpoject.ezmusic.dao.impl.MySqlAlbumDAO;
+import by.epam.webpoject.ezmusic.dao.impl.MySqlCommentDAO;
 import by.epam.webpoject.ezmusic.dao.impl.MySqlSongDAO;
 import by.epam.webpoject.ezmusic.dao.impl.MySqlUserDAO;
 import by.epam.webpoject.ezmusic.enumeration.type.DBType;
@@ -32,4 +34,21 @@ public class DAOFactory {
         }
     }
 
+    public static AbstractDAO createAlbumDAO(){
+        switch (DB_TYPE){
+            case MYSQL:
+                return MySqlAlbumDAO.getInstance();
+            default:
+                return MySqlAlbumDAO.getInstance();
+        }
+    }
+
+    public static AbstractDAO createCommentDAO(){
+        switch (DB_TYPE){
+            case MYSQL:
+                return MySqlCommentDAO.getInstance();
+            default:
+                return MySqlCommentDAO.getInstance();
+        }
+    }
 }

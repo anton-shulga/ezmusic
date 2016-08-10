@@ -1,6 +1,7 @@
 package by.epam.webpoject.ezmusic.command;
 
 import by.epam.webpoject.ezmusic.command.impl.*;
+import by.epam.webpoject.ezmusic.command.impl.user.*;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 
 import java.util.HashMap;

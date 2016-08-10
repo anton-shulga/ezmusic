@@ -1,19 +1,18 @@
-package by.epam.webpoject.ezmusic.service;
+package by.epam.webpoject.ezmusic.service.user;
 
 import by.epam.webpoject.ezmusic.dao.UserDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
-import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 
 /**
- * Created by Антон on 25.07.2016.
+ * Created by Антон on 02.08.2016.
  */
-public class UpdateUserService {
-    public static void execute(User instance) throws ServiceException {
-        UserDAO dao = (UserDAO) DAOFactory.createUserDAO();
+public class CheckLoginAvailabilityService {
+    public static boolean isLoginExist(String login) throws ServiceException {
+        UserDAO userDAO = (UserDAO) DAOFactory.createUserDAO();
         try {
-            dao.update(instance);
+            return userDAO.isLoginExist(login);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
