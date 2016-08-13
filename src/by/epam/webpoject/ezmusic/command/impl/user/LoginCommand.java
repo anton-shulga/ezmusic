@@ -31,7 +31,11 @@ public class LoginCommand implements Command {
 
         if(user != null) {
             request.getSession(true).setAttribute(RequestParameter.USER, user);
-            return JspPageName.USER_HOME;
+            if(user.isAdmin()){
+                return JspPageName.ADMIN_HOME;
+            }else {
+                return JspPageName.USER_HOME;
+            }
         }else {
             request.setAttribute(RequestParameter.MESSAGE, "The username or password you entered is incorrect");
             return JspPageName.INDEX;

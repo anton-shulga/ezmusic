@@ -1,4 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -20,10 +22,20 @@
 <body>
 <nav class="nav-wrapper cyan darken-4">
     <a href="#" class="brand-logo">EZMusic</a>
-    <div class="row right">
-        <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="waves-effect waves-light btn  green accent-4"><fmt:message key="button.sign_in"/></a>
-        <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="waves-effect waves-light btn  green accent-4"><fmt:message key="button.sign_up"/></a>
-    </div>
+    <c:if test="${empty sessionScope.user }">
+        <div class="row right">
+            <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="waves-effect waves-light btn  green accent-4"><fmt:message key="button.sign_in"/></a>
+            <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="waves-effect waves-light btn  green accent-4"><fmt:message key="button.sign_up"/></a>
+        </div>
+    </c:if>
+    <c:if test="${not empty sessionScope.user}">
+        <div class="row right">
+            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                <input type="hidden" name="command" value="logout"/>
+                <button class="waves-effect waves-light btn  green accent-4" type="submit">Logout</button>
+            </form>
+        </div>
+    </c:if>
 </nav>
 </body>
 </html>

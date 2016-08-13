@@ -18,6 +18,7 @@
     <link type="text/css" rel="stylesheet" href="../css/styles.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8">
+    <title>Login</title>
 </head>
 
 <body>
@@ -31,13 +32,13 @@
                     <span class="card-title grey-text text-darken-2">Login</span>
                     <div class="row">
                         <div class="input-field col s12 required" id="id-user-login-container">
-                            <input id="id-user-login" name="user-login" type="text" required>
+                            <input id="id-user-login" name="user_login" type="text" required>
                             <label for="id-user-login">Username</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 required" id="id-user-password-container">
-                            <input id="id-user-password" name="user-password" type="password" required>
+                            <input id="id-user-password" name="user_password" type="password" required>
                             <label for="id-user-password">Password</label>
                         </div>
                     </div>

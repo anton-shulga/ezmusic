@@ -24,26 +24,27 @@ public class RegisterUserCommand implements Command {
         String surname = request.getParameter(RequestParameter.USER_SURNAME);
         String email = request.getParameter(RequestParameter.USER_EMAIL);
         String phone = request.getParameter(RequestParameter.USER_PHONE);
-        try {
-            User user = new User();
-            boolean isValidRequest = RegisterRequestValidator.validate(login, password, firstName, surname, email, phone);
-            if(isValidRequest) {
-                user.setName(firstName);
-                user.setSurname(surname);
-                user.setLogin(login);
-                user.setPassword(password);
-                user.setEmail(email);
-                user.setPhone(phone);
-                isRegistered = RegisterUserService.register(user);
-            }
-        } catch (ServiceException e) {
-            throw new CommandException(e);
-        }
 
-        if(isRegistered) {
+        boolean isValidRequest = RegisterRequestValidator.validate(login, password, firstName, surname, email, phone);
+
+        if (isValidRequest) {
+            User user = new User();
+            user.setName(firstName);
+            user.setSurname(surname);
+            user.setLogin(login);
+            user.setPassword(password);
+            user.setEmail(email);
+            user.setPhone(phone);
+            try {
+                isRegistered = RegisterUserService.register(user);
+            } catch (ServiceException e) {
+                throw new CommandException("Registration error", e);
+            }
+        }
+        if (isRegistered) {
             request.setAttribute(RequestParameter.MESSAGE, "Successfully registered!");
             return JspPageName.LOGIN;
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, "Login is already exist!");
             return JspPageName.REGISTER;
         }

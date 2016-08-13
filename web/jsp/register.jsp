@@ -27,14 +27,14 @@
                     <span class="card-title grey-text text-darken-2">Registration</span>
                     <div class="row">
                         <div class="input-field col s12 required">
-                            <i class="material-icons prefix"></i><input id="id-user-login" name="user-login" type="text" required minlength="3">
+                            <i class="material-icons prefix"></i><input id="id-user-login" name="user_login" type="text" required minlength="3">
                             <label for="id-user-login">Username</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12 required" >
-                            <i class="material-icons prefix"></i><input id="id-user-email" name="user-email" type="email" required>
+                            <i class="material-icons prefix"></i><input id="id-user-email" name="user_email" type="email" required>
                             <label for="id-user-email" class="">Email Address</label>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                         <div class="col s12 m6">
                             <div class="row">
                                 <div class="input-field col s12 required">
-                                    <i class="material-icons prefix"></i><input id="id-user-password" name="user-password" type="password" required>
+                                    <i class="material-icons prefix"></i><input id="id-user-password" name="user_password" type="password" required>
                                     <label for="id-user-password" class="">Password</label>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                         <div class="col s12 m6">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="id-user-first-name" name="user-first-name" type="text" required>
+                                    <input id="id-user-first-name" name="user_first_name" type="text" required>
                                     <label for="id-user-first-name" class="">First name</label>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                         <div class="col s12 m6">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="id-user-surname" name="user-surname" type="text" required>
+                                    <input id="id-user-surname" name="user_surname" type="text" required>
                                     <label for="id-user-surname">Last name</label>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                         <div class="col s12 m12">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="id-user-phone" name="user-phone" type="text" required pattern="[+]{0,1}[0-9]{12}" title="Phone example: +375251112223">
+                                    <input id="id-user-phone" name="user_phone" type="text" required pattern="[+]{0,1}[0-9]{12}" title="Phone example: +375251112223">
                                     <label for="id-user-phone">Phone</label>
                                 </div>
                             </div>

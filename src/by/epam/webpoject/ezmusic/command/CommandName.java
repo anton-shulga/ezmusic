@@ -5,11 +5,18 @@ package by.epam.webpoject.ezmusic.command;
  */
 public enum CommandName {
     LOGIN,
+    LOGOUT,
     REGISTER,
+    CHECK_LOGIN_AVAILABILITY,
+    CHANGE_LANGUAGE,
     GO_HOME,
     DELETE_USER,
     UPDATE_USER,
     FIND_USER,
-    CHECK_LOGIN_AVAILABILITY,
-    CHANGE_LANGUAGE
+    CREATE_USER,
+    CREATE_SONG,
+    FIND_SONG_BY_ID,
+    FIND_ALL_SONGS,
+    DELETE_SONG,
+    UPDATE_SONG
 }

@@ -14,9 +14,12 @@
     <title>User home</title>
 </head>
 <body>
-    <c:import url="header.jsp"/>
-    <ctg:hello user="${user}"/>
-    <c:import url="footer.jsp"/>
-    <a href="error.jsp" hreflang="en"
+    <div class="wrapper">
+        <c:import url="../header.jsp"/>
+            <div class="container">
+                <ctg:hello user="${user}"/>
+            </div>
+    </div>
+    <c:import url="../footer.jsp"/>
 </body>
 </html>
