@@ -15,7 +15,8 @@ public enum CommandName {
     FIND_USER,
     CREATE_USER,
     CREATE_SONG,
-    FIND_SONG_BY_ID,
+    FIND_SONG_FOR_UPDATE,
+    FIND_SONG_FOR_CREATE,
     FIND_ALL_SONGS,
     DELETE_SONG,
     UPDATE_SONG

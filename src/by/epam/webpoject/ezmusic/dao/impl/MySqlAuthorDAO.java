@@ -31,10 +31,11 @@ public class MySqlAuthorDAO extends AuthorDAO {
     }
 
     @Override
-    public boolean create(Author instance) throws DAOException {
+    public Long create(Author instance) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-            PreparedStatement statement = null;
-            try {
+        PreparedStatement statement = null;
+        Long generatedId = null;
+        try {
             statement = connection.prepareStatement(CREATE_AUTHOR_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, instance.getName());
             statement.setString(2, instance.getCountry());
@@ -42,7 +43,7 @@ public class MySqlAuthorDAO extends AuthorDAO {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if(resultSet.next()){
-                return true;
+                generatedId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
             throw new DAOException("Creating author error", e);
@@ -50,7 +51,7 @@ public class MySqlAuthorDAO extends AuthorDAO {
             closeStatement(statement);
                 connection.close();
         }
-        return false;
+        return generatedId;
     }
 
     @Override

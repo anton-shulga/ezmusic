@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -43,6 +44,23 @@
                 </div>
                 <div class="input-field col s12">
                     <input type="text" name="song_year" value="${song.year}">
+                </div>
+
+                <div class="input-field col s12">
+                    <select multiple class="icons" name="selected_albums">
+                        <option value="" disabled selected>Choose album</option>
+                        <c:forEach items="${requestScope.all_albums}" var="item">
+                            <c:choose>
+                                <c:when test="${fn:contains(song_albums, item)}">
+                                    <option value="${item.albumId}" selected data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${item.albumId}" data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
+                    <label>Albums</label>
                 </div>
                 <div class="input-field col s12">
                     <input type="text" name="song_cost" value="${song.cost}">

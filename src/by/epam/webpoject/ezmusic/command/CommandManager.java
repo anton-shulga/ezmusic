@@ -25,7 +25,8 @@ public class CommandManager {
         availableCommands.put(CommandName.CHANGE_LOCALE, new ChangeLocaleCommand());
         availableCommands.put(CommandName.FIND_ALL_SONGS, new FindAllSongsCommand());
         availableCommands.put(CommandName.LOGOUT, new LogoutCommand());
-        availableCommands.put(CommandName.FIND_SONG_BY_ID, new FindSongForUpdateCommand());
+        availableCommands.put(CommandName.FIND_SONG_FOR_UPDATE, new FindSongForUpdateCommand());
+        availableCommands.put(CommandName.FIND_SONG_FOR_CREATE, new FindSongForCreateCommand());
         availableCommands.put(CommandName.CREATE_SONG, new CreateSongCommand());
         availableCommands.put(CommandName.UPDATE_SONG, new UpdateSongCommand());
         availableCommands.put(CommandName.DELETE_SONG, new DeleteSongCommand());

@@ -6,6 +6,7 @@ import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.service.song.UpdateSongService;
 import by.epam.webpoject.ezmusic.validator.CreateSongRequestValidator;
@@ -21,7 +22,7 @@ public class UpdateSongCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String songId = request.getParameter(RequestParameter.SONG_ID);
-        String albumId = request.getParameter("selected_album");
+        String[] selectedAlbumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
         String name = request.getParameter(RequestParameter.SONG_NAME);
         String year = request.getParameter(RequestParameter.SONG_YEAR);
         String filePath = request.getParameter(RequestParameter.SONG_FILE_PATH);
@@ -36,10 +37,12 @@ public class UpdateSongCommand implements Command {
             song.setFilePath(filePath);
             song.setPublicationDate(Date.valueOf(publicationDate));
             song.setCost(Double.parseDouble(cost));
+            Long[] albumIdArray = ParameterParser.parseLongArray(selectedAlbumIds);
             try {
-
+                UpdateSongService.update(song, albumIdArray);
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
+
             } catch (ServiceException e) {
                 throw new CommandException("Updating song error", e);
             }
@@ -49,4 +52,6 @@ public class UpdateSongCommand implements Command {
             return JspPageName.ERROR;
         }
     }
+
+
 }

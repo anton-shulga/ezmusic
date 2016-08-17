@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RegisterUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        boolean isRegistered = false;
+        Long generatedId = null;
         String login = request.getParameter(RequestParameter.USER_LOGIN);
         String password = request.getParameter(RequestParameter.USER_PASSWORD);
         String firstName = request.getParameter(RequestParameter.USER_FIRST_NAME);
@@ -36,12 +36,12 @@ public class RegisterUserCommand implements Command {
             user.setEmail(email);
             user.setPhone(phone);
             try {
-                isRegistered = RegisterUserService.register(user);
+                generatedId = RegisterUserService.register(user);
             } catch (ServiceException e) {
                 throw new CommandException("Registration error", e);
             }
         }
-        if (isRegistered) {
+        if (generatedId != null) {
             request.setAttribute(RequestParameter.MESSAGE, "Successfully registered!");
             return JspPageName.LOGIN;
         } else {

@@ -6,6 +6,7 @@ import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.song.CreateSongService;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.validator.CreateSongRequestValidator;
@@ -20,7 +21,8 @@ import java.util.ArrayList;
 public class CreateSongCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        boolean isCreated = false;
+        Long generatedId = null;
+        String[] selectedAlbumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
         String name = request.getParameter(RequestParameter.SONG_NAME);
         String year = request.getParameter(RequestParameter.SONG_YEAR);
         String filePath = request.getParameter(RequestParameter.SONG_FILE_PATH);
@@ -35,14 +37,14 @@ public class CreateSongCommand implements Command {
             song.setPublicationDate(Date.valueOf(publicationDate));
             song.setCost(Double.parseDouble(cost));
             try {
-                isCreated = CreateSongService.create(song);
+                generatedId = CreateSongService.create(song, ParameterParser.parseLongArray(selectedAlbumIds));
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
             } catch (ServiceException e) {
                 throw new CommandException("Creating song error", e);
             }
         }
-        if(isCreated){
+        if(generatedId != null){
             return JspPageName.ADMIN_ALL_SONGS;
         }else {
             return JspPageName.ADMIN_EDIT_SONG;

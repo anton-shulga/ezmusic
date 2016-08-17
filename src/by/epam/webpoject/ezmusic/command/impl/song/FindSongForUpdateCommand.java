@@ -23,16 +23,16 @@ public class FindSongForUpdateCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String songId = request.getParameter(RequestParameter.SONG_ID);
         Song song = null;
-        Album album = null;
+        ArrayList songAlbums = null;
         ArrayList<Album> albumList = null;
         boolean isValidRequest = FindSongReuqestValidator.validate(songId);
         if(isValidRequest){
             try {
                 song = FindSongByIdService.find(Long.parseLong(songId));
-                album = FindAlbumBySongIdService.find(song.getSongId());
+                songAlbums = FindAlbumBySongIdService.find(song.getSongId());
                 albumList = FindAllAlbumsService.find();
                 if(song != null  && albumList != null){
-                    request.setAttribute(RequestParameter.ALBUM, album);
+                    request.setAttribute(RequestParameter.SONG_ALBUMS, songAlbums);
                     request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
                     request.setAttribute(RequestParameter.SONG, song);
                     return JspPageName.ADMIN_EDIT_SONG;

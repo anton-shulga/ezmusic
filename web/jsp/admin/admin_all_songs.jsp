@@ -31,7 +31,7 @@
                             <div class="secondary-content">
                                 <div style="float: left">
                                     <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                        <input type="hidden" name="command" value="find_song_by_id">
+                                        <input type="hidden" name="command" value="find_song_for_update">
                                         <input type="hidden" name="song_id" value="${song.songId}">
                                         <button class="waves-effect waves-light btn  green accent-4" type="submit">Edit</button>
                                     </form>
@@ -48,7 +48,8 @@
                         </li>
                     </c:forEach>
                     <li class="collection-item right">
-                        <form action="${pageContext.request.contextPath}/jsp/admin/admin_edit_song.jsp">
+                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                            <input type="hidden" name="command" value="find_song_for_create">
                             <button class="waves-effect waves-light btn  green accent-4" type="submit">Create new song</button>
                         </form>
                     </li>

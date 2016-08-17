@@ -26,6 +26,7 @@ public class RequestParameter {
     public static final String ALL_SONGS = "all_songs";
     public static final String SONG_ID = "song_id";
     public static final String SONG = "song";
-    public static final String ALBUM = "album";
+    public static final String SONG_ALBUMS = "song_albums";
     public static final String ALL_ALBUMS = "all_albums";
+    public static final String SELECTED_ALBUMS = "selected_albums";
 }

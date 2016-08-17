@@ -6,11 +6,13 @@ import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 
+import java.util.ArrayList;
+
 /**
  * Created by Антон on 16.08.2016.
  */
 public class FindAlbumBySongIdService {
-    public static Album find(Long songId) throws ServiceException {
+    public static ArrayList<Album> find(Long songId) throws ServiceException {
         AlbumDAO dao = (AlbumDAO) DAOFactory.createAlbumDAO();
         try {
             return dao.findBySongId(songId);

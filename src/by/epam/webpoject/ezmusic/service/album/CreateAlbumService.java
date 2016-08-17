@@ -10,7 +10,7 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
  * Created by Антон on 10.08.2016.
  */
 public class CreateAlbumService {
-    public static boolean create(Album instance) throws ServiceException {
+    public static Long create(Album instance) throws ServiceException {
         AlbumDAO dao = (AlbumDAO) DAOFactory.createAlbumDAO();
         try {
             return dao.create(instance);

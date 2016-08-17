@@ -32,9 +32,10 @@ public class MySqlUserDAO extends UserDAO {
     }
 
     @Override
-    public boolean create(User instance) throws DAOException {
+    public Long create(User instance) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
+        Long generatedId = null;
         try {
             if(!isLoginExist(instance.getLogin())) {
                 statement = connection.prepareStatement(CREATE_USER_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -51,7 +52,7 @@ public class MySqlUserDAO extends UserDAO {
                 statement.executeUpdate();
                 ResultSet resultSet = statement.getGeneratedKeys();
                 if (resultSet.next()) {
-                   return true;
+                    generatedId = resultSet.getLong(1);
                 }
             }
         } catch (SQLException e) {
@@ -60,7 +61,7 @@ public class MySqlUserDAO extends UserDAO {
             closeStatement(statement);
             connection.close();
         }
-        return false;
+        return generatedId;
     }
 
     @Override

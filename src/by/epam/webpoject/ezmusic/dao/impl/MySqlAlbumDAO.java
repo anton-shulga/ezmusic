@@ -33,9 +33,10 @@ public class MySqlAlbumDAO extends AlbumDAO {
     }
 
     @Override
-    public boolean create(Album instance) throws DAOException {
+    public Long create(Album instance) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
+        Long generatedId = null;
         try {
             statement = connection.prepareStatement(CREATE_ALBUM_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, instance.getName());
@@ -44,7 +45,7 @@ public class MySqlAlbumDAO extends AlbumDAO {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if(resultSet.next()){
-                return true;
+                generatedId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
             throw new DAOException("Creating album error", e);
@@ -52,7 +53,7 @@ public class MySqlAlbumDAO extends AlbumDAO {
             closeStatement(statement);
             connection.close();
         }
-        return false;
+        return generatedId;
     }
 
     @Override
@@ -168,21 +169,22 @@ public class MySqlAlbumDAO extends AlbumDAO {
     }
 
     @Override
-    public Album findBySongId(Long songId) throws DAOException {
+    public ArrayList<Album> findBySongId(Long songId) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        Album album = null;
+        ArrayList<Album> albumList =  new ArrayList<>();
         try{
             statement = connection.prepareStatement(FIND_ALBUM_BY_SONG_ID_QUERY);
             statement.setLong(1, songId);
             ResultSet resultSet = statement.executeQuery();
-
-            if(resultSet.next()){
+            Album album = null;
+            while(resultSet.next()){
                 album = new Album();
                 album.setAlbumId(resultSet.getLong(1));
                 album.setName(resultSet.getString(2));
                 album.setYear(resultSet.getInt(3));
                 album.setImageFilePath(resultSet.getString(4));
+                albumList.add(album);
             }
         } catch (SQLException e) {
             throw new DAOException("Finding album error", e);
@@ -190,6 +192,6 @@ public class MySqlAlbumDAO extends AlbumDAO {
             closeStatement(statement);
             connection.close();
         }
-        return album;
+        return albumList;
     }
 }

@@ -16,17 +16,16 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
-
     <div class="wrapper">
-        <c:import url="../header.jsp"/>
+        <c:import url="${pageContext.request.contextPath}jsp/header.jsp"/>
         <div class="container">
             <div class="card">
                 <ul class="collection">
-                    <c:forEach items="${requestScope.all_songs}" var="song">
+                    <c:forEach items="${requestScope.all_albums}" var="album">
                         <li class="collection-item avatar">
                             <i class="material-icons circle red">play_arrow</i>
-                            <span class="title">${song.name}</span>
-                            <p>${song.year}<br>
+                            <span class="title">${album.name}</span>
+                            <p>${album.year}<br>
                                     ${song.publicationDate}
                             </p>
                             <div class="secondary-content">
@@ -57,6 +56,6 @@
             </div>
         </div>
     </div>
-<c:import url="../footer.jsp"/>
+    <c:import url="${pageContext.request.contextPath}jsp/footer.jsp"/>
 </body>
 </html>

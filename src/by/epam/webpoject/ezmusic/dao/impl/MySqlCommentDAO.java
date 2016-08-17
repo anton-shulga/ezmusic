@@ -29,9 +29,10 @@ public class MySqlCommentDAO extends CommentDAO {
     public static MySqlCommentDAO getInstance(){return instance;}
 
     @Override
-    public boolean create(Comment instance) throws DAOException {
+    public Long create(Comment instance) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
+        Long generatedId = null;
         try {
             statement = connection.prepareStatement(CREATE_COMMENT_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, instance.getUserId());
@@ -41,7 +42,7 @@ public class MySqlCommentDAO extends CommentDAO {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if(resultSet.next()){
-                return true;
+                generatedId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
             throw new DAOException("Creating comment error", e);
@@ -49,7 +50,7 @@ public class MySqlCommentDAO extends CommentDAO {
             closeStatement(statement);
             connection.close();
         }
-        return false;
+        return generatedId;
     }
 
     @Override
