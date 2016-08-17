@@ -16,6 +16,7 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
+
     <div class="wrapper">
         <c:import url="../header.jsp"/>
         <div class="container">
