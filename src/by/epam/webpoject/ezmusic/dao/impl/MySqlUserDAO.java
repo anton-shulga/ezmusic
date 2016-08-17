@@ -5,8 +5,6 @@ import by.epam.webpoject.ezmusic.connection.ProxyConnection;
 import by.epam.webpoject.ezmusic.dao.UserDAO;
 import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,15 +15,14 @@ import java.sql.SQLException;
  */
 public class MySqlUserDAO extends UserDAO {
 
-    private final static Logger LOGGER = LogManager.getLogger(MySqlUserDAO.class);
-
     private static final MySqlUserDAO instance = new MySqlUserDAO();
-    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD_QUERY = "SELECT user_id, user_name, user_surname, user_login,   user_password, user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned FROM USER WHERE user_login = ? AND user_password = ?";
-    private static final String CREATE_USER_QUERY = "INSERT INTO USER (user_name, user_surname, user_login, user_password, user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned) VALUES (?,?,?,?,?,?,?,?,?,?)";
-    private static final String FIND_USER_BY_ID_QUERY = "SELECT user_id, user_name, user_surname, user_login, user_password user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned FROM USER WHERE user_id = ? ";
-    private static final String DELETE_USER_BY_ID = "DELETE  FROM USER WHERE user_id = ?";
-    private static final String UPDATE_USER_QUERY = "UPDATE USER SET user_name = ?, user_surname = ?, user_login = ?, user_password = ?, user_email = ?, user_phone = ?, user_photo_path = ?, user_balance = ?, user_is_admin = ?, user_is_banned = ? WHERE user_id = ?";
-    private static final String FIND_USER_BY_LOGIN_QUERY = "SELECT user_id FROM USER WHERE user_login = ?";
+
+    private static final String FIND_USER_BY_LOGIN_AND_PASSWORD_QUERY = "SELECT user_id, user_name, user_surname, user_login,   user_password, user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned FROM ezmusicdb.user WHERE user_login = ? AND user_password = ?";
+    private static final String CREATE_USER_QUERY = "INSERT INTO ezmusicdb.user (user_name, user_surname, user_login, user_password, user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    private static final String FIND_USER_BY_ID_QUERY = "SELECT user_id, user_name, user_surname, user_login, user_password,user_email, user_phone, user_photo_path, user_balance, user_is_admin, user_is_banned FROM ezmusicdb.user WHERE user_id = ? ";
+    private static final String DELETE_USER_BY_ID = "DELETE  FROM ezmusicdb.user WHERE user_id = ?";
+    private static final String UPDATE_USER_QUERY = "UPDATE ezmusicdb.user SET user_name = ?, user_surname = ?, user_login = ?, user_password = ?, user_email = ?, user_phone = ?, user_photo_path = ?, user_balance = ?, user_is_admin = ?, user_is_banned = ? WHERE user_id = ?";
+    private static final String FIND_USER_BY_LOGIN_QUERY = "SELECT user_id FROM ezmusicdb.user WHERE user_login = ?";
 
     private MySqlUserDAO() {
     }

@@ -10,10 +10,11 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
  * Created by Антон on 10.08.2016.
  */
 public class UpdateSongService {
-    public static void update(Song instance) throws ServiceException {
+    public static void update(Song instance, Long albumId) throws ServiceException {
         SongDAO dao = (SongDAO) DAOFactory.createSongDAO();
         try {
             dao.update(instance);
+
         } catch (DAOException e) {
             throw new ServiceException("Updating song error", e);
         }

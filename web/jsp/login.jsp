@@ -16,6 +16,8 @@
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../css/styles.css" media="screen,projection"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/bin/materialize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8">
     <title>Login</title>
@@ -32,13 +34,13 @@
                     <span class="card-title grey-text text-darken-2">Login</span>
                     <div class="row">
                         <div class="input-field col s12 required" id="id-user-login-container">
-                            <input id="id-user-login" name="user_login" type="text" required>
+                            <i class="material-icons prefix">perm_identity</i><input id="id-user-login" name="user_login" type="text" required>
                             <label for="id-user-login">Username</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 required" id="id-user-password-container">
-                            <input id="id-user-password" name="user_password" type="password" required>
+                            <i class="material-icons prefix">lock</i><input id="id-user-password" name="user_password" type="password" required>
                             <label for="id-user-password">Password</label>
                         </div>
                     </div>
@@ -60,8 +62,7 @@
 <c:import url="footer.jsp"/>
 
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="../js/bin/materialize.min.js"></script>
+
 
 <script>
     $( document ).ready(function(){

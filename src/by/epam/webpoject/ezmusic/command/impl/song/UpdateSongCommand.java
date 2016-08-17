@@ -21,6 +21,7 @@ public class UpdateSongCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String songId = request.getParameter(RequestParameter.SONG_ID);
+        String albumId = request.getParameter("selected_album");
         String name = request.getParameter(RequestParameter.SONG_NAME);
         String year = request.getParameter(RequestParameter.SONG_YEAR);
         String filePath = request.getParameter(RequestParameter.SONG_FILE_PATH);
@@ -36,7 +37,7 @@ public class UpdateSongCommand implements Command {
             song.setPublicationDate(Date.valueOf(publicationDate));
             song.setCost(Double.parseDouble(cost));
             try {
-                UpdateSongService.update(song);
+
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
             } catch (ServiceException e) {

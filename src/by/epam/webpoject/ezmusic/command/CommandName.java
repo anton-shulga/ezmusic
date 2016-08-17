@@ -8,7 +8,7 @@ public enum CommandName {
     LOGOUT,
     REGISTER,
     CHECK_LOGIN_AVAILABILITY,
-    CHANGE_LANGUAGE,
+    CHANGE_LOCALE,
     GO_HOME,
     DELETE_USER,
     UPDATE_USER,

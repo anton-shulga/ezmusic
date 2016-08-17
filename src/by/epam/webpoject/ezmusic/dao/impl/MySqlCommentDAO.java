@@ -17,11 +17,12 @@ import java.util.ArrayList;
 public class MySqlCommentDAO extends CommentDAO {
     
     private static final MySqlCommentDAO instance = new MySqlCommentDAO();
-    private static final String CREATE_COMMENT_QUERY = "INSERT INTO COMMENT (comment_user_id, comment_rating, comment_text, comment_song_id) VALUES (?, ?, ?, ?)";
-    private static final String FIND_COMMENT_QUERY = "SELECT comment_id, comment_user_id, comment_rating, comment_text, comment_song_id FROM COMMENT WHERE comment_id = ?";
-    private static final String DELETE_COMMENT_QUERY = "DELETE FROM COMMENT WHERE comment_id = ?";
-    private static final String UPDATE_COMMENT_QUERY ="UPDATE COMMENT SET  comment_user_id = ?, comment_rating = ?, comment_text = ?, comment_song_id = ? WHERE comment_id = ?";
-    private static final String FIND_COMMENT_BY_SONG_ID = "SELECT comment_id, comment_user_id, comment_rating, comment_text, comment_song_id FROM COMMENT WHERE comment_song_id = ?";
+
+    private static final String CREATE_COMMENT_QUERY = "INSERT INTO ezmusicdb.comment (comment_user_id, comment_rating, comment_text, comment_song_id) VALUES (?, ?, ?, ?)";
+    private static final String FIND_COMMENT_QUERY = "SELECT comment_id, comment_user_id, comment_rating, comment_text, comment_song_id FROM ezmusicdb.comment WHERE comment_id = ?";
+    private static final String DELETE_COMMENT_QUERY = "DELETE FROM ezmusicdb.comment WHERE comment_id = ?";
+    private static final String UPDATE_COMMENT_QUERY ="UPDATE ezmusicdb.comment SET  comment_user_id = ?, comment_rating = ?, comment_text = ?, comment_song_id = ? WHERE comment_id = ?";
+    private static final String FIND_COMMENT_BY_SONG_ID = "SELECT comment_id, comment_user_id, comment_rating, comment_text, comment_song_id FROM ezmusicdb.comment WHERE comment_song_id = ?";
 
     private MySqlCommentDAO(){}
 

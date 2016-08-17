@@ -13,32 +13,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Антон on 15.07.2016.
+ * Created by Антон on 17.08.2016.
  */
-public class Controller extends HttpServlet {
+public class LocaleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String page = null;
-        String commandName = req.getParameter(RequestParameter.COMMAND);
-        try {
-            Command command = CommandManager.getCommand(commandName);
-            page = command.execute(req);
-        } catch (CommandException e) {
-           page = JspPageName.ERROR;
-        }
-        req.getRequestDispatcher(page).forward(req, resp);
+        super.doPost(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String page = null;
         String commandName = req.getParameter(RequestParameter.COMMAND);
         try {
             Command command = CommandManager.getCommand(commandName);
-            page = command.execute(req);
+            command.execute(req);
         } catch (CommandException e) {
-            page = JspPageName.ERROR;
+            resp.sendRedirect(JspPageName.ERROR);
         }
-        req.getRequestDispatcher(page).forward(req, resp);
     }
 }

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSessionListener;
 public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        httpSessionEvent.getSession().setAttribute(RequestParameter.LOCALE, "ru_RU");
+        httpSessionEvent.getSession().setAttribute(RequestParameter.LOCALE, "default");
     }
 
     @Override

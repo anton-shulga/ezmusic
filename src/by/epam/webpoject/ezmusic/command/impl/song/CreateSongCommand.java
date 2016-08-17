@@ -7,10 +7,12 @@ import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.service.song.CreateSongService;
+import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.validator.CreateSongRequestValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * Created by Антон on 10.08.2016.
@@ -34,6 +36,8 @@ public class CreateSongCommand implements Command {
             song.setCost(Double.parseDouble(cost));
             try {
                 isCreated = CreateSongService.create(song);
+                ArrayList<Song> songList = FindAllSongsService.find();
+                request.setAttribute(RequestParameter.ALL_SONGS, songList);
             } catch (ServiceException e) {
                 throw new CommandException("Creating song error", e);
             }
@@ -41,7 +45,7 @@ public class CreateSongCommand implements Command {
         if(isCreated){
             return JspPageName.ADMIN_ALL_SONGS;
         }else {
-            return JspPageName.ADMIN_ALL_SONGS;
+            return JspPageName.ADMIN_EDIT_SONG;
         }
     }
 }

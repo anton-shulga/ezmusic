@@ -1,10 +1,7 @@
 package by.epam.webpoject.ezmusic.command;
 
 import by.epam.webpoject.ezmusic.command.impl.*;
-import by.epam.webpoject.ezmusic.command.impl.song.CreateSongCommand;
-import by.epam.webpoject.ezmusic.command.impl.song.FindAllSongsCommand;
-import by.epam.webpoject.ezmusic.command.impl.song.FindSongByIdCommand;
-import by.epam.webpoject.ezmusic.command.impl.song.UpdateSongCommand;
+import by.epam.webpoject.ezmusic.command.impl.song.*;
 import by.epam.webpoject.ezmusic.command.impl.user.*;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 
@@ -25,12 +22,13 @@ public class CommandManager {
         availableCommands.put(CommandName.FIND_USER, new FindUserCommand());
         availableCommands.put(CommandName.UPDATE_USER, new UpdateUserCommand());
         availableCommands.put(CommandName.CHECK_LOGIN_AVAILABILITY, new CheckLoginAvailabilityCommand());
-        availableCommands.put(CommandName.CHANGE_LANGUAGE, new ChangeLanguageCommand());
-        availableCommands.put(CommandName.CREATE_SONG, new CreateSongCommand());
+        availableCommands.put(CommandName.CHANGE_LOCALE, new ChangeLocaleCommand());
         availableCommands.put(CommandName.FIND_ALL_SONGS, new FindAllSongsCommand());
         availableCommands.put(CommandName.LOGOUT, new LogoutCommand());
-        availableCommands.put(CommandName.FIND_SONG_BY_ID, new FindSongByIdCommand());
+        availableCommands.put(CommandName.FIND_SONG_BY_ID, new FindSongForUpdateCommand());
+        availableCommands.put(CommandName.CREATE_SONG, new CreateSongCommand());
         availableCommands.put(CommandName.UPDATE_SONG, new UpdateSongCommand());
+        availableCommands.put(CommandName.DELETE_SONG, new DeleteSongCommand());
     }
 
     public static Command getCommand(String commandName) throws CommandException {
