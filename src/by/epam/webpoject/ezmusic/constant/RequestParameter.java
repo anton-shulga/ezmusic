@@ -29,4 +29,8 @@ public class RequestParameter {
     public static final String SONG_ALBUMS = "song_albums";
     public static final String ALL_ALBUMS = "all_albums";
     public static final String SELECTED_ALBUMS = "selected_albums";
+    public static final String ALL_AUTHORS = "all_authors";
+    public static final String AUTHOR_ID = "author_id";
+    public static final String SONG_AUTHORS = "song_authors";
+    public static final String SELECTED_AUTHORS = "selected_authors";
 }

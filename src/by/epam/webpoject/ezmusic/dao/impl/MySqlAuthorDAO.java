@@ -23,6 +23,7 @@ public class MySqlAuthorDAO extends AuthorDAO {
     private static final String DELETE_AUTHOR_QUERY = "DELETE FROM ezmusicdb.author WHERE author_id = ?";
     private static final String  UPDATE_AUTHOR_QUERY = "UPDATE ezmusicdb.author SET author_name = ?, author_country = ?, author_image_path = ? WHERE author_id = ?";
     private static final String FIND_ALL_AUTHORS_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author";
+    private static final String FIND_AUTHOR_BY_SONG_ID_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author AS a INNER JOIN ezmusicdb.author_song AS a_s ON a.author_id = a_s.id_author WHERE a_s.id_song = ?";
 
     private MySqlAuthorDAO(){}
 
@@ -132,6 +133,30 @@ public class MySqlAuthorDAO extends AuthorDAO {
         }finally {
             closeStatement(statement);
             connection.close();
+        }
+        return authorList;
+    }
+
+    @Override
+    public ArrayList<Author> findBySongId(Long songId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ArrayList<Author> authorList = new ArrayList<>();
+        try{
+            statement = connection.prepareStatement(FIND_AUTHOR_BY_SONG_ID_QUERY);
+            statement.setLong(1, songId);
+            ResultSet resultSet = statement.executeQuery();
+            Author author = null;
+            while (resultSet.next()){
+                author = new Author();
+                author.setAuthorId(resultSet.getLong(1));
+                author.setName(resultSet.getString(2));
+                author.setCountry(resultSet.getString(3));
+                author.setPhotoPath(resultSet.getString(4));
+                authorList.add(author);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Finding author error", e);
         }
         return authorList;
     }

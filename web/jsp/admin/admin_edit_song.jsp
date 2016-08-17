@@ -41,14 +41,16 @@
                 </c:if>
                 <div class="input-field col s12">
                     <input type="text" name="song_name" value="${song.name}">
+                    <label>Name</label>
                 </div>
                 <div class="input-field col s12">
                     <input type="text" name="song_year" value="${song.year}">
+                    <label>Year</label>
                 </div>
 
                 <div class="input-field col s12">
                     <select multiple class="icons" name="selected_albums">
-                        <option value="" disabled selected>Choose album</option>
+                        <option value="" disabled selected>Select album</option>
                         <c:forEach items="${requestScope.all_albums}" var="item">
                             <c:choose>
                                 <c:when test="${fn:contains(song_albums, item)}">
@@ -63,7 +65,24 @@
                     <label>Albums</label>
                 </div>
                 <div class="input-field col s12">
+                    <select multiple class="icons" name="selected_authors">
+                        <option value="" disabled selected>Select authors</option>
+                        <c:forEach items="${requestScope.all_authors}" var="item">
+                            <c:choose>
+                                <c:when test="${fn:contains(song_authors, item)}">
+                                    <option value="${item.authorId}" selected data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${item.authorId}" data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
+                    <label>Authors</label>
+                </div>
+                <div class="input-field col s12">
                     <input type="text" name="song_cost" value="${song.cost}">
+                    <label>Cost</label>
                 </div>
                 <div class="input-field col s12">
                     <input type="date" class="datepicker" name="song_publication_date" value="${song.publicationDate}">

@@ -16,6 +16,7 @@ public abstract class AuthorDAO implements AbstractDAO<Author, Long> {
     private static final Logger LOGGER = LogManager.getLogger(AuthorDAO.class);
 
     public abstract ArrayList<Author> findAll() throws DAOException;
+    public abstract ArrayList<Author> findBySongId(Long songId) throws DAOException;
 
     @Override
     public void closeStatement(Statement statement) {

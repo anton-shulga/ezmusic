@@ -23,6 +23,7 @@ public class CreateSongCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         Long generatedId = null;
         String[] selectedAlbumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
+        String[] selectedAuthorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
         String name = request.getParameter(RequestParameter.SONG_NAME);
         String year = request.getParameter(RequestParameter.SONG_YEAR);
         String filePath = request.getParameter(RequestParameter.SONG_FILE_PATH);
@@ -37,7 +38,7 @@ public class CreateSongCommand implements Command {
             song.setPublicationDate(Date.valueOf(publicationDate));
             song.setCost(Double.parseDouble(cost));
             try {
-                generatedId = CreateSongService.create(song, ParameterParser.parseLongArray(selectedAlbumIds));
+                generatedId = CreateSongService.create(song, ParameterParser.parseLongArray(selectedAlbumIds), ParameterParser.parseLongArray(selectedAuthorIds));
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
             } catch (ServiceException e) {
