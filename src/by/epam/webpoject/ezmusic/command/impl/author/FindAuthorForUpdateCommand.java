@@ -50,7 +50,6 @@ public class FindAuthorForUpdateCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException("Finding author error", e);
         }
-
         return page;
     }
 }
