@@ -9,7 +9,6 @@ import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.service.album.FindAlbumBySongIdService;
-import by.epam.webpoject.ezmusic.service.album.FindAllAlbumsService;
 import by.epam.webpoject.ezmusic.service.author.FindAllAuthorsService;
 import by.epam.webpoject.ezmusic.service.author.FindAuthorBySongIdService;
 import by.epam.webpoject.ezmusic.service.song.FindSongByIdService;
@@ -35,10 +34,9 @@ public class FindSongForUpdateCommand implements Command {
             try {
                 song = FindSongByIdService.find(Long.parseLong(songId));
                 songAlbums = FindAlbumBySongIdService.find(song.getSongId());
-                allAlbums = FindAllAlbumsService.find();
                 songAuthors = FindAuthorBySongIdService.find(song.getSongId());
                 allAuthors = FindAllAuthorsService.find();
-                if(song != null  && allAlbums != null && allAuthors != null){
+                if(song != null  && allAuthors != null){
                     request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
                     request.setAttribute(RequestParameter.SONG_AUTHORS, songAuthors);
                     request.setAttribute(RequestParameter.SONG_ALBUMS, songAlbums);

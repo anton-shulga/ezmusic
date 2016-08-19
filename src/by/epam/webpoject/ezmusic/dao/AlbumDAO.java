@@ -18,6 +18,10 @@ public abstract class AlbumDAO implements AbstractDAO<Album, Long> {
     public abstract ArrayList<Album> findByAuthorId(Long authorId) throws DAOException;
     public abstract ArrayList<Album> findAll() throws DAOException;
     public abstract ArrayList<Album> findBySongId(Long songId) throws DAOException;
+    public abstract boolean createAlbumSong(Long albumId, Long songId) throws DAOException;
+    public abstract boolean createAlbumAuthor(Long albumId, Long authorId) throws DAOException;
+    public abstract void deleteAlbumSong(Long albumId) throws DAOException;
+    public abstract void deleteAlbumAuthor(Long albumId) throws DAOException;
 
     @Override
     public void closeStatement(Statement statement) {

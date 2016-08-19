@@ -24,7 +24,32 @@
             $('select').material_select();
         });
     </script>
-
+    <script>
+        $(document).ready(function() {
+            $('#id-authors').on("change", function(event) {
+                var selectedAuthors = $('#id-authors').val();
+                $.ajax({
+                    url: 'JsonController',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {selected_authors:selectedAuthors, command:"find_author_albums_json"},
+                    success: function (json) {
+                        var $select = $('#id-album');
+                        $select.find('option').remove();
+                        $select.material_select('update');
+                        $select.closest('.input-field').children('span.caret').remove();
+                        $.each(json, function(index, album) {
+                            if(json.length != 0) {
+                                $select.append($("<option></option>").val(album.albumId).html(album.name));
+                                $select.material_select('update');
+                                $select.closest('.input-field').children('span.caret').remove();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="wrapper">
@@ -47,39 +72,39 @@
                     <input type="text" name="song_year" value="${song.year}">
                     <label>Year</label>
                 </div>
-
                 <div class="input-field col s12">
-                    <select multiple class="icons" name="selected_albums">
+                    <select multiple class="icons" id="id-authors" name="selected_authors">
+                    <option value="" disabled selected>Select authors</option>
+                    <c:forEach items="${requestScope.all_authors}" var="item">
+                        <c:choose>
+                            <c:when test="${fn:contains(song_authors, item)}">
+                                <option value="${item.authorId}" selected data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${item.authorId}" data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    </select>
+                    <label>Authors</label>
+                </div>
+                <div class="input-field col s12">
+                    <select multiple class="icons" id="id-album" name="selected_albums">
                         <option value="" disabled selected>Select album</option>
                         <c:forEach items="${requestScope.all_albums}" var="item">
                             <c:choose>
                                 <c:when test="${fn:contains(song_albums, item)}">
-                                    <option value="${item.albumId}" selected data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                    <option value="${item.albumId}" selected>${item.name}</option>
                                 </c:when>
                                 <c:otherwise>
-                                    <option value="${item.albumId}" data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                    <option value="${item.albumId}">${item.name}</option>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
                     </select>
                     <label>Albums</label>
                 </div>
-                <div class="input-field col s12">
-                    <select multiple class="icons" name="selected_authors">
-                        <option value="" disabled selected>Select authors</option>
-                        <c:forEach items="${requestScope.all_authors}" var="item">
-                            <c:choose>
-                                <c:when test="${fn:contains(song_authors, item)}">
-                                    <option value="${item.authorId}" selected data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="${item.authorId}" data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </select>
-                    <label>Authors</label>
-                </div>
+
                 <div class="input-field col s12">
                     <input type="text" name="song_cost" value="${song.cost}">
                     <label>Cost</label>

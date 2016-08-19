@@ -1,6 +1,7 @@
 package by.epam.webpoject.ezmusic.dao;
 
 import by.epam.webpoject.ezmusic.entity.Author;
+import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +18,7 @@ public abstract class AuthorDAO implements AbstractDAO<Author, Long> {
 
     public abstract ArrayList<Author> findAll() throws DAOException;
     public abstract ArrayList<Author> findBySongId(Long songId) throws DAOException;
+    public abstract ArrayList<Author> findByAlbumId(Long albumId) throws CommandException;
 
     @Override
     public void closeStatement(Statement statement) {

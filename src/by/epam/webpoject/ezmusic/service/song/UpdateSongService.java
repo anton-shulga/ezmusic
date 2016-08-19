@@ -15,12 +15,16 @@ public class UpdateSongService {
         try {
             dao.update(instance);
             dao.deleteSongAlbum(instance.getSongId());
-            for (Long albumId : albumIds) {
-                dao.createSongAlbum(instance.getSongId(), albumId);
+            if(albumIds != null) {
+                for (Long albumId : albumIds) {
+                    dao.createSongAlbum(instance.getSongId(), albumId);
+                }
             }
             dao.deleteSongAuthor(instance.getSongId());
-            for (Long authorId : authorIds) {
-                dao.createSongAuthor(instance.getSongId(), authorId);
+            if(authorIds != null) {
+                for (Long authorId : authorIds) {
+                    dao.createSongAuthor(instance.getSongId(), authorId);
+                }
             }
         } catch (DAOException e) {
             throw new ServiceException("Updating song error", e);

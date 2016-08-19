@@ -24,11 +24,13 @@ public class MySqlSongDAO extends SongDAO {
     private static final String UPDATE_SONG_QUERY = "UPDATE ezmusicdb.song SET song_name = ?, song_year = ?, song_file_path = ?, song_publication_date = ?, song_cost = ? WHERE song_id = ?";
     private static final String FIND_SONG_BY_USER_ID_QUERY = "SELECT s.song_id, s.song_name, s.song_year, s.song_file_path, s.song_publication_date, s.song_cost FROM ezmusicdb.song AS s INNER JOIN ezmusicdb.user_song as u_s ON s.song_id = u_s.id_song WHERE u_s.id_user = ?";
     private static final String FIND_SONG_BY_ALBUM_ID_QUERY = "SELECT s.song_id, s.song_name, s.song_year, s.song_file_path, s.song_publication_date, s.song_cost FROM ezmusicdb.song AS s INNER JOIN ezmusicdb.album_song as a_s ON s.song_id = a_s.id_song WHERE a_s.id_album = ?";
+    private static final String FIND_SONG_BY_AUTHOR_ID_QUERY = "SELECT song_id, song_name, song_year, song_file_path, song_publication_date, song_cost FROM ezmusicdb.song AS a INNER JOIN ezmusicdb.author_song AS a_s ON a.song_id = a_s.id_song WHERE a_s.id_author = ?" ;
     private static final String FIND_ALL_SONGS = "SELECT song_id, song_name, song_year, song_file_path, song_publication_date, song_cost FROM ezmusicdb.song";
     private static final String CREATE_SONG_ALBUM_QUERY = "INSERT INTO ezmusicdb.album_song (id_album, id_song) VALUES (?, ?)";
     private static final String CREATE_SONG_AUTHOR_QUERY = "INSERT INTO ezmusicdb.author_song (id_author, id_song) VALUES (?, ?)";
     private static final String DELETE_SONG_ALBUM_QUERY = "DELETE FROM ezmusicdb.album_song WHERE id_song = ?";
     private static final String DELETE_SONG_AUTHOR_QUERY = "DELETE FROM ezmusicdb.author_song WHERE id_song = ?";
+
 
 
     private MySqlSongDAO() {
@@ -189,6 +191,35 @@ public class MySqlSongDAO extends SongDAO {
     }
 
     @Override
+    public ArrayList<Song> findByAuthorId(Long authorId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ArrayList<Song> songList = new ArrayList<>();
+        try{
+            statement = connection.prepareStatement(FIND_SONG_BY_AUTHOR_ID_QUERY);
+            statement.setLong(1, authorId);
+            ResultSet resultSet = statement.executeQuery();
+            Song song = null;
+            while (resultSet.next()){
+                song = new Song();
+                song.setSongId(resultSet.getLong(1));
+                song.setName(resultSet.getString(2));
+                song.setYear(resultSet.getInt(3));
+                song.setFilePath(resultSet.getString(4));
+                song.setPublicationDate(resultSet.getDate(5));
+                song.setCost(resultSet.getDouble(6));
+                songList.add(song);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Finding song error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return songList;
+    }
+
+    @Override
     public ArrayList<Song> findAll() throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         Statement statement = null;
@@ -270,6 +301,9 @@ public class MySqlSongDAO extends SongDAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Deleting song-album error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
         }
     }
 
@@ -283,6 +317,9 @@ public class MySqlSongDAO extends SongDAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Deleting song-author error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
         }
     }
 }

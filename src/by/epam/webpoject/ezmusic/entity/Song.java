@@ -10,7 +10,6 @@ public class Song {
     private long songId;
     private String name;
     private int year;
-    private Album album;
     private double cost;
     private String filePath;
     private Date publicationDate;
@@ -39,14 +38,6 @@ public class Song {
         this.year = year;
     }
 
-    public Album getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(Album album) {
-        this.album = album;
-    }
-
     public double getCost() {
         return cost;
     }
@@ -69,5 +60,35 @@ public class Song {
 
     public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Song)) return false;
+
+        Song song = (Song) o;
+
+        if (songId != song.songId) return false;
+        if (year != song.year) return false;
+        if (Double.compare(song.cost, cost) != 0) return false;
+        if (!name.equals(song.name)) return false;
+        if (!filePath.equals(song.filePath)) return false;
+        return publicationDate.equals(song.publicationDate);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = (int) (songId ^ (songId >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + year;
+        temp = Double.doubleToLongBits(cost);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + filePath.hashCode();
+        result = 31 * result + publicationDate.hashCode();
+        return result;
     }
 }

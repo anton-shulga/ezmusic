@@ -33,4 +33,12 @@ public class RequestParameter {
     public static final String AUTHOR_ID = "author_id";
     public static final String SONG_AUTHORS = "song_authors";
     public static final String SELECTED_AUTHORS = "selected_authors";
+    public static final String ALBUM_ID = "album_id";
+    public static final String ALBUM = "album";
+    public static final String ALBUM_AUTHORS = "album_authors";
+    public static final String ALBUM_SONGS = "album_songs";
+    public static final String SELECTED_SONGS = "selected_songs";
+    public static final String ALBUM_NAME = "album_name";
+    public static final String ALBUM_YEAR= "album_year";
+    public static final String ALBUM_IMAGE_FILE_PATH = "album_image_file_path";
 }

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 public class UpdateSongCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+        String page = null;
+
         String songId = request.getParameter(RequestParameter.SONG_ID);
         String[] selectedAlbumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
         String[] selectedAuthorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
@@ -29,6 +31,7 @@ public class UpdateSongCommand implements Command {
         String filePath = request.getParameter(RequestParameter.SONG_FILE_PATH);
         String publicationDate = request.getParameter(RequestParameter.SONG_PUBLICATION_DATE);
         String cost = request.getParameter(RequestParameter.SONG_COST);
+
         boolean isValidRequest = CreateSongRequestValidator.validate(name, year, filePath, publicationDate, cost);
         if(isValidRequest) {
             Song song = new Song();
@@ -38,21 +41,19 @@ public class UpdateSongCommand implements Command {
             song.setFilePath(filePath);
             song.setPublicationDate(Date.valueOf(publicationDate));
             song.setCost(Double.parseDouble(cost));
-            Long[] albumIdArray = ParameterParser.parseLongArray(selectedAlbumIds);
-            Long[] authorIdArray = ParameterParser.parseLongArray(selectedAuthorIds);
             try {
-                UpdateSongService.update(song, albumIdArray, authorIdArray);
+                UpdateSongService.update(song, ParameterParser.parseLongArray(selectedAlbumIds),  ParameterParser.parseLongArray(selectedAuthorIds));
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
-
+                page = JspPageName.ADMIN_ALL_SONGS;
             } catch (ServiceException e) {
                 throw new CommandException("Updating song error", e);
             }
-            return JspPageName.ADMIN_ALL_SONGS;
         }
         else {
-            return JspPageName.ERROR;
+            page = JspPageName.ADMIN_EDIT_SONG;
         }
+        return page;
     }
 
 

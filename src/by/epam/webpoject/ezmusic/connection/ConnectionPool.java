@@ -1,6 +1,5 @@
 package by.epam.webpoject.ezmusic.connection;
 
-import by.epam.webpoject.ezmusic.exception.connectionpool.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -102,7 +101,7 @@ public class ConnectionPool {
             connectionQueue.offer(connection);
     }
 
-    public void closePool() throws ConnectionPoolException {
+    public void closePool(){
         for (ProxyConnection connection: connectionQueue) {
             connection.closeConnection();
         }

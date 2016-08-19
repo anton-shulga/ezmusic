@@ -27,6 +27,18 @@
                     <button class="btn" type="submit">All songs</button>
                 </form>
             </div>
+            <div>
+                <form action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="find_all_albums">
+                    <button class="btn" type="submit">All albums</button>
+                </form>
+            </div>
+            <div>
+                <form action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="find_all_authors">
+                    <button class="btn" type="submit">All authors</button>
+                </form>
+            </div>
         </div>
 
     </div>

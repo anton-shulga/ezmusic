@@ -1,6 +1,9 @@
 package by.epam.webpoject.ezmusic.command;
 
 import by.epam.webpoject.ezmusic.command.impl.*;
+import by.epam.webpoject.ezmusic.command.impl.album.*;
+import by.epam.webpoject.ezmusic.command.impl.album.FindAuthorAlbumsJsonCommand;
+import by.epam.webpoject.ezmusic.command.impl.author.FindAllAuthorsCommand;
 import by.epam.webpoject.ezmusic.command.impl.song.*;
 import by.epam.webpoject.ezmusic.command.impl.user.*;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
@@ -30,13 +33,27 @@ public class CommandManager {
         availableCommands.put(CommandName.CREATE_SONG, new CreateSongCommand());
         availableCommands.put(CommandName.UPDATE_SONG, new UpdateSongCommand());
         availableCommands.put(CommandName.DELETE_SONG, new DeleteSongCommand());
+        availableCommands.put(CommandName.CREATE_ALBUM, new CreateAlbumCommnd());
+        availableCommands.put(CommandName.UPDATE_ALBUM, new UpdateAlbumCommand());
+        availableCommands.put(CommandName.DELETE_ALBUM, new DeleteAlbumCommand());
+        availableCommands.put(CommandName.FIND_ALL_ALBUMS, new FindAllAlbumsCommand());
+        availableCommands.put(CommandName.FIND_ALBUM_FOR_CREATE, new FindAlbumForCreateCommand());
+        availableCommands.put(CommandName.FIND_ALBUM_FOR_UPDATE, new FindAlbumForUpdateCommand());
+        availableCommands.put(CommandName.FIND_AUTHOR_ALBUMS_JSON, new FindAuthorAlbumsJsonCommand());
+        availableCommands.put(CommandName.FIND_AUTHOR_SONGS_JSON, new FindAuthorSongsJsonCommand());
+        availableCommands.put(CommandName.FIND_ALL_AUTHORS, new FindAllAuthorsCommand());
+        availableCommands.put(CommandName.FIND_AUTHOR_FOR_CREATE, new FindAuthorForCreateCommand());
     }
 
     public static Command getCommand(String commandName) throws CommandException {
         if(commandName != null) {
             if (!commandName.isEmpty()) {
-                CommandName name = CommandName.valueOf(commandName.toUpperCase());
-                return availableCommands.get(name);
+                try {
+                    CommandName name = CommandName.valueOf(commandName.toUpperCase());
+                    return availableCommands.get(name);
+                }catch (IllegalArgumentException e) {
+                    throw new CommandException("Invalid command", e);
+                }
             } else throw new CommandException("Invalid command");
         }else return availableCommands.get(CommandName.GO_HOME);
     }

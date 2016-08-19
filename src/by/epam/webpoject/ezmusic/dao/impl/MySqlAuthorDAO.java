@@ -4,6 +4,7 @@ import by.epam.webpoject.ezmusic.connection.ConnectionPool;
 import by.epam.webpoject.ezmusic.connection.ProxyConnection;
 import by.epam.webpoject.ezmusic.dao.AuthorDAO;
 import by.epam.webpoject.ezmusic.entity.Author;
+import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 
 import java.sql.PreparedStatement;
@@ -24,6 +25,7 @@ public class MySqlAuthorDAO extends AuthorDAO {
     private static final String  UPDATE_AUTHOR_QUERY = "UPDATE ezmusicdb.author SET author_name = ?, author_country = ?, author_image_path = ? WHERE author_id = ?";
     private static final String FIND_ALL_AUTHORS_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author";
     private static final String FIND_AUTHOR_BY_SONG_ID_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author AS a INNER JOIN ezmusicdb.author_song AS a_s ON a.author_id = a_s.id_author WHERE a_s.id_song = ?";
+    private static final String FIND_AUTHOR_BY_ALBUM_ID_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author as a INNER JOIN ezmusicdb.album_author as a_a ON a.author_id = a_a.id_author WHERE a_a.id_album = ?";
 
     private MySqlAuthorDAO(){}
 
@@ -157,6 +159,36 @@ public class MySqlAuthorDAO extends AuthorDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Finding author error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return authorList;
+    }
+
+    @Override
+    public ArrayList<Author> findByAlbumId(Long albumId) throws CommandException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ArrayList<Author> authorList =  new ArrayList<>();
+        try{
+            statement = connection.prepareStatement(FIND_AUTHOR_BY_ALBUM_ID_QUERY);
+            statement.setLong(1, albumId);
+            ResultSet resultSet = statement.executeQuery();
+            Author author = null;
+            while (resultSet.next()){
+                author = new Author();
+                author.setAuthorId(resultSet.getLong(1));
+                author.setName(resultSet.getString(2));
+                author.setCountry(resultSet.getString(3));
+                author.setPhotoPath(resultSet.getString(4));
+                authorList.add(author);
+            }
+        } catch (SQLException e) {
+            throw new CommandException("Finding author error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
         }
         return authorList;
     }
