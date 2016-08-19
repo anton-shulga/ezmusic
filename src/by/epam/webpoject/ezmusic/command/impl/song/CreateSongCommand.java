@@ -23,7 +23,6 @@ public class CreateSongCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
         Long generatedId = null;
-
         String[] selectedAlbumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
         String[] selectedAuthorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
         String name = request.getParameter(RequestParameter.SONG_NAME);

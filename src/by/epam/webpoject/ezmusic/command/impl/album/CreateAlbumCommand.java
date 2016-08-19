@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Антон on 10.08.2016.
  */
-public class CreateAlbumCommnd implements Command{
+public class CreateAlbumCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         Long generatedId = null;

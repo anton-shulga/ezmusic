@@ -41,4 +41,10 @@ public class RequestParameter {
     public static final String ALBUM_NAME = "album_name";
     public static final String ALBUM_YEAR= "album_year";
     public static final String ALBUM_IMAGE_FILE_PATH = "album_image_file_path";
+    public static final String AUTHOR = "author";
+    public static final String AUTHOR_NAME = "author_name";
+    public static final String AUTHOR_COUNTRY = "author_country";
+    public static final String AUTHOR_PHOTO_PATH = "author_photo_path";
+    public static final String AUTHOR_SONGS = "author_songs";
+    public static final String AUTHOR_ALBUMS = "author_albums";
 }

@@ -1,9 +1,10 @@
 package by.epam.webpoject.ezmusic.command;
 
-import by.epam.webpoject.ezmusic.command.impl.*;
+import by.epam.webpoject.ezmusic.command.impl.ChangeLocaleCommand;
+import by.epam.webpoject.ezmusic.command.impl.GoHomeCommand;
+import by.epam.webpoject.ezmusic.command.impl.LogoutCommand;
 import by.epam.webpoject.ezmusic.command.impl.album.*;
-import by.epam.webpoject.ezmusic.command.impl.album.FindAuthorAlbumsJsonCommand;
-import by.epam.webpoject.ezmusic.command.impl.author.FindAllAuthorsCommand;
+import by.epam.webpoject.ezmusic.command.impl.author.*;
 import by.epam.webpoject.ezmusic.command.impl.song.*;
 import by.epam.webpoject.ezmusic.command.impl.user.*;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
@@ -33,7 +34,7 @@ public class CommandManager {
         availableCommands.put(CommandName.CREATE_SONG, new CreateSongCommand());
         availableCommands.put(CommandName.UPDATE_SONG, new UpdateSongCommand());
         availableCommands.put(CommandName.DELETE_SONG, new DeleteSongCommand());
-        availableCommands.put(CommandName.CREATE_ALBUM, new CreateAlbumCommnd());
+        availableCommands.put(CommandName.CREATE_ALBUM, new CreateAlbumCommand());
         availableCommands.put(CommandName.UPDATE_ALBUM, new UpdateAlbumCommand());
         availableCommands.put(CommandName.DELETE_ALBUM, new DeleteAlbumCommand());
         availableCommands.put(CommandName.FIND_ALL_ALBUMS, new FindAllAlbumsCommand());
@@ -43,6 +44,10 @@ public class CommandManager {
         availableCommands.put(CommandName.FIND_AUTHOR_SONGS_JSON, new FindAuthorSongsJsonCommand());
         availableCommands.put(CommandName.FIND_ALL_AUTHORS, new FindAllAuthorsCommand());
         availableCommands.put(CommandName.FIND_AUTHOR_FOR_CREATE, new FindAuthorForCreateCommand());
+        availableCommands.put(CommandName.FIND_ALBUM_SONGS_JSON, new FindAlbumSongsJsonCommand());
+        availableCommands.put(CommandName.CREATE_AUTHOR, new CreateAuthorCommand());
+        availableCommands.put(CommandName.UPDATE_AUTHOR, new UpdateAuthorCommand());
+        availableCommands.put(CommandName.FIND_AUTHOR_FOR_UPDATE, new FindAuthorForUpdateCommand());
     }
 
     public static Command getCommand(String commandName) throws CommandException {

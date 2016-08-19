@@ -15,4 +15,5 @@ public class JspPageName {
     public static final String ADMING_ALL_ALBUMS = "jsp/admin/admin_all_albums.jsp";
     public static final String ADMIN_EDIT_ALBUM = "jsp/admin/admin_edit_album.jsp";
     public static final String ADMIN_ALL_AUTHORS = "jsp/admin/admin_all_authors.jsp";
+    public static final String ADMIN_EDIT_AUTHOR = "jsp/admin/admin_edit_author.jsp";
 }

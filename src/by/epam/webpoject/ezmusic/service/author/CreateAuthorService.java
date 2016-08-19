@@ -10,12 +10,24 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
  * Created by Антон on 15.08.2016.
  */
 public class CreateAuthorService {
-    public static Long create(Author instance) throws ServiceException {
+    public static Long create(Author instance, Long[] albumIds, Long[] songIds) throws ServiceException {
         AuthorDAO dao = (AuthorDAO) DAOFactory.createAuthorDAO();
+        Long generatedId = null;
         try {
-            return dao.create(instance);
+            generatedId = dao.create(instance);
+            if(albumIds != null){
+                for(Long albumId:albumIds){
+                    dao.createAuthorAlbum(generatedId, albumId);
+                }
+            }
+            if(songIds != null){
+                for(Long songId:songIds){
+                    dao.createAuthorAlbum(generatedId, songId);
+                }
+            }
         } catch (DAOException e) {
             throw new ServiceException("Creating author error", e);
         }
+        return generatedId;
     }
 }

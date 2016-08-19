@@ -26,6 +26,10 @@ public class MySqlAuthorDAO extends AuthorDAO {
     private static final String FIND_ALL_AUTHORS_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author";
     private static final String FIND_AUTHOR_BY_SONG_ID_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author AS a INNER JOIN ezmusicdb.author_song AS a_s ON a.author_id = a_s.id_author WHERE a_s.id_song = ?";
     private static final String FIND_AUTHOR_BY_ALBUM_ID_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author as a INNER JOIN ezmusicdb.album_author as a_a ON a.author_id = a_a.id_author WHERE a_a.id_album = ?";
+    private static final String INSERT_AUTHOR_ALBUM_QUERY = "INSERT INTO ezmusicdb.album_author (id_author, id_album) VALUES (?, ?)";
+    private static final String INSERT_AUTHOR_SONG_QUERY = "INSERT INTO ezmusicdb.author_song (id_author, id_song) VALUES (?, ?)";
+    private static final String DELETE_AUTHOR_ALBUM_QUERY = "DELETE FROM ezmusicdb.album_author WHERE id_author = ?";
+    private static final String DELETE_AUTHOR_SONG_QUERY = "DELETE FROM ezmusicdb.author_song WHERE id_author = ?";
 
     private MySqlAuthorDAO(){}
 
@@ -104,6 +108,10 @@ public class MySqlAuthorDAO extends AuthorDAO {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(UPDATE_AUTHOR_QUERY);
+            statement.setString(1, instance.getName());
+            statement.setString(2, instance.getCountry());
+            statement.setString(3, instance.getPhotoPath());
+            statement.setLong(4, instance.getAuthorId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Updating author error", e);
@@ -191,5 +199,83 @@ public class MySqlAuthorDAO extends AuthorDAO {
             connection.close();
         }
         return authorList;
+    }
+
+    @Override
+    public Long createAuthorAlbum(Long authorId, Long albumId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        Long generateId = null;
+        try{
+            statement = connection.prepareStatement(INSERT_AUTHOR_ALBUM_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, authorId);
+            statement.setLong(2, albumId);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if(resultSet.next()){
+               generateId = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Creating author album error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return generateId;
+    }
+
+    @Override
+    public Long createAuthorSong(Long authorId, Long songId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        Long generateId = null;
+        try{
+            statement = connection.prepareStatement(INSERT_AUTHOR_SONG_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, authorId);
+            statement.setLong(2, songId);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if(resultSet.next()){
+                generateId = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Creating author song error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return generateId;
+    }
+
+    @Override
+    public void deleteAuthorAlbum(Long authorId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try{
+            statement = connection.prepareStatement(DELETE_AUTHOR_ALBUM_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, authorId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Deleting author album error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+    }
+
+    @Override
+    public void deleteAuthorSong(Long authorId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try{
+            statement = connection.prepareStatement(DELETE_AUTHOR_SONG_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, authorId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Deleting author album error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
     }
 }
