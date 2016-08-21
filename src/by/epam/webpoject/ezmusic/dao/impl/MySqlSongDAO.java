@@ -16,8 +16,6 @@ import java.util.ArrayList;
  * Created by Антон on 04.08.2016.
  */
 public class MySqlSongDAO extends SongDAO {
-
-    private static final MySqlSongDAO instance = new MySqlSongDAO();
     private static final String CREATE_SONG_QUERY = "INSERT INTO ezmusicdb.song (song_name, song_year, song_file_path, song_publication_date, song_cost) VALUES (?, ?, ?, ?, ?)";
     private static final String FIND_SONG_QUERY = "SELECT song_id, song_name, song_year, song_file_path, song_publication_date, song_cost FROM ezmusicdb.song WHERE song_id = ?";
     private static final String DELETE_SONG_QUERY = "DELETE FROM ezmusicdb.song WHERE song_id = ?";
@@ -31,7 +29,7 @@ public class MySqlSongDAO extends SongDAO {
     private static final String DELETE_SONG_ALBUM_QUERY = "DELETE FROM ezmusicdb.album_song WHERE id_song = ?";
     private static final String DELETE_SONG_AUTHOR_QUERY = "DELETE FROM ezmusicdb.author_song WHERE id_song = ?";
 
-
+    private static final MySqlSongDAO instance = new MySqlSongDAO();
 
     private MySqlSongDAO() {
     }
