@@ -6,7 +6,9 @@ import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
+import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.service.song.FindSongByAlbumIdService;
+import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +21,22 @@ import java.util.Set;
 public class FindAlbumSongsJsonCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        Long[] albumIds = ParameterParser.parseLongArray(request.getParameterValues(RequestParameter.SELECTED_ALBUMS + "[]"));
         Set<Song> albumSongs = new HashSet<>();
-        try {
-            for (Long albumId: albumIds) {
-                albumSongs.addAll(FindSongByAlbumIdService.find(albumId));
+        String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS + "[]");
+        boolean isValidRequest = SongParametersValidator.validateFindJsonParameters(albumIds);
+        if(isValidRequest) {
+            try {
+                Long[] longAlbumIds = ParameterParser.parseLongArray(albumIds);
+                if (albumIds == null) {
+                    albumSongs.addAll(FindAllSongsService.find());
+                } else {
+                    for (Long albumId : longAlbumIds) {
+                        albumSongs.addAll(FindSongByAlbumIdService.find(albumId));
+                    }
+                }
+            } catch (ServiceException e) {
+                throw new CommandException("Find album songs command exception", e);
             }
-        }catch (ServiceException e) {
-            throw new CommandException("Finding author albums error", e);
         }
         return new Gson().toJson(albumSongs);
     }

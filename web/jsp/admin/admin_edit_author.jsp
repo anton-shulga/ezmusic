@@ -65,7 +65,7 @@
             </div>
             <div class="input-field col s12">
                 <input type="text" name="author_country" value="${author.country}">
-                <label>Counrty</label>
+                <label>Country</label>
             </div>
             <div class="input-field col s12">
                 <select multiple class="icons" id="id-albums" name="selected_albums">
@@ -88,8 +88,8 @@
                     <option value="" disabled selected>Select songs</option>
                     <c:forEach items="${requestScope.all_songs}" var="item">
                         <c:choose>
-                            <c:when test="${fn:contains(auhtor_songs, item)}">
-                                <option value="${item.songId}" selected>${item.name}</option>
+                            <c:when test="${fn:contains(author_songs, item)}">
+                                <option value="${item.songId}" selected >${item.name}</option>
                             </c:when>
                             <c:otherwise>
                                 <option value="${item.songId}">${item.name}</option>

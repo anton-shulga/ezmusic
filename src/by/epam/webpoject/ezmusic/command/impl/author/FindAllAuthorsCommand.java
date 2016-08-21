@@ -22,13 +22,13 @@ public class FindAllAuthorsCommand implements Command {
         try {
             allAuthors = FindAllAuthorsService.find();
         } catch (ServiceException e) {
-            throw new CommandException("Finding authors error", e);
+            throw new CommandException("Find authors command error", e);
         }
         if(allAuthors != null){
             request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
             page = JspPageName.ADMIN_ALL_AUTHORS;
         }else {
-            page = JspPageName.ERROR;
+            page = JspPageName.ADMIN_HOME;
         }
         return page;
     }

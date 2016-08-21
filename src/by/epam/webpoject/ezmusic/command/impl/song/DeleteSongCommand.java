@@ -8,7 +8,7 @@ import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.service.song.DeleteSongService;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
-import by.epam.webpoject.ezmusic.validator.DeleteSongRequestValidator;
+import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -19,18 +19,21 @@ import java.util.ArrayList;
 public class DeleteSongCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+        String page = null;
         String songId = request.getParameter(RequestParameter.SONG_ID);
-        boolean isValidRequest = DeleteSongRequestValidator.validate(songId);
+        boolean isValidRequest = SongParametersValidator.validateDeleteParameters(songId);
         if(isValidRequest){
             try {
                 DeleteSongService.delete(Long.parseLong(songId));
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
-                return JspPageName.ADMIN_ALL_SONGS;
+                page = JspPageName.ADMIN_ALL_SONGS;
             } catch (ServiceException e) {
-                throw new CommandException("Deleting song error", e);
+                throw new CommandException("Delete song command exception", e);
             }
+        }else {
+            page = JspPageName.ADMIN_HOME;
         }
-        return JspPageName.ERROR;
+        return page;
     }
 }

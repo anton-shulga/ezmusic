@@ -15,11 +15,15 @@ public class CreateAlbumService {
         AlbumDAO dao = (AlbumDAO) DAOFactory.createAlbumDAO();
         try {
             generatedId =  dao.create(instance);
-            for(Long songId : songIds){
-                dao.createAlbumSong(generatedId, songId);
+            if(songIds != null) {
+                for (Long songId : songIds) {
+                    dao.createAlbumSong(generatedId, songId);
+                }
             }
-            for (Long authorId : authorIds){
-                dao.createAlbumAuthor(generatedId, authorId);
+            if(authorIds != null) {
+                for (Long authorId : authorIds) {
+                    dao.createAlbumAuthor(generatedId, authorId);
+                }
             }
         } catch (DAOException e) {
             throw new ServiceException("Creating album error", e);

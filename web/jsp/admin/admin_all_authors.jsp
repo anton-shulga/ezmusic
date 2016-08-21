@@ -37,7 +37,7 @@
                                 <div style="float: right">
                                     <form action="${pageContext.request.contextPath}/controller" method="POST">
                                         <input type="hidden" name="command" value="delete_author">
-                                        <input type="hidden" name="author_id" value="${auhtor.authorId}">
+                                        <input type="hidden" name="author_id" value="${author.authorId}">
                                         <button class="waves-effect waves-light btn red" type="submit">Del</button>
                                     </form>
                                 </div>

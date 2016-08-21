@@ -22,13 +22,13 @@ public class FindAllAlbumsCommand implements Command {
         try {
             allAlbums = FindAllAlbumsService.find();
         } catch (ServiceException e) {
-            throw new CommandException("Finding albums error", e);
+            throw new CommandException("Find albums command exception", e);
         }
         if (allAlbums != null) {
             request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
             page = JspPageName.ADMING_ALL_ALBUMS;
         }else {
-            page = JspPageName.ERROR;
+            page = JspPageName.ADMIN_HOME;
         }
         return page;
     }

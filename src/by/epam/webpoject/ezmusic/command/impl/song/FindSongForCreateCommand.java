@@ -19,16 +19,22 @@ import java.util.ArrayList;
 public class FindSongForCreateCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        ArrayList<Album> albumList = null;
-        ArrayList<Author> authorList = null;
+        String page = null;
+        ArrayList<Album> allAlbums = null;
+        ArrayList<Author> allAuthors = null;
             try {
-                albumList = FindAllAlbumsService.find();
-                authorList = FindAllAuthorsService.find();
-                request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
-                request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
-                return JspPageName.ADMIN_EDIT_SONG;
+                allAlbums = FindAllAlbumsService.find();
+                allAuthors = FindAllAuthorsService.find();
             } catch (ServiceException e) {
-                throw new CommandException("Finding song error", e);
+                throw new CommandException("Find songs command exception", e);
             }
+            if(allAlbums != null && allAuthors != null){
+                request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+                request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                page = JspPageName.ADMIN_EDIT_SONG;
+            }else {
+                page = JspPageName.ADMIN_HOME;
+            }
+            return page;
     }
 }

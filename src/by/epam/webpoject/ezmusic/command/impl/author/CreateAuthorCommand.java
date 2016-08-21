@@ -9,6 +9,7 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.author.CreateAuthorService;
 import by.epam.webpoject.ezmusic.service.author.FindAllAuthorsService;
+import by.epam.webpoject.ezmusic.validator.AuthorParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -21,24 +22,31 @@ public class CreateAuthorCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
         Long generatedId = null;
-        Long[] albumIds = ParameterParser.parseLongArray(request.getParameterValues(RequestParameter.SELECTED_ALBUMS));
-        Long[] songIds = ParameterParser.parseLongArray(request.getParameterValues(RequestParameter.SELECTED_SONGS));
+        String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
+        String[] songIds = request.getParameterValues(RequestParameter.SELECTED_SONGS);
         String name = request.getParameter(RequestParameter.AUTHOR_NAME);
         String country = request.getParameter(RequestParameter.AUTHOR_COUNTRY);
         String photoPath = request.getParameter(RequestParameter.AUTHOR_PHOTO_PATH);
-        Author author = new Author();
-        author.setName(name);
-        author.setCountry(country);
-        author.setPhotoPath(photoPath);
-        try {
-            generatedId = CreateAuthorService.create(author, albumIds, songIds);
-            if(generatedId != null){
-                ArrayList<Author> allAuthors = FindAllAuthorsService.find();
-                request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-                page = JspPageName.ADMIN_ALL_AUTHORS;
+        boolean isValidRequest = AuthorParametersValidator.validateCreateParameters(albumIds, songIds, name, country, photoPath);
+        if(isValidRequest) {
+            Author author = new Author();
+            author.setName(name);
+            author.setCountry(country);
+            author.setPhotoPath(photoPath);
+            try {
+                generatedId = CreateAuthorService.create(author, ParameterParser.parseLongArray(albumIds), ParameterParser.parseLongArray(songIds));
+                if (generatedId != null) {
+                    ArrayList<Author> allAuthors = FindAllAuthorsService.find();
+                    request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                    page = JspPageName.ADMIN_ALL_AUTHORS;
+                }else {
+                    page = JspPageName.ADMIN_HOME;
+                }
+            } catch (ServiceException e) {
+                throw new CommandException("Create author command error", e);
             }
-        } catch (ServiceException e) {
-            throw new CommandException("Creating author error", e);
+        }else {
+            page = JspPageName.ERROR;
         }
         return page;
 

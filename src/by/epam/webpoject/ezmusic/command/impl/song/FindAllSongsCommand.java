@@ -17,17 +17,18 @@ import java.util.ArrayList;
 public class FindAllSongsCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+        String page = null;
         ArrayList<Song> songList = null;
         try {
             songList = FindAllSongsService.find();
         } catch (ServiceException e) {
-            throw new CommandException("Finding song error", e);
+            throw new CommandException("Find songs command error", e);
         }
         if(songList != null ){
             request.setAttribute(RequestParameter.ALL_SONGS, songList);
             return JspPageName.ADMIN_ALL_SONGS;
         }else {
-            return JspPageName.ERROR;
+            return JspPageName.ADMIN_HOME;
         }
     }
 }

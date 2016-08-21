@@ -7,6 +7,7 @@ import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.album.FindAlbumByAuthorIdService;
+import by.epam.webpoject.ezmusic.validator.AlbumParametersValidator;
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +20,18 @@ import java.util.Set;
 public class FindAuthorAlbumsJsonCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        Long[] authorIds = ParameterParser.parseLongArray(request.getParameterValues(RequestParameter.SELECTED_AUTHORS + "[]"));
+        String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS + "[]");
         Set<Album> authorAlbums = new HashSet<>();
-        try {
-            for (Long authorId: authorIds) {
-                authorAlbums.addAll(FindAlbumByAuthorIdService.find(authorId));
+        boolean isValidRequest = AlbumParametersValidator.validateFindJsonParameters(authorIds);
+        if(isValidRequest) {
+            Long[] longAuthorIds = ParameterParser.parseLongArray(authorIds);
+            try {
+                for (Long authorId : longAuthorIds) {
+                    authorAlbums.addAll(FindAlbumByAuthorIdService.find(authorId));
+                }
+            } catch (ServiceException e) {
+                throw new CommandException("Find author albums command exception", e);
             }
-        }catch (ServiceException e) {
-            throw new CommandException("Finding author albums error", e);
         }
         return new Gson().toJson(authorAlbums);
     }

@@ -48,6 +48,7 @@ public class CommandManager {
         availableCommands.put(CommandName.CREATE_AUTHOR, new CreateAuthorCommand());
         availableCommands.put(CommandName.UPDATE_AUTHOR, new UpdateAuthorCommand());
         availableCommands.put(CommandName.FIND_AUTHOR_FOR_UPDATE, new FindAuthorForUpdateCommand());
+        availableCommands.put(CommandName.DELETE_AUTHOR, new DeleteAuthorCommand());
     }
 
     public static Command getCommand(String commandName) throws CommandException {

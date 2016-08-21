@@ -9,7 +9,7 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.service.song.UpdateSongService;
-import by.epam.webpoject.ezmusic.validator.CreateSongRequestValidator;
+import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
@@ -22,17 +22,16 @@ public class UpdateSongCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
-
         String songId = request.getParameter(RequestParameter.SONG_ID);
-        String[] selectedAlbumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
-        String[] selectedAuthorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
+        String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
+        String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
         String name = request.getParameter(RequestParameter.SONG_NAME);
         String year = request.getParameter(RequestParameter.SONG_YEAR);
         String filePath = request.getParameter(RequestParameter.SONG_FILE_PATH);
         String publicationDate = request.getParameter(RequestParameter.SONG_PUBLICATION_DATE);
         String cost = request.getParameter(RequestParameter.SONG_COST);
 
-        boolean isValidRequest = CreateSongRequestValidator.validate(name, year, filePath, publicationDate, cost);
+        boolean isValidRequest = SongParametersValidator.validateUpdateParameters(albumIds, authorIds, songId, name, year, filePath, publicationDate, cost);
         if(isValidRequest) {
             Song song = new Song();
             song.setSongId(Long.parseLong(songId));
@@ -42,16 +41,16 @@ public class UpdateSongCommand implements Command {
             song.setPublicationDate(Date.valueOf(publicationDate));
             song.setCost(Double.parseDouble(cost));
             try {
-                UpdateSongService.update(song, ParameterParser.parseLongArray(selectedAlbumIds),  ParameterParser.parseLongArray(selectedAuthorIds));
+                UpdateSongService.update(song, ParameterParser.parseLongArray(albumIds),  ParameterParser.parseLongArray(authorIds));
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 page = JspPageName.ADMIN_ALL_SONGS;
             } catch (ServiceException e) {
-                throw new CommandException("Updating song error", e);
+                throw new CommandException("Update song command exception", e);
             }
         }
         else {
-            page = JspPageName.ADMIN_EDIT_SONG;
+            page = JspPageName.ADMIN_HOME;
         }
         return page;
     }

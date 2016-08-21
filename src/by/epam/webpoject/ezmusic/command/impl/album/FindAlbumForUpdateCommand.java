@@ -14,6 +14,7 @@ import by.epam.webpoject.ezmusic.service.author.FindAllAuthorsService;
 import by.epam.webpoject.ezmusic.service.author.FindAuthorByAlbumIdService;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.service.song.FindSongByAlbumIdService;
+import by.epam.webpoject.ezmusic.validator.AlbumParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -30,23 +31,32 @@ public class FindAlbumForUpdateCommand implements Command {
         ArrayList<Song> allSongs = null;
         ArrayList<Author> albumAuthors = null;
         ArrayList<Song> albumSongs = null;
-        Long albumId = ParameterParser.parseLong(request.getParameter(RequestParameter.ALBUM_ID));
-        try {
-            album = FindAlbumByIdService.find(albumId);
-            allAuthors = FindAllAuthorsService.find();
-            allSongs = FindAllSongsService.find();
-            albumSongs = FindSongByAlbumIdService.find(albumId);
-            albumAuthors = FindAuthorByAlbumIdService.find(albumId);
-        } catch (ServiceException e) {
-            throw new CommandException("Finding album error", e);
-        }
-        if(album != null && allAuthors != null && allSongs != null){
-            request.setAttribute(RequestParameter.ALBUM, album);
-            request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-            request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
-            request.setAttribute(RequestParameter.ALBUM_AUTHORS, albumAuthors);
-            request.setAttribute(RequestParameter.ALBUM_SONGS, albumSongs);
-            page = JspPageName.ADMIN_EDIT_ALBUM;
+        String albumId = request.getParameter(RequestParameter.ALBUM_ID);
+        boolean isValidRequest = AlbumParametersValidator.validateFindParameters(albumId);
+        if(isValidRequest) {
+            try {
+                Long longAlbumId = ParameterParser.parseLong(albumId);
+                album = FindAlbumByIdService.find(longAlbumId);
+                allAuthors = FindAllAuthorsService.find();
+                allSongs = FindAllSongsService.find();
+                albumSongs = FindSongByAlbumIdService.find(longAlbumId);
+                albumAuthors = FindAuthorByAlbumIdService.find(longAlbumId);
+            } catch (ServiceException e) {
+                throw new CommandException("Find album command exception", e);
+            }
+            if (album != null && allAuthors != null && allSongs != null && albumAuthors != null && albumSongs != null) {
+                request.setAttribute(RequestParameter.ALBUM, album);
+                request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
+                request.setAttribute(RequestParameter.ALBUM_AUTHORS, albumAuthors);
+                request.setAttribute(RequestParameter.ALBUM_SONGS, albumSongs);
+                page = JspPageName.ADMIN_EDIT_ALBUM;
+            }else {
+                page = JspPageName.ADMIN_HOME;
+            }
+
+        }else {
+            page = JspPageName.ADMIN_HOME;
         }
         return page;
 

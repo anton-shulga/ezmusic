@@ -9,6 +9,7 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.album.DeleteAlbumService;
 import by.epam.webpoject.ezmusic.service.album.FindAllAlbumsService;
+import by.epam.webpoject.ezmusic.validator.AlbumParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -19,15 +20,20 @@ import java.util.ArrayList;
 public class DeleteAlbumCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+        String  page = null;
         String albumId = request.getParameter(RequestParameter.ALBUM_ID);
-        String page = null;
-        try {
-            DeleteAlbumService.delete(ParameterParser.parseLong(albumId));
-            ArrayList<Album> allAlbums = FindAllAlbumsService.find();
-            request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
-            page = JspPageName.ADMING_ALL_ALBUMS;
-        } catch (ServiceException e) {
-            throw new CommandException("Deleting album error", e);
+        boolean isValidRequest = AlbumParametersValidator.validateDeleteParameters(albumId);
+        if(isValidRequest) {
+            try {
+                DeleteAlbumService.delete(ParameterParser.parseLong(albumId));
+                ArrayList<Album> allAlbums = FindAllAlbumsService.find();
+                request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+                page = JspPageName.ADMING_ALL_ALBUMS;
+            } catch (ServiceException e) {
+                throw new CommandException("Delete album command exception", e);
+            }
+        }else {
+            page = JspPageName.ERROR;
         }
         return page;
     }

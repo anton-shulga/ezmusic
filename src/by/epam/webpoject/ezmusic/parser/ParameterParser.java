@@ -4,6 +4,9 @@ package by.epam.webpoject.ezmusic.parser;
  * Created by Антон on 17.08.2016.
  */
 public class ParameterParser {
+    public static Double parseDouble(String value){
+        return Double.parseDouble(value);
+    }
     public static Long parseLong(String value){
         return Long.parseLong(value);
     }
