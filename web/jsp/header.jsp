@@ -20,22 +20,32 @@
     <meta charset="utf-8">
 </head>
 <body>
-<nav class="nav-wrapper cyan darken-4">
-    <a href="#" class="brand-logo">EZMusic</a>
-    <c:if test="${empty sessionScope.user }">
-        <div class="row right">
-            <a href="${pageContext.request.contextPath}/jsp/login.jsp" class="waves-effect waves-light btn  green accent-4"><fmt:message key="button.sign_in"/></a>
-            <a href="${pageContext.request.contextPath}/jsp/register.jsp" class="waves-effect waves-light btn  green accent-4"><fmt:message key="button.sign_up"/></a>
-        </div>
-    </c:if>
-    <c:if test="${not empty sessionScope.user}">
-        <div class="row right">
+<header>
+<nav class="nav-wrapper teal">
+    <a href="#" class="brand-logo center">EZMusic</a>
+    <ul class="right hide-on-med-and-down">
+        <c:if test="${empty sessionScope.user }">
+            <li>
+                <form action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="to_login"/>
+                    <button class="btn waves-effect waves-light green accent-4" type="submit"><fmt:message key="button.sign_in"/></button>
+                </form>
+            </li>
+            <li>
+                <form action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="to_register"/>
+                    <button class="waves-effect waves-light btn  green accent-4" type="submit"><fmt:message key="button.sign_up"/></button>
+                </form>
+            </li>
+        </c:if>
+        <c:if test="${not empty sessionScope.user }">
             <form action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="logout"/>
                 <button class="waves-effect waves-light btn  green accent-4" type="submit">Logout</button>
             </form>
-        </div>
-    </c:if>
+        </c:if>
+    </ul>
 </nav>
+</header>
 </body>
 </html>

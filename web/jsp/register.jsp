@@ -13,11 +13,63 @@
     <link type="text/css" rel="stylesheet" href="../css/styles.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/bin/materialize.min.js"></script>
+
+    <script>
+        $( document ).ready(function(){
+            $(".button-collapse").sideNav();
+            $('select').material_select();
+
+            $('.datepicker').pickadate({
+                selectMonths: true,
+                selectYears: 15
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $("#id-user-login").on("change",function() {
+            var login = $(this).val();
+            if(login.length > 3) {
+                $(".status").html("Checking availability...");
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.request.contextPath}/LoginAvailabilityController",
+                    data: "user_login=" + login + "&" +
+                    "command=" + "check_login_availability",
+                    success: function(msg) {
+                        Materialize.toast(msg, 4000);
+                    }
+                });
+            }
+            else {
+                Materialize.toast("Login must be longer than three characters", 4000);
+            }
+        });
+    </script>
+    <script>
+        var password = document.getElementById("id-user-password");
+        var confirm_password = document.getElementById("id-password-confirm");
+
+        function validatePassword(){
+            if(password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords don't match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onchange = validatePassword;
+    </script>
 </head>
 
 <body>
+<main>
+    <c:import url="header.jsp"/>
+    <c:import url="common_navbar.jsp"/>
 <div class="wrapper">
-   <c:import url="header.jsp"/>
+
 
     <div class="container col s6" >
         <div class="card s6">
@@ -96,60 +148,8 @@
         </div>
     </c:if>
 </div> <!-- End wrapper-->
-
-
-
+</main>
 <c:import url="footer.jsp"/>
 
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="../js/bin/materialize.min.js"></script>
-
-<script>
-    $( document ).ready(function(){
-        $(".button-collapse").sideNav();
-        $('select').material_select();
-
-        $('.datepicker').pickadate({
-            selectMonths: true,
-            selectYears: 15
-        });
-    });
-</script>
-<script type="text/javascript">
-        $("#id-user-login").on("change",function() {
-            var login = $(this).val();
-            if(login.length > 3) {
-                $(".status").html("Checking availability...");
-                $.ajax({
-                    type: "POST",
-                    url: "${pageContext.request.contextPath}/LoginAvailabilityController",
-                    data: "user_login=" + login + "&" +
-                    "command=" + "check_login_availability",
-                    success: function(msg) {
-                        Materialize.toast(msg, 4000);
-                    }
-                });
-            }
-            else {
-                Materialize.toast("Login must be longer than three characters", 4000);
-            }
-        });
-</script>
-<script>
-    var password = document.getElementById("id-user-password");
-    var confirm_password = document.getElementById("id-password-confirm");
-
-    function validatePassword(){
-        if(password.value != confirm_password.value) {
-            confirm_password.setCustomValidity("Passwords don't match");
-        } else {
-            confirm_password.setCustomValidity('');
-        }
-    }
-
-    password.onchange = validatePassword;
-    confirm_password.onchange = validatePassword;
-</script>
 </body>
 </html>

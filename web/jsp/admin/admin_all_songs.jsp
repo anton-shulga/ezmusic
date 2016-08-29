@@ -16,48 +16,63 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
-    <div class="wrapper">
-        <c:import url="../header.jsp"/>
-        <div class="container">
-            <div class="card">
-                <ul class="collection">
-                    <c:forEach items="${requestScope.all_songs}" var="song">
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle red">play_arrow</i>
-                            <span class="title">${song.name}</span>
-                            <p>${song.year}<br>
-                                ${song.publicationDate}
-                            </p>
-                            <div class="secondary-content">
-                                <div style="float: left">
-                                    <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                        <input type="hidden" name="command" value="find_song_for_update">
-                                        <input type="hidden" name="song_id" value="${song.songId}">
-                                        <button class="waves-effect waves-light btn  green accent-4" type="submit">Edit</button>
-                                    </form>
-                                </div>
-                                <div style="float: right">
-                                    <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                        <input type="hidden" name="command" value="delete_song">
-                                        <input type="hidden" name="song_id" value="${song.songId}">
-                                        <button class="waves-effect waves-light btn red" type="submit">Del</button>
-                                    </form>
-                                </div>
+    <c:import url="../header.jsp"/>
+    <c:import url="admin_navbar.jsp"/>
+    <main>
+        <div class="wrapper">
+            <div class="container">
 
-                            </div>
+                    <ul class="collection">
+                        <c:forEach items="${requestScope.all_songs}" var="song">
+                            <li class="collection-item avatar">
+                                <i class="material-icons circle red">play_arrow</i>
+                                <span class="title"><b>Name: </b>${song.name}</span>
+                                <p>
+                                    <b>Authors:</b>
+                                    <c:forEach items="${song.authorList}" var="author">
+                                        ${author.name};
+                                    </c:forEach><br>
+                                    <b>Albums :</b>
+                                    <c:forEach items="${song.albumList}" var="album">
+                                        ${album.name};
+                                    </c:forEach>
+                                </p>
+                                <div class="secondary-content">
+                                    <div style="float: left">
+                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                            <input type="hidden" name="command" value="find_song_for_update">
+                                            <input type="hidden" name="song_id" value="${song.songId}">
+                                            <button class="waves-effect waves-circle waves-light btn-floating green accent-4" type="submit">
+                                                <i class="material-icons">mode_edit</i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div style="float: right">
+                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                            <input type="hidden" name="command" value="delete_song">
+                                            <input type="hidden" name="song_id" value="${song.songId}">
+                                            <button class="waves-effect waves-circle waves-light btn-floating red" type="submit">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </li>
+                        </c:forEach>
+                        <li class="collection-item right">
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <input type="hidden" name="command" value="find_song_for_create">
+                                <button class="waves-effect waves-circle waves-light btn-floating green accent-4" type="submit">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </form>
                         </li>
-                    </c:forEach>
-                    <li class="collection-item right">
-                        <form action="${pageContext.request.contextPath}/controller" method="POST">
-                            <input type="hidden" name="command" value="find_song_for_create">
-                            <button class="waves-effect waves-light btn  green accent-4" type="submit">Create new song</button>
-                        </form>
-                    </li>
-                </ul>
+                    </ul>
             </div>
+            <c:import url="../footer.jsp"/>
         </div>
-    </div>
-    <c:import url="../footer.jsp"/>
+    </main>
 
 </body>
 </html>

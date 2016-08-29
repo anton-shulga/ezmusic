@@ -18,6 +18,7 @@ public abstract class SongDAO implements AbstractDAO<Song, Long> {
     public abstract ArrayList<Song> findByUserId(Long userId) throws DAOException;
     public abstract ArrayList<Song> findByAlbumId(Long albumId) throws DAOException;
     public abstract ArrayList<Song> findByAuthorId(Long authorId) throws DAOException;
+    public abstract ArrayList<Song> findByOrderId(Long orderId) throws DAOException;
     public abstract ArrayList<Song> findAll() throws DAOException;
     public abstract boolean createSongAlbum(Long songId, Long albumId) throws DAOException;
     public abstract boolean createSongAuthor(Long songId, Long authorId) throws DAOException;

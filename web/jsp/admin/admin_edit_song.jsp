@@ -52,10 +52,12 @@
     </script>
 </head>
 <body>
+<c:import url="../header.jsp"/>
+<c:import url="admin_navbar.jsp"/>
+<main>
 <div class="wrapper">
-    <c:import url="../header.jsp"/>
     <div class="container">
-
+        <div class="card">
             <form action="${pageContext.request.contextPath}/controller" method="POST">
                 <c:if test="${not empty song}">
                     <input type="hidden" name="command" value="update_song">
@@ -124,11 +126,12 @@
 
                 <button class="btn" type="submit">Save changes</button>
             </form>
-
+        </div>
     </div>
-
+    <c:import url="/jsp/footer.jsp"/>
 </div>
-<c:import url="/jsp/footer.jsp"/>
+</main>
+
 
 </body>
 </html>

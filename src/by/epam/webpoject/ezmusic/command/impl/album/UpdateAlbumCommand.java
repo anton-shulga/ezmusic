@@ -38,7 +38,7 @@ public class UpdateAlbumCommand implements Command {
                 UpdateAlbumService.update(album, ParameterParser.parseLongArray(songIds), ParameterParser.parseLongArray(authorIds));
                 ArrayList<Album> albumList = FindAllAlbumsService.find();
                 request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
-                page = JspPageName.ADMING_ALL_ALBUMS;
+                page = JspPageName.ADMIN_ALL_ALBUMS;
             } catch (ServiceException e) {
                 throw new CommandException("Update album command exception", e);
             }

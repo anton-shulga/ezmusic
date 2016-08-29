@@ -3,6 +3,8 @@ package by.epam.webpoject.ezmusic.command.impl.song;
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
+import by.epam.webpoject.ezmusic.entity.Album;
+import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
@@ -40,8 +42,28 @@ public class UpdateSongCommand implements Command {
             song.setFilePath(filePath);
             song.setPublicationDate(Date.valueOf(publicationDate));
             song.setCost(Double.parseDouble(cost));
+            if(albumIds != null) {
+                Album album = null;
+                ArrayList<Album> albums = new ArrayList<>();
+                for (Long albumId : ParameterParser.parseLongArray(albumIds)) {
+                    album = new Album();
+                    album.setAlbumId(albumId);
+                    albums.add(album);
+                }
+                song.setAlbumList(albums);
+            }
+            if(authorIds != null) {
+                Author author = null;
+                ArrayList<Author> authors = new ArrayList<>();
+                for (Long authorId : ParameterParser.parseLongArray(authorIds)) {
+                    author = new Author();
+                    author.setAuthorId(authorId);
+                    authors.add(author);
+                }
+                song.setAuthorList(authors);
+            }
             try {
-                UpdateSongService.update(song, ParameterParser.parseLongArray(albumIds),  ParameterParser.parseLongArray(authorIds));
+                UpdateSongService.update(song);
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 page = JspPageName.ADMIN_ALL_SONGS;

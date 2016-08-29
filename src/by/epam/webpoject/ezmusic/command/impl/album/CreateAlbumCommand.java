@@ -38,7 +38,7 @@ public class CreateAlbumCommand implements Command{
                 if (generatedId != null) {
                     ArrayList<Album> albumList = FindAllAlbumsService.find();
                     request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
-                    page = JspPageName.ADMING_ALL_ALBUMS;
+                    page = JspPageName.ADMIN_ALL_ALBUMS;
                 } else {
                     page = JspPageName.ADMIN_EDIT_ALBUM;
                 }

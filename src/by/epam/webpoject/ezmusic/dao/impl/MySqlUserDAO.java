@@ -46,7 +46,7 @@ public class MySqlUserDAO extends UserDAO {
                 statement.setString(6, instance.getPhone());
                 statement.setString(7, instance.getPhotoPath());
                 statement.setDouble(8, instance.getBalance());
-                statement.setBoolean(9, instance.isAdmin());
+                statement.setBoolean(9, instance.getIsAdmin());
                 statement.setBoolean(10, instance.isBanned());
                 statement.executeUpdate();
                 ResultSet resultSet = statement.getGeneratedKeys();
@@ -124,7 +124,7 @@ public class MySqlUserDAO extends UserDAO {
             statement.setString(6, instance.getPhone());
             statement.setString(7, instance.getPhotoPath());
             statement.setDouble(8, instance.getBalance());
-            statement.setBoolean(9, instance.isAdmin());
+            statement.setBoolean(9, instance.getIsAdmin());
             statement.setBoolean(10, instance.isBanned());
             statement.setLong(11, instance.getUserId());
             statement.executeUpdate();

@@ -20,7 +20,7 @@ import java.util.Set;
 public class FindAuthorSongsJsonCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        String[] authorIds =request.getParameterValues(RequestParameter.SELECTED_AUTHORS + "[]");
+        String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS + "[]");
         Set<Song> authorSongs = new HashSet<>();
         boolean isValidRequest = SongParametersValidator.validateFindJsonParameters(authorIds);
         if(isValidRequest) {

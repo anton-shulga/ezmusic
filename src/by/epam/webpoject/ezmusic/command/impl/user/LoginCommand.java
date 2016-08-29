@@ -31,7 +31,7 @@ public class LoginCommand implements Command {
 
         if(user != null) {
             request.getSession(true).setAttribute(RequestParameter.USER, user);
-            if(user.isAdmin()){
+            if(user.getIsAdmin()){
                 return JspPageName.ADMIN_HOME;
             }else {
                 return JspPageName.USER_HOME;

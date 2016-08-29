@@ -1,6 +1,7 @@
 package by.epam.webpoject.ezmusic.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 
 /**
@@ -13,6 +14,8 @@ public class Song {
     private double cost;
     private String filePath;
     private Date publicationDate;
+    private ArrayList<Author> authorList;
+    private ArrayList<Album> albumList;
 
     public long getSongId() {
         return songId;
@@ -62,6 +65,22 @@ public class Song {
         this.publicationDate = publicationDate;
     }
 
+    public ArrayList<Author> getAuthorList() {
+        return authorList;
+    }
+
+    public void setAuthorList(ArrayList<Author> authorList) {
+        this.authorList = authorList;
+    }
+
+    public ArrayList<Album> getAlbumList() {
+        return albumList;
+    }
+
+    public void setAlbumList(ArrayList<Album> albumList) {
+        this.albumList = albumList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,7 +93,9 @@ public class Song {
         if (Double.compare(song.cost, cost) != 0) return false;
         if (!name.equals(song.name)) return false;
         if (!filePath.equals(song.filePath)) return false;
-        return publicationDate.equals(song.publicationDate);
+        if (!publicationDate.equals(song.publicationDate)) return false;
+        if (!authorList.equals(song.authorList)) return false;
+        return albumList.equals(song.albumList);
 
     }
 
@@ -89,6 +110,8 @@ public class Song {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + filePath.hashCode();
         result = 31 * result + publicationDate.hashCode();
+        result = 31 * result + authorList.hashCode();
+        result = 31 * result + albumList.hashCode();
         return result;
     }
 }

@@ -16,8 +16,10 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
+<c:import url="../../jsp/header.jsp"/>
+<c:import url="admin_navbar.jsp"/>
+<main>
     <div class="wrapper">
-        <c:import url="../../jsp/header.jsp"/>
         <div class="container">
             <div class="card">
                 <ul class="collection">
@@ -31,14 +33,18 @@
                                     <form action="${pageContext.request.contextPath}/controller" method="POST">
                                         <input type="hidden" name="command" value="find_author_for_update">
                                         <input type="hidden" name="author_id" value="${author.authorId}">
-                                        <button class="waves-effect waves-light btn  green accent-4" type="submit">Edit</button>
+                                        <button class="waves-effect waves-circle waves-light btn-floating green accent-4" type="submit">
+                                            <i class="material-icons">mode_edit</i>
+                                        </button>
                                     </form>
                                 </div>
                                 <div style="float: right">
                                     <form action="${pageContext.request.contextPath}/controller" method="POST">
                                         <input type="hidden" name="command" value="delete_author">
                                         <input type="hidden" name="author_id" value="${author.authorId}">
-                                        <button class="waves-effect waves-light btn red" type="submit">Del</button>
+                                        <button class="waves-effect waves-circle waves-light btn-floating red" type="submit">
+                                            <i class="material-icons">delete</i>
+                                        </button>
                                     </form>
                                 </div>
 
@@ -48,13 +54,18 @@
                     <li class="collection-item right">
                         <form action="${pageContext.request.contextPath}/controller" method="POST">
                             <input type="hidden" name="command" value="find_author_for_create">
-                            <button class="waves-effect waves-light btn  green accent-4" type="submit">Create new author</button>
+                            <button class="waves-effect waves-circle waves-light btn-floating green accent-4" type="submit">
+                                <i class="material-icons">add</i>
+                            </button>
                         </form>
                     </li>
                 </ul>
             </div>
         </div>
+        <c:import url="../../jsp/footer.jsp"/>
     </div>
-    <c:import url="../../jsp/footer.jsp"/>
+</main>
+
+
 </body>
 </html>

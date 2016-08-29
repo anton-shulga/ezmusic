@@ -20,7 +20,7 @@ public class HelloTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         String output = null;
-        if(user.isAdmin()){
+        if(user.getIsAdmin()){
             output = "Hello, " + user.getLogin() + "! You are admin!";
         }else {
             output = "Hello, " + user.getLogin() + "! You are user!";

@@ -1,5 +1,7 @@
 package by.epam.webpoject.ezmusic.service.song;
 
+import by.epam.webpoject.ezmusic.dao.AlbumDAO;
+import by.epam.webpoject.ezmusic.dao.AuthorDAO;
 import by.epam.webpoject.ezmusic.dao.SongDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
 import by.epam.webpoject.ezmusic.entity.Song;
@@ -11,12 +13,18 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
  */
 public class FindSongByIdService  {
     public static Song find(Long songId) throws ServiceException {
-        SongDAO dao = (SongDAO) DAOFactory.createSongDAO();
+        SongDAO songDao = (SongDAO) DAOFactory.createSongDAO();
+        AlbumDAO albumDAO = (AlbumDAO) DAOFactory.createAlbumDAO();
+        AuthorDAO authorDAO = (AuthorDAO) DAOFactory.createAuthorDAO();
+        Song song = null;
         try {
-            return dao.find(songId);
+            song = songDao.find(songId);
+            song.setAlbumList(albumDAO.findBySongId(songId));
+            song.setAuthorList(authorDAO.findBySongId(songId));
         } catch (DAOException e) {
             throw new ServiceException("Finding song error", e);
         }
+        return song;
     }
 
 }

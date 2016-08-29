@@ -1,11 +1,14 @@
 package by.epam.webpoject.ezmusic.entity;
 
+import java.util.ArrayList;
+
 /**
  * Created by Антон on 21.08.2016.
  */
 public class Order {
     private Long orderId;
     private Long userId;
+    private ArrayList<Song> songList;
     private Double totalCost;
     private boolean isPaid;
 
@@ -25,6 +28,14 @@ public class Order {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public ArrayList<Song> getSongList() {
+        return songList;
+    }
+
+    public void setSongList(ArrayList<Song> songList) {
+        this.songList = songList;
     }
 
     public Double getTotalCost() {

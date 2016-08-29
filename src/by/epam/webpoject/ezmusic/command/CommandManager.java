@@ -1,8 +1,6 @@
 package by.epam.webpoject.ezmusic.command;
 
-import by.epam.webpoject.ezmusic.command.impl.ChangeLocaleCommand;
-import by.epam.webpoject.ezmusic.command.impl.GoHomeCommand;
-import by.epam.webpoject.ezmusic.command.impl.LogoutCommand;
+import by.epam.webpoject.ezmusic.command.impl.*;
 import by.epam.webpoject.ezmusic.command.impl.album.*;
 import by.epam.webpoject.ezmusic.command.impl.author.*;
 import by.epam.webpoject.ezmusic.command.impl.song.*;
@@ -20,6 +18,8 @@ public class CommandManager {
 
     static {
         availableCommands.put(CommandName.GO_HOME, new GoHomeCommand());
+        availableCommands.put(CommandName.TO_LOGIN, new ToLoginCommand());
+        availableCommands.put(CommandName.TO_REGISTER, new ToRegisterCommand());
         availableCommands.put(CommandName.LOGIN, new LoginCommand());
         availableCommands.put(CommandName.REGISTER, new RegisterUserCommand());
         availableCommands.put(CommandName.DELETE_USER, new DeleteUserCommand());
@@ -27,7 +27,7 @@ public class CommandManager {
         availableCommands.put(CommandName.UPDATE_USER, new UpdateUserCommand());
         availableCommands.put(CommandName.CHECK_LOGIN_AVAILABILITY, new CheckLoginAvailabilityCommand());
         availableCommands.put(CommandName.CHANGE_LOCALE, new ChangeLocaleCommand());
-        availableCommands.put(CommandName.FIND_ALL_SONGS, new FindAllSongsCommand());
+        availableCommands.put(CommandName.FIND_ALL_SONGS_ADMIN, new FindAllSongsCommand());
         availableCommands.put(CommandName.LOGOUT, new LogoutCommand());
         availableCommands.put(CommandName.FIND_SONG_FOR_UPDATE, new FindSongForUpdateCommand());
         availableCommands.put(CommandName.FIND_SONG_FOR_CREATE, new FindSongForCreateCommand());
@@ -37,18 +37,23 @@ public class CommandManager {
         availableCommands.put(CommandName.CREATE_ALBUM, new CreateAlbumCommand());
         availableCommands.put(CommandName.UPDATE_ALBUM, new UpdateAlbumCommand());
         availableCommands.put(CommandName.DELETE_ALBUM, new DeleteAlbumCommand());
-        availableCommands.put(CommandName.FIND_ALL_ALBUMS, new FindAllAlbumsCommand());
+        availableCommands.put(CommandName.FIND_ALL_ALBUMS_ADMIN, new FindAllAlbumsCommand());
         availableCommands.put(CommandName.FIND_ALBUM_FOR_CREATE, new FindAlbumForCreateCommand());
         availableCommands.put(CommandName.FIND_ALBUM_FOR_UPDATE, new FindAlbumForUpdateCommand());
         availableCommands.put(CommandName.FIND_AUTHOR_ALBUMS_JSON, new FindAuthorAlbumsJsonCommand());
         availableCommands.put(CommandName.FIND_AUTHOR_SONGS_JSON, new FindAuthorSongsJsonCommand());
-        availableCommands.put(CommandName.FIND_ALL_AUTHORS, new FindAllAuthorsCommand());
+        availableCommands.put(CommandName.FIND_ALL_AUTHORS_ADMIN, new FindAllAuthorsCommand());
         availableCommands.put(CommandName.FIND_AUTHOR_FOR_CREATE, new FindAuthorForCreateCommand());
         availableCommands.put(CommandName.FIND_ALBUM_SONGS_JSON, new FindAlbumSongsJsonCommand());
         availableCommands.put(CommandName.CREATE_AUTHOR, new CreateAuthorCommand());
         availableCommands.put(CommandName.UPDATE_AUTHOR, new UpdateAuthorCommand());
         availableCommands.put(CommandName.FIND_AUTHOR_FOR_UPDATE, new FindAuthorForUpdateCommand());
         availableCommands.put(CommandName.DELETE_AUTHOR, new DeleteAuthorCommand());
+        availableCommands.put(CommandName.FIND_ALL_SONGS_USER, new FindAllSongsUserCommand());
+        availableCommands.put(CommandName.HOME_ADMIN, new HomeAdminCommand());
+        availableCommands.put(CommandName.HOME_USER, new HomeUserCommand());
+        availableCommands.put(CommandName.FIND_ALL_ALBUMS_USER, new FindAllAlbumsUserCommand());
+        availableCommands.put(CommandName.FIND_ALL_AUTHORS_USER, new FindAllAuthorsUserCommand());
     }
 
     public static Command getCommand(String commandName) throws CommandException {

@@ -24,8 +24,10 @@
 </head>
 
 <body>
+<c:import url="header.jsp"/>
+<c:import url="common_navbar.jsp"/>
+<main>
 <div class="wrapper">
-   <c:import url="header.jsp"/>
     <div class="container">
         <div class="card">
             <form method="POST" action="${pageContext.request.contextPath}/controller">
@@ -59,22 +61,9 @@
         </div>
     </c:if>
 </div>
+</main>
 <c:import url="footer.jsp"/>
 
-
-
-
-<script>
-    $( document ).ready(function(){
-        $(".button-collapse").sideNav();
-        $('select').material_select();
-
-        $('.datepicker').pickadate({
-            selectMonths: true,
-            selectYears: 15
-        });
-    });
-</script>
 </body>
 </html>
 

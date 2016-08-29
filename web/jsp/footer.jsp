@@ -31,8 +31,8 @@
     </script>
 </head>
 <body>
-    <footer class="page-footer cyan darken-4">
-        <div class="footer-copyright">
+    <footer class="page-footer teal">
+        <div class="footer-copyright teal">
             <div class="row right">
                 <input type="image" src="../img/logo/ru.png" onclick="changeLocale('ru_RU')"/>
                 <input type="image" src="../img/logo/eng.png" onclick="changeLocale('default')"/>

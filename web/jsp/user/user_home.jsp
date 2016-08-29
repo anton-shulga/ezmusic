@@ -11,15 +11,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>User home</title>
+    <title>Home</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../../css/styles.css" media="screen,projection"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
+<c:import url="../header.jsp"/>
+<c:import url="user_navbar.jsp"/>
+<main>
     <div class="wrapper">
-        <c:import url="../header.jsp"/>
-            <div class="container">
+        <div class="container">
+            <div class="row">
                 <ctg:hello user="${user}"/>
             </div>
+        </div>
     </div>
-    <c:import url="../footer.jsp"/>
+</main>
+<c:import url="/jsp/footer.jsp"/>
 </body>
 </html>

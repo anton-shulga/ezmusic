@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 /**
- * Created by Антон on 18.08.2016.
+ * Created by Антон on 30.08.2016.
  */
-public class FindAllAlbumsCommand implements Command {
+public class FindAllAlbumsUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
@@ -26,9 +26,9 @@ public class FindAllAlbumsCommand implements Command {
         }
         if (allAlbums != null) {
             request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
-            page = JspPageName.ADMIN_ALL_ALBUMS;
+            page = JspPageName.USER_ALL_ALBUMS;
         }else {
-            page = JspPageName.ADMIN_HOME;
+            page = JspPageName.USER_HOME;
         }
         return page;
     }

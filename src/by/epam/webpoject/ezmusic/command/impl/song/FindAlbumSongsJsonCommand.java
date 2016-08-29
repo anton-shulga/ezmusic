@@ -26,10 +26,11 @@ public class FindAlbumSongsJsonCommand implements Command {
         boolean isValidRequest = SongParametersValidator.validateFindJsonParameters(albumIds);
         if(isValidRequest) {
             try {
-                Long[] longAlbumIds = ParameterParser.parseLongArray(albumIds);
+
                 if (albumIds == null) {
                     albumSongs.addAll(FindAllSongsService.find());
                 } else {
+                    Long[] longAlbumIds = ParameterParser.parseLongArray(albumIds);
                     for (Long albumId : longAlbumIds) {
                         albumSongs.addAll(FindSongByAlbumIdService.find(albumId));
                     }

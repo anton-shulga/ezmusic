@@ -90,7 +90,7 @@ public class User {
         this.balance = balance;
     }
 
-    public boolean isAdmin() {
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 
