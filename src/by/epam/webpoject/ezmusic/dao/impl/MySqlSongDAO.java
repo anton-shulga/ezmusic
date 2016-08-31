@@ -29,8 +29,10 @@ public class MySqlSongDAO extends SongDAO {
     private static final String CREATE_SONG_AUTHOR_QUERY = "INSERT INTO ezmusicdb.author_song (id_author, id_song) VALUES (?, ?)";
     private static final String DELETE_SONG_ALBUM_QUERY = "DELETE FROM ezmusicdb.album_song WHERE id_song = ?";
     private static final String DELETE_SONG_AUTHOR_QUERY = "DELETE FROM ezmusicdb.author_song WHERE id_song = ?";
+    private static final String CREATE_SONG_ORDER_QUERY = "INSERT INTO ezmusicdb.order_song (id_order, id_song) VALUES (?, ?)";
 
     private static final MySqlSongDAO instance = new MySqlSongDAO();
+
 
 
     private MySqlSongDAO() {
@@ -305,6 +307,28 @@ public class MySqlSongDAO extends SongDAO {
         try{
             statement = connection.prepareStatement(CREATE_SONG_AUTHOR_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, authorId);
+            statement.setLong(2, songId);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if(resultSet.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Creating song-author error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean createSongOrder(Long songId, Long orderId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try{
+            statement = connection.prepareStatement(CREATE_SONG_ORDER_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, orderId);
             statement.setLong(2, songId);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();

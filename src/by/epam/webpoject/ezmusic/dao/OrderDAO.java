@@ -16,7 +16,8 @@ public abstract class OrderDAO implements AbstractDAO<Order, Long> {
     private static final Logger LOGGER = LogManager.getLogger(OrderDAO.class);
 
     public abstract ArrayList<Order> findByUserId(Long userId) throws DAOException;
-    public abstract Order findCartByUserId(Long userId);
+    public abstract Order findCartByUserId(Long userId) throws DAOException;
+    public abstract Long getOrderSongsNumber(Long orderId) throws DAOException;
     @Override
     public void closeStatement(Statement statement) {
         try {

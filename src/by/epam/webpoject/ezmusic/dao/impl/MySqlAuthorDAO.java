@@ -24,8 +24,8 @@ public class MySqlAuthorDAO extends AuthorDAO {
     private static final String FIND_ALL_AUTHORS_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author";
     private static final String FIND_AUTHOR_BY_SONG_ID_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author AS a INNER JOIN ezmusicdb.author_song AS a_s ON a.author_id = a_s.id_author WHERE a_s.id_song = ?";
     private static final String FIND_AUTHOR_BY_ALBUM_ID_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author as a INNER JOIN ezmusicdb.album_author as a_a ON a.author_id = a_a.id_author WHERE a_a.id_album = ?";
-    private static final String INSERT_AUTHOR_ALBUM_QUERY = "INSERT INTO ezmusicdb.album_author (id_author, id_album) VALUES (?, ?)";
-    private static final String INSERT_AUTHOR_SONG_QUERY = "INSERT INTO ezmusicdb.author_song (id_author, id_song) VALUES (?, ?)";
+    private static final String CREATE_AUTHOR_ALBUM_QUERY = "INSERT INTO ezmusicdb.album_author (id_author, id_album) VALUES (?, ?)";
+    private static final String CREATE_AUTHOR_SONG_QUERY = "INSERT INTO ezmusicdb.author_song (id_author, id_song) VALUES (?, ?)";
     private static final String DELETE_AUTHOR_ALBUM_QUERY = "DELETE FROM ezmusicdb.album_author WHERE id_author = ?";
     private static final String DELETE_AUTHOR_SONG_QUERY = "DELETE FROM ezmusicdb.author_song WHERE id_author = ?";
 
@@ -207,7 +207,7 @@ public class MySqlAuthorDAO extends AuthorDAO {
         PreparedStatement statement = null;
         Long generateId = null;
         try{
-            statement = connection.prepareStatement(INSERT_AUTHOR_ALBUM_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(CREATE_AUTHOR_ALBUM_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, authorId);
             statement.setLong(2, albumId);
             statement.executeUpdate();
@@ -230,7 +230,7 @@ public class MySqlAuthorDAO extends AuthorDAO {
         PreparedStatement statement = null;
         Long generateId = null;
         try{
-            statement = connection.prepareStatement(INSERT_AUTHOR_SONG_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(CREATE_AUTHOR_SONG_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, authorId);
             statement.setLong(2, songId);
             statement.executeUpdate();

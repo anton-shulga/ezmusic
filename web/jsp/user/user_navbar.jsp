@@ -17,6 +17,12 @@
 <body>
     <ul id="slide-out" class="side-nav fixed">
         <li>
+            <form name="fundsForm" action="${pageContext.request.contextPath}/controller" method="POST">
+                <input type="hidden" name="command" value="home_user">
+                <a class="waves-effect waves-teal" href="javascript:document.homeForm.submit()">Home</a>
+            </form>
+        </li>
+        <li>
             <form name="homeForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="home_user">
                 <a class="waves-effect waves-teal" href="javascript:document.homeForm.submit()">Home</a>
@@ -37,14 +43,14 @@
         <li>
             <form name="albumsForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_all_albums_user">
-                <a class="waves-effect waves-teal" class="waves-effect" href="javascript:document.albumsForm.submit()">Albums</a>
+                <a class="waves-effect waves-teal"  href="javascript:document.albumsForm.submit()">Albums</a>
             </form>
         </li>
         <li><div class="divider"></div></li>
         <li>
             <form name="cartForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_cart_user">
-                <a class="waves-effect waves-teal" href="javascript:document.cartForm.submit()">My cart</a>
+                <a class="waves-effect waves-teal" href="javascript:document.cartForm.submit()">My cart<span id="id-badge" class="new badge" data-badge-caption="songs">${sessionScope.order_songs_number}</span></a>
             </form>
         </li>
         <li>

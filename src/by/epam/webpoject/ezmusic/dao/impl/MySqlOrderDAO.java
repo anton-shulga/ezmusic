@@ -15,12 +15,14 @@ import java.util.ArrayList;
  * Created by Антон on 21.08.2016.
  */
 public class MySqlOrderDAO extends OrderDAO{
-    private static final String CREATE_ORDER_QUERY = "INSERT INTO ezmusicdb.order (user_id, order_is_paid) VALUES (? ,?, ?)";
+    private static final String CREATE_ORDER_QUERY = "INSERT INTO ezmusicdb.order (user_id, order_is_paid) VALUES (? ,?)";
     private static final MySqlOrderDAO instance = new MySqlOrderDAO();
     private static final String FIND_ORDER_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE order_id = ?";
     private static final String DELETE_ORDER_QUERY = "DELETE FROM ezmusicdb.order WHERE order_id = ?";
     private static final String  UPDATE_ORDER_QUERY = "UPDATE ezmusicdb.order SET user_id = ?, order_is_paid = ?, order_total_cost = ? WHERE order_id = ?";
     private static final String FIND_ORDER_BY_USER_ID_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE user_id = ?";
+    private static final String FIND_UNPAID_ORDER_BY_USER_ID_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE user_id = ? AND order_is_paid = FALSE";
+    private static final String COUNT_ORDER_SONGS_NUMBER = "SELECT count(id_order) FROM ezmusicdb.order_song WHERE id_order = ?";
 
 
     private MySqlOrderDAO(){}
@@ -38,7 +40,6 @@ public class MySqlOrderDAO extends OrderDAO{
             statement = connection.prepareStatement(CREATE_ORDER_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, instance.getUserId());
             statement.setBoolean(2, instance.isPaid());
-            statement.setDouble(3, instance.getTotalCost());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if(resultSet.next()) {
@@ -140,7 +141,48 @@ public class MySqlOrderDAO extends OrderDAO{
     }
 
     @Override
-    public Order findCartByUserId(Long userId) {
-        return null;
+    public Order findCartByUserId(Long userId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        Order order = null;
+        try{
+            statement = connection.prepareStatement(FIND_UNPAID_ORDER_BY_USER_ID_QUERY);
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                order = new Order();
+                order.setOrderId(resultSet.getLong(1));
+                order.setUserId(resultSet.getLong(2));
+                order.setPaid(resultSet.getBoolean(3));
+                order.setTotalCost(resultSet.getDouble(4));
+            }
+        }catch (SQLException e){
+            throw new DAOException("Find order dao exception", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return order;
+    }
+
+    @Override
+    public Long getOrderSongsNumber(Long orderId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        Long songsNumber = null;
+        try{
+            statement = connection.prepareStatement(COUNT_ORDER_SONGS_NUMBER);
+            statement.setLong(1, orderId);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+               songsNumber = resultSet.getLong(1);
+            }
+        }catch (SQLException e){
+            throw new DAOException("Find order dao exception", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return songsNumber;
     }
 }

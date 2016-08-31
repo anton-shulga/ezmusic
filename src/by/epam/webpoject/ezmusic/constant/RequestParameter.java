@@ -47,4 +47,6 @@ public class RequestParameter {
     public static final String AUTHOR_PHOTO_PATH = "author_photo_path";
     public static final String AUTHOR_SONGS = "author_songs";
     public static final String AUTHOR_ALBUMS = "author_albums";
+    public static final String ORDER_SONGS_NUMBER = "order_songs_number";
+    public static final String CART = "cart";
 }

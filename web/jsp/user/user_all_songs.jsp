@@ -10,6 +10,25 @@
 <html>
 <head>
     <title>Songs</title>
+    <link type="text/css" rel="stylesheet" href="../../css/styles.css" media="screen,projection"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
+    <script>
+            function addSongToOrder(songId) {
+                $.ajax({
+                    url: 'JsonController',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {song_id:songId, command:"add_song_to_order"},
+                    success: function (json) {
+                        var $select = $('#id-badge');
+                        $select.text(json);
+                    }
+                });
+            }
+
+
+   </script>
 </head>
 <body>
 <c:import url="../header.jsp"/>
@@ -34,24 +53,13 @@
                             </p>
                             <div class="secondary-content">
                                 <div style="float: left">
-                                    <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                        <input type="hidden" name="command" value="find_song_info">
-                                        <input type="hidden" name="song_id" value="${song.songId}">
-                                        <button class="waves-effect waves-circle waves-light btn-floating green accent-4" type="submit">
-                                            <i class="material-icons">info_outline</i>
-                                        </button>
-                                    </form>
+                                    <input type="hidden" name="command" value="find_song_info">
+                                    <input type="hidden" name="song_id" value="${song.songId}">
+                                    <button class="waves-effect waves-circle waves-light btn-floating green accent-4" type="submit"><i class="material-icons">info_outline</i></button>
                                 </div>
                                 <div style="float: right">
-                                    <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                        <input type="hidden" name="command" value="add_song_to_order">
-                                        <input type="hidden" name="song_id" value="${song.songId}">
-                                        <button class="waves-effect waves-circle waves-light btn-floating  green accent-4" type="submit">
-                                            <i class="material-icons">shopping_cart</i>
-                                        </button>
-                                    </form>
+                                        <button class="btn-floating waves-effect waves-light green accent-4" onclick="addSongToOrder(${song.songId})"><i class="material-icons">shopping_cart</i></button>
                                 </div>
-
                             </div>
                         </li>
                     </c:forEach>
@@ -60,6 +68,5 @@
             <c:import url="../footer.jsp"/>
         </div>
     </main>
-
 </body>
 </html>

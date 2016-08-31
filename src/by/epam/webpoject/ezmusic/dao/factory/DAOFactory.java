@@ -57,4 +57,13 @@ public class DAOFactory {
                 return MySqlAuthorDAO.getInstance();
         }
     }
+
+    public static AbstractDAO createOrderDAO() {
+        switch (DB_TYPE){
+            case MYSQL:
+                return MySqlOrderDAO.getInstance();
+            default:
+                return MySqlOrderDAO.getInstance();
+        }
+    }
 }

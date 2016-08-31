@@ -54,6 +54,8 @@ public class CommandManager {
         availableCommands.put(CommandName.HOME_USER, new HomeUserCommand());
         availableCommands.put(CommandName.FIND_ALL_ALBUMS_USER, new FindAllAlbumsUserCommand());
         availableCommands.put(CommandName.FIND_ALL_AUTHORS_USER, new FindAllAuthorsUserCommand());
+        availableCommands.put(CommandName.ADD_SONG_TO_ORDER, new AddSongToOrderCommand());
+        availableCommands.put(CommandName.FIND_CART_USER, new FindCartUserCommand());
     }
 
     public static Command getCommand(String commandName) throws CommandException {
