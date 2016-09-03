@@ -20,4 +20,5 @@ public class JspPageName {
     public static final String USER_ALL_ALBUMS = "jsp/user/user_all_albums.jsp";
     public static final String USER_ALL_AUTHORS = "jsp/user/user_all_authors.jsp";
     public static final String USER_CART = "jsp/user/user_cart.jsp";
+    public static final String USER_SONG = "jsp/user/user_song.jsp";
 }

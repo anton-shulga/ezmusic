@@ -53,9 +53,11 @@
                             </p>
                             <div class="secondary-content">
                                 <div style="float: left">
-                                    <input type="hidden" name="command" value="find_song_info">
-                                    <input type="hidden" name="song_id" value="${song.songId}">
-                                    <button class="waves-effect waves-circle waves-light btn-floating green accent-4" type="submit"><i class="material-icons">info_outline</i></button>
+                                    <form action="controller" method="POST">
+                                        <input type="hidden" name="command" value="find_song_user">
+                                        <input type="hidden" name="song_id" value="${song.songId}">
+                                        <button class="waves-effect waves-circle waves-light btn-floating green accent-4" type="submit"><i class="material-icons">info_outline</i></button>
+                                    </form>
                                 </div>
                                 <div style="float: right">
                                         <button class="btn-floating waves-effect waves-light green accent-4" onclick="addSongToOrder(${song.songId})"><i class="material-icons">shopping_cart</i></button>

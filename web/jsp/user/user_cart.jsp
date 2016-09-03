@@ -35,7 +35,7 @@
     <div class="wrapper">
         <div class="container">
             <ul class="collection">
-                <c:forEach items="${requestScope.cart.songList}" var="song">
+                <c:forEach items="${sessionScope.cart.songList}" var="song">
                     <li class="collection-item avatar">
                         <i class="material-icons circle red">play_arrow</i>
                         <span class="title"><b>Name: </b>${song.name}</span>
@@ -50,17 +50,20 @@
                             </c:forEach>
                         </p>
                         <div class="secondary-content">
-
-                            <div style="float: right">
                                 <form action="controller">
                                     <input type="hidden" name="command" value="delete_song_from_cart"/>
                                     <input type="hidden" name="song_id" value="${song.songId}"/>
                                     <button class="btn-floating waves-effect waves-light green accent-4" onclick="addSongToOrder(${song.songId})"><i class="material-icons">delete</i></button>
                                 </form>
-                            </div>
                         </div>
                     </li>
                 </c:forEach>
+                <li class="collection-item right">
+                    <form action="controller">
+                        <input type="hidden" name="command" value="pay_for_order"/>
+                        <button class="btn waves-effect waves-light green accent-4" onclick="addSongToOrder(${song.songId})">Pay ${cart.totalCost}</button>
+                    </form>
+                </li>
             </ul>
         </div>
         <c:import url="../footer.jsp"/>

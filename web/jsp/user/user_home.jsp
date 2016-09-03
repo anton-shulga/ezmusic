@@ -23,9 +23,6 @@
 <main>
     <div class="wrapper">
         <div class="container">
-            <div class="row">
-                <ctg:hello user="${user}"/>
-            </div>
         </div>
     </div>
 </main>

@@ -16,6 +16,7 @@ public class Song {
     private Date publicationDate;
     private ArrayList<Author> authorList;
     private ArrayList<Album> albumList;
+    private ArrayList<Comment> commentList;
 
     public long getSongId() {
         return songId;
@@ -81,6 +82,14 @@ public class Song {
         this.albumList = albumList;
     }
 
+    public ArrayList<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(ArrayList<Comment> commentList) {
+        this.commentList = commentList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,7 +104,8 @@ public class Song {
         if (!filePath.equals(song.filePath)) return false;
         if (!publicationDate.equals(song.publicationDate)) return false;
         if (!authorList.equals(song.authorList)) return false;
-        return albumList.equals(song.albumList);
+        if (!albumList.equals(song.albumList)) return false;
+        return commentList.equals(song.commentList);
 
     }
 
@@ -112,6 +122,7 @@ public class Song {
         result = 31 * result + publicationDate.hashCode();
         result = 31 * result + authorList.hashCode();
         result = 31 * result + albumList.hashCode();
+        result = 31 * result + commentList.hashCode();
         return result;
     }
 }

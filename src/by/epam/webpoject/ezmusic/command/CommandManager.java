@@ -3,6 +3,7 @@ package by.epam.webpoject.ezmusic.command;
 import by.epam.webpoject.ezmusic.command.impl.*;
 import by.epam.webpoject.ezmusic.command.impl.album.*;
 import by.epam.webpoject.ezmusic.command.impl.author.*;
+import by.epam.webpoject.ezmusic.command.impl.comment.CreateCommentCommand;
 import by.epam.webpoject.ezmusic.command.impl.song.*;
 import by.epam.webpoject.ezmusic.command.impl.user.*;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
@@ -56,6 +57,10 @@ public class CommandManager {
         availableCommands.put(CommandName.FIND_ALL_AUTHORS_USER, new FindAllAuthorsUserCommand());
         availableCommands.put(CommandName.ADD_SONG_TO_ORDER, new AddSongToOrderCommand());
         availableCommands.put(CommandName.FIND_CART_USER, new FindCartUserCommand());
+        availableCommands.put(CommandName.DELETE_SONG_FROM_CART, new DeleteSongFromCartCommand());
+        availableCommands.put(CommandName.PAY_ORDER, new PayOrderCommand());
+        availableCommands.put(CommandName.FIND_SONG_USER, new FindSongUserCommand());
+        availableCommands.put(CommandName.CREATE_COMMENT, new CreateCommentCommand());
     }
 
     public static Command getCommand(String commandName) throws CommandException {

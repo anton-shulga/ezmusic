@@ -25,6 +25,7 @@ public abstract class SongDAO implements AbstractDAO<Song, Long> {
     public abstract boolean createSongOrder(Long songId, Long orderId) throws DAOException;
     public abstract void deleteSongAlbum(Long songId) throws DAOException;
     public abstract void deleteSongAuthor(Long songId) throws DAOException;
+    public abstract void deleteSongOrder(Long songId, Long albumId) throws DAOException;
 
     @Override
     public void closeStatement(Statement statement) {

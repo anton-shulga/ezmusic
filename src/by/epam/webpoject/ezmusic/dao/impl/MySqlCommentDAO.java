@@ -4,6 +4,7 @@ import by.epam.webpoject.ezmusic.connection.ConnectionPool;
 import by.epam.webpoject.ezmusic.connection.ProxyConnection;
 import by.epam.webpoject.ezmusic.dao.CommentDAO;
 import by.epam.webpoject.ezmusic.entity.Comment;
+import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 
 import java.sql.PreparedStatement;
@@ -34,7 +35,7 @@ public class MySqlCommentDAO extends CommentDAO {
         Long generatedId = null;
         try {
             statement = connection.prepareStatement(CREATE_COMMENT_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setLong(1, instance.getUserId());
+            statement.setLong(1, instance.getUser().getUserId());
             statement.setInt(2, instance.getRating());
             statement.setString(3, instance.getText());
             statement.setLong(4, instance.getSongId());
@@ -61,10 +62,13 @@ public class MySqlCommentDAO extends CommentDAO {
             statement = connection.prepareStatement(FIND_COMMENT_QUERY);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
+            User user = null;
             if(resultSet.next()){
                 comment = new Comment();
                 comment.setCommentId(resultSet.getLong(1));
-                comment.setUserId(resultSet.getLong(2));
+                user = new User();
+                user.setUserId(resultSet.getLong(2));
+                comment.setUser(user);
                 comment.setRating(resultSet.getInt(3));
                 comment.setText(resultSet.getString(4));
                 comment.setSongId(resultSet.getLong(5));
@@ -102,7 +106,7 @@ public class MySqlCommentDAO extends CommentDAO {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(UPDATE_COMMENT_QUERY);
-            statement.setLong(1, instance.getUserId());
+            statement.setLong(1, instance.getUser().getUserId());
             statement.setInt(2, instance.getRating());
             statement.setString(3, instance.getText());
             statement.setLong(4, instance.getSongId());
@@ -125,10 +129,13 @@ public class MySqlCommentDAO extends CommentDAO {
             statement = connection.prepareStatement(FIND_COMMENT_BY_SONG_ID);
             statement.setLong(1, songId);
             ResultSet resultSet = statement.executeQuery();
+            User user = null;
             while (resultSet.next()){
                 Comment comment = new Comment();
                 comment.setCommentId(resultSet.getLong(1));
-                comment.setUserId(resultSet.getLong(2));
+                user = new User();
+                user.setUserId(resultSet.getLong(2));
+                comment.setUser(user);
                 comment.setRating(resultSet.getInt(3));
                 comment.setText(resultSet.getString(4));
                 comment.setSongId(resultSet.getLong(5));

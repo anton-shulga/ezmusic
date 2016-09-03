@@ -2,12 +2,13 @@ package by.epam.webpoject.ezmusic.command.impl.song;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
+import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
-import by.epam.webpoject.ezmusic.service.order.GetOrderSongsNumberByUserIdService;
+import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
 import by.epam.webpoject.ezmusic.service.song.AddSongToOrderService;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
@@ -21,24 +22,23 @@ import java.util.ArrayList;
 public class AddSongToOrderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        String page = null;
+        String output = null;
         String songId = request.getParameter(RequestParameter.SONG_ID);
-        Long orderSongsNumber = null;
         boolean isValidRequest = SongParametersValidator.validateFindParameters(songId);
-
         if(isValidRequest){
             User user = (User) request.getSession().getAttribute(RequestParameter.USER);
             try {
                 AddSongToOrderService.add(user.getUserId(), ParameterParser.parseLong(songId));
-                orderSongsNumber = GetOrderSongsNumberByUserIdService.get(user.getUserId());
+                Order cart = FindCartByUserIdService.find(user.getUserId());
+                request.getSession().setAttribute(RequestParameter.CART, cart);
                 ArrayList<Song> allSongs = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
-                request.getSession().setAttribute(RequestParameter.ORDER_SONGS_NUMBER, orderSongsNumber);
+                output = String.valueOf(cart.getSongList().size());
             }catch (ServiceException e) {
               throw new CommandException("Add song to order command exception", e);
             }
         }
-        return orderSongsNumber.toString();
+        return output;
     }
 
 }

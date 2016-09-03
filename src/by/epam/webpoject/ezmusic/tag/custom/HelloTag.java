@@ -23,7 +23,7 @@ public class HelloTag extends TagSupport {
         if(user.getIsAdmin()){
             output = "Hello, " + user.getLogin() + "! You are admin!";
         }else {
-            output = "Hello, " + user.getLogin() + "! You are user!";
+            output = "Hello, " + user.getLogin() + "! You are user! Balance : " + user.getBalance() ;
         }
         try {
             pageContext.getOut().write("<hr/>" + output + "<hr/>");

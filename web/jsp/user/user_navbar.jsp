@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -17,10 +19,7 @@
 <body>
     <ul id="slide-out" class="side-nav fixed">
         <li>
-            <form name="fundsForm" action="${pageContext.request.contextPath}/controller" method="POST">
-                <input type="hidden" name="command" value="home_user">
-                <a class="waves-effect waves-teal" href="javascript:document.homeForm.submit()">Home</a>
-            </form>
+            <ctg:hello user="${user}"/>
         </li>
         <li>
             <form name="homeForm" action="${pageContext.request.contextPath}/controller" method="POST">
@@ -31,7 +30,7 @@
         <li>
             <form name="songsForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_all_songs_user">
-                <a class="waves-effect waves-teal" class="waves-effect " href="javascript:document.songsForm.submit()">Songs</a>
+                <a class="waves-effect waves-teal" href="javascript:document.songsForm.submit()">Songs</a>
             </form>
         </li>
         <li>
@@ -50,7 +49,7 @@
         <li>
             <form name="cartForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_cart_user">
-                <a class="waves-effect waves-teal" href="javascript:document.cartForm.submit()">My cart<span id="id-badge" class="new badge" data-badge-caption="songs">${sessionScope.order_songs_number}</span></a>
+                <a class="waves-effect waves-teal" href="javascript:document.cartForm.submit()">My cart<span id="id-badge" class="new badge" data-badge-caption="songs">${fn:length(sessionScope.cart.songList)}</span></a>
             </form>
         </li>
         <li>

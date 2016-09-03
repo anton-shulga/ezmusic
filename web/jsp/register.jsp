@@ -13,9 +13,8 @@
     <link type="text/css" rel="stylesheet" href="../css/styles.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="../js/bin/materialize.min.js"></script>
-
     <script>
         $( document ).ready(function(){
             $(".button-collapse").sideNav();
@@ -27,30 +26,30 @@
             });
         });
     </script>
-    <script type="text/javascript">
-        $("#id-user-login").on("change",function() {
-            var login = $(this).val();
-            if(login.length > 3) {
-                $(".status").html("Checking availability...");
-                $.ajax({
-                    type: "POST",
-                    url: "${pageContext.request.contextPath}/LoginAvailabilityController",
-                    data: "user_login=" + login + "&" +
-                    "command=" + "check_login_availability",
-                    success: function(msg) {
-                        Materialize.toast(msg, 4000);
-                    }
-                });
-            }
-            else {
-                Materialize.toast("Login must be longer than three characters", 4000);
-            }
+    <script>
+        $(document).ready(function() {
+            $('#id-user-login').on("change", function(event) {
+                var login = $('#id-user-login').val();
+                if(login.length > 3) {
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/JsonController',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {user_login:login,command:"check_login_availability"},
+                        success: function(json) {
+                            Materialize.toast(json, 4000);
+                        }
+                    });
+                }
+                else {
+                    Materialize.toast("Login must be longer than three characters", 4000);
+                }
+            });
         });
     </script>
     <script>
         var password = document.getElementById("id-user-password");
         var confirm_password = document.getElementById("id-password-confirm");
-
         function validatePassword(){
             if(password.value != confirm_password.value) {
                 confirm_password.setCustomValidity("Passwords don't match");
@@ -58,19 +57,16 @@
                 confirm_password.setCustomValidity('');
             }
         }
-
         password.onchange = validatePassword;
         confirm_password.onchange = validatePassword;
     </script>
 </head>
 
 <body>
+<c:import url="header.jsp"/>
+<c:import url="common_navbar.jsp"/>
 <main>
-    <c:import url="header.jsp"/>
-    <c:import url="common_navbar.jsp"/>
 <div class="wrapper">
-
-
     <div class="container col s6" >
         <div class="card s6">
             <form method="POST" action="${pageContext.request.contextPath}/controller">

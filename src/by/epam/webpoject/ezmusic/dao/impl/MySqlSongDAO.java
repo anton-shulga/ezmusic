@@ -30,7 +30,7 @@ public class MySqlSongDAO extends SongDAO {
     private static final String DELETE_SONG_ALBUM_QUERY = "DELETE FROM ezmusicdb.album_song WHERE id_song = ?";
     private static final String DELETE_SONG_AUTHOR_QUERY = "DELETE FROM ezmusicdb.author_song WHERE id_song = ?";
     private static final String CREATE_SONG_ORDER_QUERY = "INSERT INTO ezmusicdb.order_song (id_order, id_song) VALUES (?, ?)";
-
+    private static final String DELETE_SONG_ORDER_QUERY = "DELETE FROM ezmusicdb.order_song WHERE id_order = ? AND id_song = ?";
     private static final MySqlSongDAO instance = new MySqlSongDAO();
 
 
@@ -370,6 +370,23 @@ public class MySqlSongDAO extends SongDAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Deleting song-author error", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+    }
+
+    @Override
+    public void deleteSongOrder(Long songId, Long orderId) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(DELETE_SONG_ORDER_QUERY);
+            statement.setLong(1, orderId);
+            statement.setLong(2, songId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Delete song order DAO exception");
         }finally {
             closeStatement(statement);
             connection.close();

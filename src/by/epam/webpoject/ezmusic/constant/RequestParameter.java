@@ -49,4 +49,5 @@ public class RequestParameter {
     public static final String AUTHOR_ALBUMS = "author_albums";
     public static final String ORDER_SONGS_NUMBER = "order_songs_number";
     public static final String CART = "cart";
+    public static final String COMMENT_TEXT = "comment_text";
 }
