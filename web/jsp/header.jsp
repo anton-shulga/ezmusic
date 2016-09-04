@@ -20,8 +20,8 @@
     <meta charset="utf-8">
 </head>
 <body>
-<header>
-<nav class="nav-wrapper teal">
+
+<nav class="nav-wrapper black">
     <a href="#" class="brand-logo center">EZMusic</a>
     <ul class="right hide-on-med-and-down">
         <c:if test="${empty sessionScope.user }">
@@ -40,6 +40,6 @@
         </c:if>
     </ul>
 </nav>
-</header>
+
 </body>
 </html>

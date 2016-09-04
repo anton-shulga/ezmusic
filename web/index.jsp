@@ -16,6 +16,18 @@
 </head>
 
 <body>
-  <jsp:forward page="jsp/login.jsp"/>
+  <c:choose>
+    <c:when test="${not empty sessionScope.user}">
+      <c:if test="${sessionScope.user.isAdmin}" >
+        <jsp:forward page="jsp/admin/admin_home.jsp"/>
+      </c:if>
+      <c:if test="${not sessionScope.user.isAdmin}">
+        <jsp:forward page="jsp/user/user_home.jsp"/>
+      </c:if>
+    </c:when>
+    <c:otherwise>
+      <jsp:forward page="jsp/login.jsp"/>
+    </c:otherwise>
+  </c:choose>
 </body>
 </html>

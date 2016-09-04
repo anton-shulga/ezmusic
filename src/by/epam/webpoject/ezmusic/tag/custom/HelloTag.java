@@ -25,10 +25,13 @@ public class HelloTag extends TagSupport {
         }else {
             output = "Hello, " + user.getLogin() + "! <br>You are user! Balance : " + user.getBalance() + "<br>" +
                     "<div class=\"row\">\n" +
-                    "   <div class=\"input-field col s8 required\" id=\"id-money-amount-container\">\n" +
+                    "   <div class=\"input-field col s8 required\">\n" +
                     "       <input id=\"id-money-amount\" name= type=\"text\" required>\n" +
                     "   </div>\n" +
-                    "   <button class=\"btn-floating waves-effect waves-light green accent-4\" onclick=\"addFunds()\"><i          class=\"material-icons\">add</i></button>\n" +
+                    "   <label for=\"id-money-amount\">Add funds</label>" +
+                    "   <button class=\"btn-floating waves-effect waves-light black\" onclick=\"addFunds()\">" +
+                    "       <i class=\"material-icons\">add</i>" +
+                    "   </button>\n" +
                     "</div>";
         }
         try {

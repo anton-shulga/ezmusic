@@ -132,7 +132,7 @@
 
                             <div class="card-action">
                                 <div class="row">
-                                    <button class="btn col s12 teal" type="submit">Save changes</button>
+                                    <button class="btn col s12 black" type="submit">Save changes</button>
                                 </div>
 
                             </div>

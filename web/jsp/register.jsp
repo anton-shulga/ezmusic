@@ -131,7 +131,7 @@
                             </div>
                             <div class="card-action">
                                 <div class="row">
-                                    <button id="id-submit" class="col s12 waves-effect waves-light btn teal" type="submit">Sign up</button>
+                                    <button id="id-submit" class="col s12 waves-effect waves-light btn black" type="submit">Sign up</button>
                                 </div>
                             </div>
                         </form>

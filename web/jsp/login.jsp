@@ -55,14 +55,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button id="id-sing-in-button" class="col s12 waves-effect waves-light btn teal" type="submit">Sign in</button>
+                                <button id="id-sing-in-button" class="col s12 waves-effect waves-light btn black" type="submit">Sign in</button>
                             </div>
                             </form>
 
                             <div class="row">
                                 <form action="controller" method="POST">
                                     <input type="hidden" name="command" value="to_register">
-                                    <button class="col s12 waves-effect waves-light btn teal" type="submit">Sign up</button>
+                                    <button class="col s12 waves-effect waves-light btn black" type="submit">Sign up</button>
                                 </form>
                             </div>
                     </div>

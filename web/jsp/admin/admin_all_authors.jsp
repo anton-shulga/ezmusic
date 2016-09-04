@@ -38,7 +38,7 @@
                                                     <form action="${pageContext.request.contextPath}/controller" method="POST">
                                                         <input type="hidden" name="command" value="find_author_for_update">
                                                         <input type="hidden" name="author_id" value="${author.authorId}">
-                                                        <button class="waves-effect waves-circle waves-light btn-floating teal" type="submit">
+                                                        <button class="waves-effect waves-circle waves-light btn-floating black" type="submit">
                                                             <i class="material-icons">mode_edit</i>
                                                         </button>
                                                     </form>
@@ -61,7 +61,7 @@
                                 <div class="row">
                                     <form action="${pageContext.request.contextPath}/controller" method="POST">
                                         <input type="hidden" name="command" value="find_author_for_create">
-                                        <button class="btn col s12 teal" type="submit">
+                                        <button class="btn col s12 black" type="submit">
                                             <i class="material-icons">add</i>
                                         </button>
                                     </form>

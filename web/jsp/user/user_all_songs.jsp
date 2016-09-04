@@ -26,8 +26,6 @@
                     }
                 });
             }
-
-
    </script>
 </head>
 <body>
@@ -36,39 +34,50 @@
     <main>
         <div class="wrapper">
             <div class="container">
-                <ul class="collection">
-                    <c:forEach items="${requestScope.all_songs}" var="song">
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle red">play_arrow</i>
-                            <span class="title"><b>Name: </b>${song.name}</span>
-                            <p>
-                                <b>Authors:</b>
-                                <c:forEach items="${song.authorList}" var="author">
-                                    ${author.name};
-                                </c:forEach><br>
-                                <b>Albums :</b>
-                                <c:forEach items="${song.albumList}" var="album">
-                                    ${album.name};
-                                </c:forEach>
-                            </p>
-                            <div class="secondary-content">
-                                <div style="float: left">
-                                    <form action="controller" method="POST">
-                                        <input type="hidden" name="command" value="find_song_user">
-                                        <input type="hidden" name="song_id" value="${song.songId}">
-                                        <button class="waves-effect waves-circle waves-light btn-floating green accent-4" type="submit"><i class="material-icons">info_outline</i></button>
-                                    </form>
-                                </div>
-                                <div style="float: right">
-                                        <button class="btn-floating waves-effect waves-light green accent-4" onclick="addSongToOrder(${song.songId})"><i class="material-icons">shopping_cart</i></button>
-                                </div>
+                <div class="row">
+                    <div class="col s8 offset-s2">
+                        <div class="card z-depth-4">
+                            <div class="card-content">
+                                <span class="card-title">All songs</span>
+                                <c:if test="${not empty requestScope.all_songs}">
+                                    <ul class="collection">
+                                        <c:forEach items="${requestScope.all_songs}" var="song">
+                                            <li class="collection-item avatar">
+                                                <i class="material-icons circle red">play_arrow</i>
+                                                <span class="title"><b>Name: </b>${song.name}</span>
+                                                <p>
+                                                    <b>Authors:</b>
+                                                    <c:forEach items="${song.authorList}" var="author">
+                                                        ${author.name};
+                                                    </c:forEach><br>
+                                                    <b>Albums :</b>
+                                                    <c:forEach items="${song.albumList}" var="album">
+                                                        ${album.name};
+                                                    </c:forEach>
+                                                </p>
+                                                <div class="secondary-content">
+                                                    <div style="float: left">
+                                                        <form action="controller" method="POST">
+                                                            <input type="hidden" name="command" value="find_song_user">
+                                                            <input type="hidden" name="song_id" value="${song.songId}">
+                                                            <button class="btn-floating black" type="submit"><i class="material-icons">info_outline</i></button>
+                                                        </form>
+                                                    </div>
+                                                    <div style="float: right">
+                                                        <button class="btn-floating black" onclick="addSongToOrder(${song.songId})"><i class="material-icons">shopping_cart</i></button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </c:if>
                             </div>
-                        </li>
-                    </c:forEach>
-                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <c:import url="../footer.jsp"/>
-        </div>
-    </main>
+        </main>
+    <c:import url="../footer.jsp"/>
 </body>
 </html>

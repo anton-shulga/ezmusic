@@ -105,6 +105,7 @@ public class MySqlOrderDAO extends OrderDAO{
             statement.setBoolean(2, instance.isPaid());
             statement.setDouble(3, instance.getTotalCost());
             statement.setLong(4, instance.getOrderId());
+            statement.executeUpdate();
         }catch (SQLException e){
             throw new DAOException("Update order dao exception", e);
         }finally {

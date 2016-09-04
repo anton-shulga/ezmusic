@@ -58,7 +58,7 @@ public class CommandManager {
         availableCommands.put(CommandName.ADD_SONG_TO_ORDER, new AddSongToOrderCommand());
         availableCommands.put(CommandName.FIND_CART_USER, new FindCartUserCommand());
         availableCommands.put(CommandName.DELETE_SONG_FROM_CART, new DeleteSongFromCartCommand());
-        availableCommands.put(CommandName.PAY_ORDER, new PayOrderCommand());
+        availableCommands.put(CommandName.PAY_FOR_ORDER, new PayForOrderCommand());
         availableCommands.put(CommandName.FIND_SONG_USER, new FindSongUserCommand());
         availableCommands.put(CommandName.CREATE_COMMENT, new CreateCommentCommand());
         availableCommands.put(CommandName.ADD_FUNDS, new AddFundsCommand());

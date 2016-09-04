@@ -34,7 +34,7 @@
                     dataType: 'json',
                     data: {selected_authors:selectedAuthors, command:"find_author_albums_json"},
                     success: function (json) {
-                        var $select = $('#id-album');
+                        var $select = $('#id-albums');
                         $select.find('option').remove();
                         $select.material_select('update');
                         $select.closest('.input-field').children('span.caret').remove();
@@ -57,80 +57,118 @@
 <main>
 <div class="wrapper">
     <div class="container">
-        <div class="card">
-            <form action="${pageContext.request.contextPath}/controller" method="POST">
-                <c:if test="${not empty song}">
-                    <input type="hidden" name="command" value="update_song">
-                    <input type="hidden" name="song_id" value="${song.songId}">
-                </c:if>
-                <c:if test="${empty song}">
-                    <input type="hidden" name="command" value="create_song">
-                </c:if>
-                <div class="input-field col s12">
-                    <input type="text" name="song_name" value="${song.name}">
-                    <label>Name</label>
-                </div>
-                <div class="input-field col s12">
-                    <input type="text" name="song_year" value="${song.year}">
-                    <label>Year</label>
-                </div>
-                <div class="input-field col s12">
-                    <select multiple class="icons" id="id-authors" name="selected_authors">
-                    <option value="" disabled selected>Select authors</option>
-                    <c:forEach items="${requestScope.all_authors}" var="item">
-                        <c:choose>
-                            <c:when test="${fn:contains(song_authors, item)}">
-                                <option value="${item.authorId}" selected data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="${item.authorId}" data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    </select>
-                    <label>Authors</label>
-                </div>
-                <div class="input-field col s12">
-                    <select multiple class="icons" id="id-album" name="selected_albums">
-                        <option value="" disabled selected>Select album</option>
-                        <c:forEach items="${requestScope.all_albums}" var="item">
-                            <c:choose>
-                                <c:when test="${fn:contains(song_albums, item)}">
-                                    <option value="${item.albumId}" selected>${item.name}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="${item.albumId}">${item.name}</option>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </select>
-                    <label>Albums</label>
-                </div>
+        <div class="row">
+            <div class="col s8 offset-s2">
+                <div class="card z-depth-4">
+                    <div class="card-content">
+                        <span class="card-title text-darken-2">Song</span>
+                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                            <c:if test="${not empty song}">
+                                <input type="hidden" name="command" value="update_song">
+                                <input type="hidden" name="song_id" value="${song.songId}">
+                            </c:if>
+                            <c:if test="${empty song}">
+                                <input type="hidden" name="command" value="create_song">
+                            </c:if>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="id-song-name" type="text" name="song_name" value="${song.name}">
+                                    <label for="id-song-name">Name</label>
+                                </div>
+                            </div>
 
-                <div class="input-field col s12">
-                    <input type="text" name="song_cost" value="${song.cost}">
-                    <label>Cost</label>
-                </div>
-                <div class="input-field col s12">
-                    <input type="date" class="datepicker" name="song_publication_date" value="${song.publicationDate}">
-                </div>
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>File</span>
-                        <input type="file">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="song_file_path" value="${song.filePath}">
-                    </div>
-                </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="id-song-year" type="text" name="song_year" value="${song.year}">
+                                    <label for="id-song-year">Year</label>
+                                </div>
+                            </div>
 
-                <button class="btn" type="submit">Save changes</button>
-            </form>
+                            <div class="row">
+
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <select multiple class="icons" id="id-authors" name="selected_authors">
+                                        <option value="" disabled selected>Select authors</option>
+                                        <c:forEach items="${requestScope.all_authors}" var="item">
+                                            <c:choose>
+                                                <c:when test="${fn:contains(song_authors, item)}">
+                                                    <option value="${item.authorId}" selected data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${item.authorId}" data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                    </select>
+                                    <label for="id-authors">Authors</label>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <select multiple class="icons" id="id-albums" name="selected_albums">
+                                        <option value="" disabled selected>Select album</option>
+                                        <c:forEach items="${requestScope.all_albums}" var="item">
+                                            <c:choose>
+                                                <c:when test="${fn:contains(song_albums, item)}">
+                                                    <option value="${item.albumId}" selected>${item.name}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${item.albumId}">${item.name}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                    </select>
+                                    <label for="id-albums">Albums</label>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="id-song-cost" type="text" name="song_cost" value="${song.cost}">
+                                    <label for="id-song-cost">Cost</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="id-song-date" type="date" class="datepicker" name="song_publication_date" value="${song.publicationDate}">
+                                </div>
+                                <label for="id-song-date">Publication date</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>File</span>
+                                        <input type="file">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input  id="id-song-file-path"class="file-path validate" type="text" name="song_file_path" value="${song.filePath}">
+                                    </div>
+                                </div>
+                                <label for="id-song-file-path">File</label>
+                            </div>
+
+                            <div class="card-action">
+                                <div class="row">
+                                    <button class="btn col s12 teal" type="submit">Save changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <c:import url="/jsp/footer.jsp"/>
 </div>
 </main>
+<c:import url="/jsp/footer.jsp"/>
 
 
 </body>

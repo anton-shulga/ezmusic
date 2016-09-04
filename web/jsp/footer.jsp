@@ -9,12 +9,6 @@
 <html>
 <head>
     <title>Footer</title>
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../css/styles.css" media="screen,projection"/>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="../js/bin/materialize.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta charset="utf-8">
     <script>
         function changeLocale(locale) {
             $.ajax({
@@ -31,8 +25,7 @@
     </script>
 </head>
 <body>
-    <footer class="page-footer teal">
-        <div class="footer-copyright teal">
+        <div class="footer-copyright black">
             <div class="row right">
                 <input type="image" src="../img/logo/ru.png" onclick="changeLocale('ru_RU')"/>
                 <input type="image" src="../img/logo/eng.png" onclick="changeLocale('default')"/>

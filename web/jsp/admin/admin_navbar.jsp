@@ -18,28 +18,27 @@
         <li>
             <form name="homeForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="home_admin">
-                <a class="waves-effect waves-teal" href="javascript:document.homeForm.submit()">Home</a>
+                <a class="waves-effect" href="javascript:document.homeForm.submit()">Home</a>
             </form>
         </li>
         <li>
             <form name="songsForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_all_songs_admin">
-                <a class="waves-effect waves-teal" href="javascript:document.songsForm.submit()">Songs</a>
+                <a class="waves-effect " href="javascript:document.songsForm.submit()">Songs</a>
             </form>
         </li>
         <li>
             <form name="authorsForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_all_authors_admin">
-                <a class="waves-effect waves-teal" href="javascript:document.authorsForm.submit()">Authors</a>
+                <a class="waves-effect" href="javascript:document.authorsForm.submit()">Authors</a>
             </form>
         </li>
         <li>
             <form name="albumsForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_all_albums_admin">
-                <a class="waves-effect waves-teal" href="javascript:document.albumsForm.submit()">Albums</a>
+                <a class="waves-effect" href="javascript:document.albumsForm.submit()">Albums</a>
             </form>
         </li>
     </ul>
-    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 </body>
 </html>

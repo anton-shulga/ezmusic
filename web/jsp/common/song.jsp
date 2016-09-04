@@ -1,4 +1,4 @@
-<%--
+--
   Created by IntelliJ IDEA.
   User: Антон
   Date: 22.08.2016

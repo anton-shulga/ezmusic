@@ -34,40 +34,55 @@
 <main>
     <div class="wrapper">
         <div class="container">
-            <ul class="collection">
-                <c:forEach items="${sessionScope.cart.songList}" var="song">
-                    <li class="collection-item avatar">
-                        <i class="material-icons circle red">play_arrow</i>
-                        <span class="title"><b>Name: </b>${song.name}</span>
-                        <p>
-                            <b>Authors:</b>
-                            <c:forEach items="${song.authorList}" var="author">
-                                ${author.name};
-                            </c:forEach><br>
-                            <b>Albums :</b>
-                            <c:forEach items="${song.albumList}" var="album">
-                                ${album.name};
-                            </c:forEach>
-                        </p>
-                        <div class="secondary-content">
-                                <form action="controller">
-                                    <input type="hidden" name="command" value="delete_song_from_cart"/>
-                                    <input type="hidden" name="song_id" value="${song.songId}"/>
-                                    <button class="btn-floating waves-effect waves-light green accent-4" onclick="addSongToOrder(${song.songId})"><i class="material-icons">delete</i></button>
-                                </form>
+            <div class="row">
+                <div class="col s8 offset-s2">
+                    <div class="card z-depth-4">
+                        <div class="card-content">
+                            <span class="card-title">Cart</span>
+                            <c:if test="${not empty sessionScope.cart.songList}">
+                                <ul class="collection">
+                                    <c:forEach items="${sessionScope.cart.songList}" var="song">
+                                        <li class="collection-item avatar">
+                                            <i class="material-icons circle red">play_arrow</i>
+                                            <span class="title"><b>Name: </b>${song.name}</span>
+                                            <p>
+                                                <b>Authors:</b>
+                                                <c:forEach items="${song.authorList}" var="author">
+                                                    ${author.name};
+                                                </c:forEach><br>
+                                                <b>Albums :</b>
+                                                <c:forEach items="${song.albumList}" var="album">
+                                                    ${album.name};
+                                                </c:forEach>
+                                            </p>
+                                            <div class="secondary-content">
+                                                <form action="controller">
+                                                    <input type="hidden" name="command" value="delete_song_from_cart"/>
+                                                    <input type="hidden" name="song_id" value="${song.songId}"/>
+                                                    <button class="btn-floating waves-effect waves-light black" onclick="addSongToOrder(${song.songId})"><i class="material-icons">delete</i></button>
+                                                </form>
+                                            </div>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                                <div class="card-action">
+                                    <div class="row">
+                                        <form action="controller">
+                                            <input type="hidden" name="command" value="pay_for_order"/>
+                                            <button class="btn col s12 waves-effect waves-light black" type="submit">Pay ${cart.totalCost}</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </c:if>
                         </div>
-                    </li>
-                </c:forEach>
-                <li class="collection-item right">
-                    <form action="controller">
-                        <input type="hidden" name="command" value="pay_for_order"/>
-                        <button class="btn waves-effect waves-light green accent-4" onclick="addSongToOrder(${song.songId})">Pay ${cart.totalCost}</button>
-                    </form>
-                </li>
-            </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        <c:import url="../footer.jsp"/>
     </div>
 </main>
+
+        <c:import url="../footer.jsp"/>
+
 </body>
 </html>

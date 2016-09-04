@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="file-field input-field col s12">
-                                        <div class="btn teal">
+                                        <div class="btn black">
                                             <span>File</span>
                                             <input type="file">
                                         </div>
@@ -127,7 +127,7 @@
                                 </div>
                                 <div class="card-action">
                                     <div class="row">
-                                        <button class="btn col s12 teal" type="submit">Save changes</button>
+                                        <button class="btn col s12 black" type="submit">Save changes</button>
                                     </div>
                                 </div>
                             </form>

@@ -47,7 +47,7 @@
                                                         <form action="${pageContext.request.contextPath}/controller" method="POST">
                                                             <input type="hidden" name="command" value="find_song_for_update">
                                                             <input type="hidden" name="song_id" value="${song.songId}">
-                                                            <button class="btn-floating teal" type="submit">
+                                                            <button class="btn-floating black" type="submit">
                                                                 <i class="material-icons">mode_edit</i>
                                                             </button>
                                                         </form>
@@ -70,7 +70,7 @@
                                     <div class="row">
                                         <form action="${pageContext.request.contextPath}/controller" method="POST">
                                             <input type="hidden" name="command" value="find_song_for_create">
-                                            <button class="btn col s12 teal" type="submit">
+                                            <button class="btn col s12 black" type="submit">
                                                 <i class="material-icons">add</i>
                                             </button>
                                         </form>
