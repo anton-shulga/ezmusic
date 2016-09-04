@@ -69,8 +69,8 @@
 <div class="wrapper">
     <div class="container">
         <div class="row">
-            <div class="col s6 offset-s3">
-                <div class="card z-depth-5">
+            <div class="col s8 offset-s2">
+                <div class="card z-depth-4">
                     <div class="card-content">
                         <span class="card-title grey-text text-darken-2">Registration</span>
                         <div class="row">
@@ -82,9 +82,9 @@
                             <input name="command" type="hidden" value="register"/>
                             <div class="row">
                                 <div class="input-field col s12 required">
-                                        <i class="material-icons prefix">perm_identity</i>
-                                        <input id="id-user-login" name="user_login" type="text" required minlength="3">
-                                        <label for="id-user-login">Username</label>
+                                    <i class="material-icons prefix">perm_identity</i>
+                                    <input id="id-user-login" name="user_login" type="text" required minlength="3">
+                                    <label for="id-user-login">Username</label>
                                 </div>
                             </div>
                             <div class="row">

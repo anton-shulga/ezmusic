@@ -28,6 +28,7 @@ public class DeleteAlbumCommand implements Command {
                 DeleteAlbumService.delete(ParameterParser.parseLong(albumId));
                 ArrayList<Album> allAlbums = FindAllAlbumsService.find();
                 request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+                request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted album");
                 page = JspPageName.ADMIN_ALL_ALBUMS;
             } catch (ServiceException e) {
                 throw new CommandException("Delete album command exception", e);

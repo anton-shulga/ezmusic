@@ -30,7 +30,7 @@
 <div class="wrapper">
     <div class="container">
         <div class="row">
-            <div class="col s6 offset-s3">
+            <div class="col s8 offset-s2">
                 <div class="card z-depth-5">
                     <div class="card-content">
                         <span class="card-title text-darken-2">Sign in</span>

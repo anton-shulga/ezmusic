@@ -53,66 +53,88 @@
 <main>
     <div class="wrapper">
         <div class="container">
-
-            <form action="${pageContext.request.contextPath}/controller" method="POST">
-                <c:if test="${not empty album}">
-                    <input type="hidden" name="command" value="update_album">
-                    <input type="hidden" name="album_id" value="${album.albumId}">
-                </c:if>
-                <c:if test="${empty album}">
-                    <input type="hidden" name="command" value="create_album">
-                </c:if>
-                <div class="input-field col s12">
-                    <input type="text" name="album_name" value="${album.name}">
-                    <label>Name</label>
-                </div>
-                <div class="input-field col s12">
-                    <input type="text" name="album_year" value="${album.year}">
-                    <label>Year</label>
-                </div>
-                <div class="input-field col s12">
-                    <select multiple class="icons" id="id-authors" name="selected_authors">
-                        <option value="" disabled selected>Select authors</option>
-                        <c:forEach items="${requestScope.all_authors}" var="item">
-                            <c:choose>
-                                <c:when test="${fn:contains(album_authors, item)}">
-                                    <option value="${item.authorId}" selected data-icon="${item.photoPath}" class="circle">${item.name}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="${item.authorId}" data-icon="${item.photoPath}" class="circle">${item.name}</option>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </select>
-                    <label>Authors</label>
-                </div>
-                <div class="input-field col s12">
-                    <select multiple class="icons" id="id-songs" name="selected_songs">
-                        <option value="" disabled selected>Select songs</option>
-                        <c:forEach items="${requestScope.all_songs}" var="item">
-                            <c:choose>
-                                <c:when test="${fn:contains(album_songs, item)}">
-                                    <option value="${item.songId}" selected>${item.name}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="${item.songId}">${item.name}</option>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </select>
-                    <label>Albums</label>
-                </div>
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>File</span>
-                        <input type="file">
+            <div class="row">
+                <div class="col s8 offset-s2">
+                    <div class="card z-depth-4">
+                        <div class="card-content">
+                            <span class="card-title text-darken-2">Album</span>
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <c:if test="${not empty album}">
+                                    <input type="hidden" name="command" value="update_album">
+                                    <input type="hidden" name="album_id" value="${album.albumId}">
+                                </c:if>
+                                <c:if test="${empty album}">
+                                    <input type="hidden" name="command" value="create_album">
+                                </c:if>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="id-album-name" type="text" name="album_name" value="${album.name}" required>
+                                        <label for="id-album-name">Name</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="id-album-year" type="text" name="album_year" value="${album.year}" required>
+                                        <label for="id-album-year">Year</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <select multiple class="icons" id="id-authors" name="selected_authors">
+                                            <option value="" disabled selected>Select authors</option>
+                                            <c:forEach items="${requestScope.all_authors}" var="item">
+                                                <c:choose>
+                                                    <c:when test="${fn:contains(album_authors, item)}">
+                                                        <option value="${item.authorId}" selected data-icon="${item.photoPath}" class="circle">${item.name}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${item.authorId}" data-icon="${item.photoPath}" class="circle">${item.name}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
+                                        <label for="id-authors">Authors</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <select multiple class="icons" id="id-songs" name="selected_songs">
+                                            <option value="" disabled selected>Select songs</option>
+                                            <c:forEach items="${requestScope.all_songs}" var="item">
+                                                <c:choose>
+                                                    <c:when test="${fn:contains(album_songs, item)}">
+                                                        <option value="${item.songId}" selected>${item.name}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${item.songId}">${item.name}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
+                                        <label for="id-songs">Albums</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="file-field input-field col s12">
+                                        <div class="btn teal">
+                                            <span>File</span>
+                                            <input type="file">
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text" name="album_image_file_path" value="${album.imageFilePath}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-action">
+                                    <div class="row">
+                                        <button class="btn col s12 teal" type="submit">Save changes</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="album_image_file_path" value="${album.imageFilePath}">
-                    </div>
                 </div>
-                <button class="btn" type="submit">Save changes</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>
