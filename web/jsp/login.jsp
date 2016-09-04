@@ -29,38 +29,51 @@
 <main>
 <div class="wrapper">
     <div class="container">
-        <div class="card">
-            <form method="POST" action="${pageContext.request.contextPath}/controller">
-                <input type="hidden" name="command" value="login"/>
-                <div class="card-content">
-                    <span class="card-title grey-text text-darken-2">Login</span>
-                    <div class="row">
-                        <div class="input-field col s12 required" id="id-user-login-container">
-                            <i class="material-icons prefix">perm_identity</i><input id="id-user-login" name="user_login" type="text" required>
-                            <label for="id-user-login">Username</label>
+        <div class="row">
+            <div class="col s6 offset-s3">
+                <div class="card z-depth-5">
+                    <div class="card-content">
+                        <span class="card-title text-darken-2">Sign in</span>
+                        <div class="row">
+                            <div class="input-field col s12 center">
+                                <img src="../img/logo/site-logo.png" alt="" class="responsive-img valign profile-image-login">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12 required" id="id-user-password-container">
-                            <i class="material-icons prefix">lock</i><input id="id-user-password" name="user_password" type="password" required>
-                            <label for="id-user-password">Password</label>
-                        </div>
+                        <form method="POST" action="${pageContext.request.contextPath}/controller">
+                            <input type="hidden" name="command" value="login"/>
+                            <div class="row">
+                                <div class="input-field col s12 required">
+                                    <i class="material-icons prefix">perm_identity</i>
+                                    <input id="id-user-login" name="user_login" type="text" required>
+                                    <label for="id-user-login">Username</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12 required">
+                                    <i class="material-icons prefix">lock</i><input id="id-user-password" name="user_password" type="password" required>
+                                    <label for="id-user-password">Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button id="id-sing-in-button" class="col s12 waves-effect waves-light btn teal" type="submit">Sign in</button>
+                            </div>
+                            </form>
+
+                            <div class="row">
+                                <form action="controller" method="POST">
+                                    <input type="hidden" name="command" value="to_register">
+                                    <button class="col s12 waves-effect waves-light btn teal" type="submit">Sign up</button>
+                                </form>
+                            </div>
                     </div>
                 </div>
-                <div class="card-action">
-                    <div class="right-align">
-                        <button class="waves-effect waves-light btn green accent-4" type="submit">Submit</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-    <c:if test="${requestScope.message != null}">
-        <div class="card-title center">
-                ${requestScope.message}
-        </div>
-    </c:if>
 </div>
+    <c:if test="${requestScope.message != null}">
+        <script> Materialize.toast('${requestScope.message}', 4000);</script>
+    </c:if>
 </main>
 <c:import url="footer.jsp"/>
 

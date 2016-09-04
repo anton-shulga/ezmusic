@@ -67,85 +67,85 @@
 <c:import url="common_navbar.jsp"/>
 <main>
 <div class="wrapper">
-    <div class="container col s6" >
-        <div class="card s6">
-            <form method="POST" action="${pageContext.request.contextPath}/controller">
-                <input name="command" type="hidden" value="register"/>
-                <div class="card-content">
-                    <span class="card-title grey-text text-darken-2">Registration</span>
-                    <div class="row">
-                        <div class="input-field col s12 required">
-                            <i class="material-icons prefix">perm_identity</i><input id="id-user-login" name="user_login" type="text" required minlength="3">
-                            <label for="id-user-login">Username</label>
+    <div class="container">
+        <div class="row">
+            <div class="col s6 offset-s3">
+                <div class="card z-depth-5">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-2">Registration</span>
+                        <div class="row">
+                            <div class="input-field col s12 center">
+                                <img src="../img/logo/site-logo.png" alt="" class="responsive-img valign profile-image-login">
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 required" >
-                            <i class="material-icons prefix">email</i><input id="id-user-email" name="user_email" type="email" required>
-                            <label for="id-user-email" class="">Email Address</label>
-                        </div>
-                    </div>
-
-                    <div class="layout-row row">
-                        <div class="col s12 m6">
+                        <form method="POST" action="${pageContext.request.contextPath}/controller">
+                            <input name="command" type="hidden" value="register"/>
                             <div class="row">
                                 <div class="input-field col s12 required">
-                                    <i class="material-icons prefix">lock</i><input id="id-user-password" name="user_password" type="password" required>
+                                        <i class="material-icons prefix">perm_identity</i>
+                                        <input id="id-user-login" name="user_login" type="text" required minlength="3">
+                                        <label for="id-user-login">Username</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12 required" >
+                                    <i class="material-icons prefix">email</i>
+                                    <input id="id-user-email" name="user_email" type="email" required>
+                                    <label for="id-user-email" class="">Email Address</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12 required">
+                                    <i class="material-icons prefix">lock</i>
+                                    <input id="id-user-password" name="user_password" type="password" required>
                                     <label for="id-user-password" class="">Password</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col s12 m6">
                             <div class="row">
                                 <div class="input-field col s12 required">
+                                    <i class="material-icons prefix">lock</i>
                                     <input id="id-password-confirm" name="user-password-confirm" type="password" required>
                                     <label for="id-password-confirm">Confirm password</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col s12 m6">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <i class="material-icons prefix">person_pin</i><input id="id-user-first-name" name="user_first_name" type="text" required>
+                                    <i class="material-icons prefix">person_pin</i>
+                                    <input id="id-user-first-name" name="user_first_name" type="text" required>
                                     <label for="id-user-first-name" class="">First name</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col s12 m6">
                             <div class="row">
                                 <div class="input-field col s12">
+                                    <i class="material-icons prefix">person_pin</i>
                                     <input id="id-user-surname" name="user_surname" type="text" required>
                                     <label for="id-user-surname">Last name</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col s12 m12">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <i class="material-icons prefix">phone</i><input id="id-user-phone" name="user_phone" type="text" required pattern="[+]{0,1}[0-9]{12}" title="Phone example: +375251112223">
+                                    <i class="material-icons prefix">phone</i>
+                                    <input id="id-user-phone" name="user_phone" type="text" required pattern="[+]{0,1}[0-9]{12}" title="Phone example: +375251112223">
                                     <label for="id-user-phone">Phone</label>
                                 </div>
                             </div>
-                        </div>
+                            <div class="card-action">
+                                <div class="row">
+                                    <button id="id-submit" class="col s12 waves-effect waves-light btn teal" type="submit">Sign up</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="card-action">
-                    <div class="right-align">
-                        <button id="id-submit" class="waves-effect waves-light btn green accent-4" type="submit">Submit</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-    <c:if test="${requestScope.message != null}">
-        <div class="card-title center">
-                ${requestScope.message}
-        </div>
-    </c:if>
-</div> <!-- End wrapper-->
-</main>
+        <c:if test="${requestScope.message != null}">
+            <div class="card-title center">
+                    ${requestScope.message}
+            </div>
+        </c:if>
+    </div> <!-- End wrapper-->
+    </main>
 <c:import url="footer.jsp"/>
-
 </body>
 </html>

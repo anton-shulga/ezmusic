@@ -5,6 +5,6 @@ package by.epam.webpoject.ezmusic.validator;
  */
 public class RegisterRequestValidator {
     public static boolean validate(String login, String password, String username, String surname, String email, String phone){
-       return login.isEmpty() && password.isEmpty() && username.isEmpty() && surname.isEmpty() && email.isEmpty() && phone.isEmpty();
+       return true;
     }
 }

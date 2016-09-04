@@ -49,5 +49,5 @@ public enum CommandName {
     DELETE_SONG_FROM_CART,
     PAY_ORDER,
     FIND_SONG_USER,
-    CREATE_COMMENT
+    ADD_FUNDS, CREATE_COMMENT
 }

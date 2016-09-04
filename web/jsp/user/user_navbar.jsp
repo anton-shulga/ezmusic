@@ -15,6 +15,20 @@
     <link type="text/css" rel="stylesheet" href="../../css/styles.css" media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
+    <script>
+        function addFunds() {
+            var moneyAmount = $('#id-money-amount').val();
+            $.ajax({
+                url: 'JsonController',
+                method: "post",
+                data: {
+                    money_amount: moneyAmount, command: "add_funds"
+                }
+            }).done(function (data) {
+                location.reload();
+            })
+        }
+    </script>
 </head>
 <body>
     <ul id="slide-out" class="side-nav fixed">

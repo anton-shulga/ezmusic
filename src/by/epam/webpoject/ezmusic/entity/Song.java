@@ -103,9 +103,9 @@ public class Song {
         if (!name.equals(song.name)) return false;
         if (!filePath.equals(song.filePath)) return false;
         if (!publicationDate.equals(song.publicationDate)) return false;
-        if (!authorList.equals(song.authorList)) return false;
-        if (!albumList.equals(song.albumList)) return false;
-        return commentList.equals(song.commentList);
+        if (authorList != null ? !authorList.equals(song.authorList) : song.authorList != null) return false;
+        if (albumList != null ? !albumList.equals(song.albumList) : song.albumList != null) return false;
+        return commentList != null ? commentList.equals(song.commentList) : song.commentList == null;
 
     }
 
@@ -120,9 +120,9 @@ public class Song {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + filePath.hashCode();
         result = 31 * result + publicationDate.hashCode();
-        result = 31 * result + authorList.hashCode();
-        result = 31 * result + albumList.hashCode();
-        result = 31 * result + commentList.hashCode();
+        result = 31 * result + (authorList != null ? authorList.hashCode() : 0);
+        result = 31 * result + (albumList != null ? albumList.hashCode() : 0);
+        result = 31 * result + (commentList != null ? commentList.hashCode() : 0);
         return result;
     }
 }

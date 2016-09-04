@@ -26,22 +26,16 @@
     <ul class="right hide-on-med-and-down">
         <c:if test="${empty sessionScope.user }">
             <li>
-                <form action="${pageContext.request.contextPath}/controller" method="POST">
-                    <input type="hidden" name="command" value="to_login"/>
-                    <button class="btn waves-effect waves-light green accent-4" type="submit"><fmt:message key="button.sign_in"/></button>
-                </form>
-            </li>
-            <li>
-                <form action="${pageContext.request.contextPath}/controller" method="POST">
-                    <input type="hidden" name="command" value="to_register"/>
-                    <button class="waves-effect waves-light btn  green accent-4" type="submit"><fmt:message key="button.sign_up"/></button>
+                <form name="toLoginForm" action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="to_login">
+                    <a href="javascript:document.toLoginForm.submit()"><img src="../img/logo/login-logo.png"></a>
                 </form>
             </li>
         </c:if>
         <c:if test="${not empty sessionScope.user }">
-            <form action="${pageContext.request.contextPath}/controller" method="POST">
-                <input type="hidden" name="command" value="logout"/>
-                <button class="waves-effect waves-light btn  green accent-4" type="submit">Logout</button>
+            <form name="logoutForm" action="${pageContext.request.contextPath}/controller" method="POST">
+                <input type="hidden" name="command" value="logout">
+                <a href="javascript:document.logoutForm.submit()"><img src="../img/logo/logout-logo.png"></a>
             </form>
         </c:if>
     </ul>
