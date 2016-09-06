@@ -21,14 +21,16 @@ public class FindAllSongsCommand implements Command {
         ArrayList<Song> songList = null;
         try {
             songList = FindAllSongsService.find();
+            if(songList != null ){
+                request.setAttribute(RequestParameter.ALL_SONGS, songList);
+                page = JspPageName.ADMIN_ALL_SONGS;
+            }else {
+                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                page = JspPageName.ADMIN_HOME;
+            }
         } catch (ServiceException e) {
-            throw new CommandException("Find songs command error", e);
+            throw new CommandException("Find songs command exception", e);
         }
-        if(songList != null ){
-            request.setAttribute(RequestParameter.ALL_SONGS, songList);
-            return JspPageName.ADMIN_ALL_SONGS;
-        }else {
-            return JspPageName.ADMIN_HOME;
-        }
+        return page;
     }
 }

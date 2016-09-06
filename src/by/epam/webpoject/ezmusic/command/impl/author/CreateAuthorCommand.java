@@ -27,9 +27,10 @@ public class CreateAuthorCommand implements Command {
         String name = request.getParameter(RequestParameter.AUTHOR_NAME);
         String country = request.getParameter(RequestParameter.AUTHOR_COUNTRY);
         String photoPath = request.getParameter(RequestParameter.AUTHOR_PHOTO_PATH);
+        Author author = null;
         boolean isValidRequest = AuthorParametersValidator.validateCreateParameters(albumIds, songIds, name, country, photoPath);
         if(isValidRequest) {
-            Author author = new Author();
+            author = new Author();
             author.setName(name);
             author.setCountry(country);
             author.setPhotoPath(photoPath);
@@ -38,15 +39,18 @@ public class CreateAuthorCommand implements Command {
                 if (generatedId != null) {
                     ArrayList<Author> allAuthors = FindAllAuthorsService.find();
                     request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                    request.setAttribute(RequestParameter.MESSAGE, "Successfully created author " + name);
                     page = JspPageName.ADMIN_ALL_AUTHORS;
                 }else {
+                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
                     page = JspPageName.ADMIN_HOME;
                 }
             } catch (ServiceException e) {
-                throw new CommandException("Create author command error", e);
+                throw new CommandException("Create author command exception", e);
             }
         }else {
-            page = JspPageName.ERROR;
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
+            page = JspPageName.ADMIN_HOME;
         }
         return page;
 

@@ -34,7 +34,8 @@ public class DeleteAlbumCommand implements Command {
                 throw new CommandException("Delete album command exception", e);
             }
         }else {
-            page = JspPageName.ERROR;
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+            page = JspPageName.ADMIN_ALL_ALBUMS;
         }
         return page;
     }

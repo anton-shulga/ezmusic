@@ -26,27 +26,32 @@ public class FindSongForUpdateCommand implements Command {
         Song song = null;
         ArrayList<Album> allAlbums = null;
         ArrayList<Author> allAuthors = null;
+
         String songId = request.getParameter(RequestParameter.SONG_ID);
+
         boolean isValidRequest = SongParametersValidator.validateFindParameters(songId);
         if(isValidRequest){
             try {
                 song = FindSongByIdService.find(Long.parseLong(songId));
                 allAlbums = FindAllAlbumsService.find();
                 allAuthors = FindAllAuthorsService.find();
+                if(song != null  && allAuthors != null && allAlbums != null){
+                    request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                    request.setAttribute(RequestParameter.SONG_AUTHORS, song.getAuthorList());
+                    request.setAttribute(RequestParameter.SONG_ALBUMS, song.getAlbumList());
+                    request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+                    request.setAttribute(RequestParameter.SONG, song);
+                    page = JspPageName.ADMIN_EDIT_SONG;
+                }else {
+                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                    page = JspPageName.ADMIN_HOME;
+                }
             } catch (ServiceException e) {
                 throw new CommandException("Find song command exception", e);
             }
-            if(song != null  && allAuthors != null && allAlbums != null){
-                request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-                request.setAttribute(RequestParameter.SONG_AUTHORS, song.getAuthorList());
-                request.setAttribute(RequestParameter.SONG_ALBUMS, song.getAlbumList());
-                request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
-                request.setAttribute(RequestParameter.SONG, song);
-                page = JspPageName.ADMIN_EDIT_SONG;
-            }else {
-                page = JspPageName.ADMIN_HOME;
-            }
+
         }else {
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
             page = JspPageName.ADMIN_HOME;
         }
         return page;

@@ -21,12 +21,14 @@ import java.util.Set;
 public class FindAlbumSongsJsonCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        Set<Song> albumSongs = new HashSet<>();
         String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS + "[]");
+
+        Set<Song> albumSongs = null;
+
         boolean isValidRequest = SongParametersValidator.validateFindJsonParameters(albumIds);
         if(isValidRequest) {
             try {
-
+                albumSongs = new HashSet<>();
                 if (albumIds == null) {
                     albumSongs.addAll(FindAllSongsService.find());
                 } else {

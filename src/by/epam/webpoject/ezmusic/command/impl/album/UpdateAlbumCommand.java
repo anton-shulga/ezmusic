@@ -27,9 +27,10 @@ public class UpdateAlbumCommand implements Command {
         String name = request.getParameter(RequestParameter.ALBUM_NAME);
         String year = request.getParameter(RequestParameter.ALBUM_YEAR);
         String filePath = request.getParameter(RequestParameter.ALBUM_IMAGE_FILE_PATH);
+        Album album = null;
         boolean isValidRequest = AlbumParametersValidator.validateUpdateParameters(albumId, songIds, authorIds, name, year, filePath);
         if(isValidRequest) {
-            Album album = new Album();
+            album = new Album();
             album.setAlbumId(ParameterParser.parseLong(albumId));
             album.setName(name);
             album.setYear(ParameterParser.parseInt(year));
@@ -38,11 +39,13 @@ public class UpdateAlbumCommand implements Command {
                 UpdateAlbumService.update(album, ParameterParser.parseLongArray(songIds), ParameterParser.parseLongArray(authorIds));
                 ArrayList<Album> albumList = FindAllAlbumsService.find();
                 request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
+                request.setAttribute(RequestParameter.MESSAGE, "Successfully updated album");
                 page = JspPageName.ADMIN_ALL_ALBUMS;
             } catch (ServiceException e) {
                 throw new CommandException("Update album command exception", e);
             }
         }else {
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters.");
             page = JspPageName.ADMIN_HOME;
         }
         return page;

@@ -18,7 +18,9 @@ public class FindCartUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
+
         User user = (User) request.getSession().getAttribute(RequestParameter.USER);
+
         try {
             Order cart = FindCartByUserIdService.find(user.getUserId());
             request.setAttribute(RequestParameter.CART, cart);

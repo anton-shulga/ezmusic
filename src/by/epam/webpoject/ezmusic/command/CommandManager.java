@@ -23,7 +23,6 @@ public class CommandManager {
         availableCommands.put(CommandName.TO_REGISTER, new ToRegisterCommand());
         availableCommands.put(CommandName.LOGIN, new LoginCommand());
         availableCommands.put(CommandName.REGISTER, new RegisterUserCommand());
-        availableCommands.put(CommandName.DELETE_USER, new DeleteUserCommand());
         availableCommands.put(CommandName.FIND_USER, new FindUserCommand());
         availableCommands.put(CommandName.UPDATE_USER, new UpdateUserCommand());
         availableCommands.put(CommandName.CHECK_LOGIN_AVAILABILITY, new CheckLoginAvailabilityCommand());

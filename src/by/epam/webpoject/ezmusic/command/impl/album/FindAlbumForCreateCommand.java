@@ -22,18 +22,18 @@ public class FindAlbumForCreateCommand implements Command {
         String page = null;
         ArrayList<Author> allAuthors = null;
         ArrayList<Song> allSongs = null;
-        try{
+        try {
             allAuthors = FindAllAuthorsService.find();
             allSongs = FindAllSongsService.find();
+            if(allAuthors != null && allSongs != null) {
+                request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
+                page = JspPageName.ADMIN_EDIT_ALBUM;
+            }else {
+                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+            }
         } catch (ServiceException e) {
             throw new CommandException("Find album command exception", e);
-        }
-        if(allAuthors != null && allSongs != null){
-            request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-            request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
-            page = JspPageName.ADMIN_EDIT_ALBUM;
-        }else {
-            page = JspPageName.ADMIN_HOME;
         }
         return page;
     }

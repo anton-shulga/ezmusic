@@ -23,6 +23,9 @@ public class FindCartByUserIdService {
         SongDAO songDAO = (SongDAO) DAOFactory.createSongDAO();
         try {
             Order cart = orderDAO.findCartByUserId(userId);
+            if(cart == null){
+                return null;
+            }
             ArrayList<Song> songList = songDAO.findByOrderId(cart.getOrderId());
             ArrayList<Author> songAuthors = null;
             ArrayList<Album> songAlbums = null;

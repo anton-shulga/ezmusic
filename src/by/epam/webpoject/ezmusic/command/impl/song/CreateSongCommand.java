@@ -34,10 +34,12 @@ public class CreateSongCommand implements Command {
         String publicationDate = request.getParameter(RequestParameter.SONG_PUBLICATION_DATE);
         String cost = request.getParameter(RequestParameter.SONG_COST);
 
+        Song song = null;
+
         boolean isValidRequest = SongParametersValidator.validateCreateParameters(authorIds, albumIds, name, year, filePath, publicationDate, cost);
 
         if(isValidRequest) {
-            Song song = new Song();
+            song = new Song();
             song.setName(name);
             song.setYear(Integer.parseInt(year));
             song.setFilePath(filePath);
@@ -54,6 +56,7 @@ public class CreateSongCommand implements Command {
                 }
                 song.setAlbumList(albums);
             }
+
             if(authorIds != null) {
                 Author author = null;
                 ArrayList<Author> authors = new ArrayList<>();
@@ -69,14 +72,17 @@ public class CreateSongCommand implements Command {
                 if(generatedId != null){
                     ArrayList<Song> songList = FindAllSongsService.find();
                     request.setAttribute(RequestParameter.ALL_SONGS, songList);
+                    request.setAttribute(RequestParameter.MESSAGE, "Successfully created song " + name);
                     page = JspPageName.ADMIN_ALL_SONGS;
                 }else {
+                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
                     page = JspPageName.ADMIN_HOME;
                 }
             } catch (ServiceException e) {
                 throw new CommandException("Create song command exception", e);
             }
         }else {
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
             page = JspPageName.ADMIN_HOME;
         }
         return page;

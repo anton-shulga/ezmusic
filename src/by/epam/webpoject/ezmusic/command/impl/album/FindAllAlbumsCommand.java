@@ -21,14 +21,14 @@ public class FindAllAlbumsCommand implements Command {
         ArrayList<Album> allAlbums = null;
         try {
             allAlbums = FindAllAlbumsService.find();
+            if (allAlbums != null) {
+                request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+                page = JspPageName.ADMIN_ALL_ALBUMS;
+            }else {
+                page = JspPageName.ADMIN_HOME;
+            }
         } catch (ServiceException e) {
             throw new CommandException("Find albums command exception", e);
-        }
-        if (allAlbums != null) {
-            request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
-            page = JspPageName.ADMIN_ALL_ALBUMS;
-        }else {
-            page = JspPageName.ADMIN_HOME;
         }
         return page;
     }

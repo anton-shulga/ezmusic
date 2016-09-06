@@ -4,12 +4,11 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
-import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
-import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
 import by.epam.webpoject.ezmusic.service.song.DeleteSongFromCartService;
+import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,15 +19,21 @@ public class DeleteSongFromCartCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
-        User user = (User) request.getSession().getAttribute(RequestParameter.USER);
+
         String  songId = request.getParameter(RequestParameter.SONG_ID);
-        try {
-            DeleteSongFromCartService.delete(user.getUserId(), ParameterParser.parseLong(songId));
-            Order cart = FindCartByUserIdService.find(user.getUserId());
-            request.getSession().setAttribute(RequestParameter.CART, cart);
-            page = JspPageName.USER_CART;
-        } catch (ServiceException e) {
-            throw new CommandException("Delete song from cart command exception", e);
+        Order cart = (Order) request.getSession().getAttribute(RequestParameter.CART);
+        boolean isValidRequest = SongParametersValidator.validateDeleteParameters(songId);
+        if(isValidRequest) {
+            try {
+                DeleteSongFromCartService.delete(cart, ParameterParser.parseLong(songId));
+                request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted song from cart");
+                page = JspPageName.USER_CART;
+            } catch (ServiceException e) {
+                throw new CommandException("Delete song from cart command exception", e);
+            }
+        }else {
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+            page = JspPageName.USER_HOME;
         }
         return page;
     }

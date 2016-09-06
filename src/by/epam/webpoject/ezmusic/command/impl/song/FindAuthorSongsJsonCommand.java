@@ -20,10 +20,13 @@ import java.util.Set;
 public class FindAuthorSongsJsonCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS + "[]");
-        Set<Song> authorSongs = new HashSet<>();
+        Set<Song> authorSongs = null;
+
         boolean isValidRequest = SongParametersValidator.validateFindJsonParameters(authorIds);
         if(isValidRequest) {
+            authorSongs = new HashSet<>();
             Long[] longAuthorIds = ParameterParser.parseLongArray(authorIds);
             try {
                 for (Long authorId : longAuthorIds) {

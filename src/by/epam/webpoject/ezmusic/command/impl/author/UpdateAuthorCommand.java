@@ -27,9 +27,10 @@ public class UpdateAuthorCommand implements Command{
         String name = request.getParameter(RequestParameter.AUTHOR_NAME);
         String country = request.getParameter(RequestParameter.AUTHOR_COUNTRY);
         String photoPath = request.getParameter(RequestParameter.AUTHOR_PHOTO_PATH);
+        Author author = null;
         boolean isValidRequest = AuthorParametersValidator.validateUpdateParameters(authorId, albumIds, songIds, name, country, photoPath);
         if(isValidRequest) {
-            Author author = new Author();
+            author = new Author();
             author.setAuthorId(ParameterParser.parseLong(authorId));
             author.setName(name);
             author.setCountry(country);
@@ -37,12 +38,14 @@ public class UpdateAuthorCommand implements Command{
             try {
                 UpdateAuthorService.update(author, ParameterParser.parseLongArray(albumIds), ParameterParser.parseLongArray(songIds));
                 ArrayList<Author> allAuthors = FindAllAuthorsService.find();
+                request.setAttribute(RequestParameter.MESSAGE, "Successfully updated album");
                 request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
                 page = JspPageName.ADMIN_ALL_AUTHORS;
             } catch (ServiceException e) {
                 throw new CommandException("Update author command exception", e);
             }
         }else {
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
             page = JspPageName.ADMIN_HOME;
         }
         return page;

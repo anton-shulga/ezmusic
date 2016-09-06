@@ -4,25 +4,30 @@ import by.epam.webpoject.ezmusic.dao.OrderDAO;
 import by.epam.webpoject.ezmusic.dao.SongDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
 import by.epam.webpoject.ezmusic.entity.Order;
+import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+
+import java.util.ArrayList;
 
 /**
  * Created by Антон on 30.08.2016.
  */
 public class AddSongToOrderService {
-    public static boolean add(Long userId, Long songId) throws ServiceException {
+    public static boolean add(Long songId, Order cart, Long userId) throws ServiceException {
         SongDAO songDAO = (SongDAO) DAOFactory.createSongDAO();
         OrderDAO orderDAO = (OrderDAO) DAOFactory.createOrderDAO();
         try {
-            Order unpaidOrder = orderDAO.findCartByUserId(userId);
-            if (unpaidOrder == null) {
-                unpaidOrder = new Order();
-                unpaidOrder.setPaid(false);
-                unpaidOrder.setUserId(userId);
-                unpaidOrder.setOrderId(orderDAO.create(unpaidOrder));
+            if (cart == null) {
+                cart = new Order();
+                cart.setPaid(false);
+                cart.setUserId(userId);
+                cart.setOrderId(orderDAO.create(cart));
+                cart.setSongList(new ArrayList<Song>());
             }
-            return songDAO.createSongOrder(songId, unpaidOrder.getOrderId());
+            Song song = songDAO.find(songId);
+            cart.getSongList().add(song);
+            return songDAO.createSongOrder(songId, cart.getOrderId());
         } catch (DAOException e) {
             throw new ServiceException("Add song to order service exception");
         }

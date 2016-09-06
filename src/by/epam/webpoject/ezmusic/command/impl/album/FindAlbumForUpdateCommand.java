@@ -37,25 +37,26 @@ public class FindAlbumForUpdateCommand implements Command {
             try {
                 Long longAlbumId = ParameterParser.parseLong(albumId);
                 album = FindAlbumByIdService.find(longAlbumId);
-                allAuthors = FindAllAuthorsService.find();
-                allSongs = FindAllSongsService.find();
-                albumSongs = FindSongByAlbumIdService.find(longAlbumId);
-                albumAuthors = FindAuthorByAlbumIdService.find(longAlbumId);
+                if(album != null) {
+                    allAuthors = FindAllAuthorsService.find();
+                    allSongs = FindAllSongsService.find();
+                    albumSongs = FindSongByAlbumIdService.find(longAlbumId);
+                    albumAuthors = FindAuthorByAlbumIdService.find(longAlbumId);
+                    request.setAttribute(RequestParameter.ALBUM, album);
+                    request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                    request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
+                    request.setAttribute(RequestParameter.ALBUM_AUTHORS, albumAuthors);
+                    request.setAttribute(RequestParameter.ALBUM_SONGS, albumSongs);
+                    page = JspPageName.ADMIN_EDIT_ALBUM;
+                }else {
+                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                    page = JspPageName.ADMIN_HOME;
+                }
             } catch (ServiceException e) {
                 throw new CommandException("Find album command exception", e);
             }
-            if (album != null && allAuthors != null && allSongs != null && albumAuthors != null && albumSongs != null) {
-                request.setAttribute(RequestParameter.ALBUM, album);
-                request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-                request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
-                request.setAttribute(RequestParameter.ALBUM_AUTHORS, albumAuthors);
-                request.setAttribute(RequestParameter.ALBUM_SONGS, albumSongs);
-                page = JspPageName.ADMIN_EDIT_ALBUM;
-            }else {
-                page = JspPageName.ADMIN_HOME;
-            }
-
         }else {
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
             page = JspPageName.ADMIN_HOME;
         }
         return page;

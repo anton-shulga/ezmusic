@@ -8,7 +8,6 @@ import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
-import by.epam.webpoject.ezmusic.service.order.GetOrderSongsNumberByUserIdService;
 import by.epam.webpoject.ezmusic.service.user.LoginUserService;
 import by.epam.webpoject.ezmusic.validator.LoginRequestValidator;
 
@@ -33,9 +32,8 @@ public class LoginCommand implements Command {
                         request.getSession(true).setAttribute(RequestParameter.USER, user);
                         page = JspPageName.ADMIN_HOME;
                     }else {
-                        Long orderSongsNumber = GetOrderSongsNumberByUserIdService.get(user.getUserId());
                         Order cart = FindCartByUserIdService.find(user.getUserId());
-                        request.getSession().setAttribute(RequestParameter.CART, cart);
+                        request.getSession(true).setAttribute(RequestParameter.CART, cart);
                         request.getSession().setAttribute(RequestParameter.USER, user);
                         page = JspPageName.USER_HOME;
                     }

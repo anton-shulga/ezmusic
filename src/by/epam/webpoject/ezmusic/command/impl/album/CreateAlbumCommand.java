@@ -48,7 +48,8 @@ public class CreateAlbumCommand implements Command{
                 throw new CommandException("Create album command exception", e);
             }
         }else {
-            page = JspPageName.ADMIN_HOME;
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
+            page = JspPageName.ADMIN_EDIT_ALBUM;
         }
         return page;
     }

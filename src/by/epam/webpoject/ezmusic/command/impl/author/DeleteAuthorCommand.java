@@ -28,11 +28,13 @@ public class DeleteAuthorCommand implements Command {
                 DeleteAuthorService.delete(ParameterParser.parseLong(authorId));
                 ArrayList<Author> allAuthors = FindAllAuthorsService.find();
                 request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted author");
                 page = JspPageName.ADMIN_ALL_AUTHORS;
             } catch (ServiceException e) {
                 throw new CommandException("Delete author command exception", e);
             }
         }else {
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
             page = JspPageName.ADMIN_HOME;
         }
         return page;

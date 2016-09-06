@@ -20,18 +20,26 @@ public class FindSongUserCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
         Song song = null;
+
         String songId = request.getParameter(RequestParameter.SONG_ID);
+
         boolean isValidRequest = SongParametersValidator.validateFindParameters(songId);
         if(isValidRequest){
             try {
                 song = FindSongByIdService.find(ParameterParser.parseLong(songId));
-                request.setAttribute(RequestParameter.SONG, song);
-                page = JspPageName.USER_SONG;
+                if(song != null) {
+                    request.setAttribute(RequestParameter.SONG, song);
+                    page = JspPageName.USER_SONG;
+                }else {
+                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                    page = JspPageName.USER_HOME;
+                }
             } catch (ServiceException e) {
                 throw new CommandException("Find song user command exception", e);
             }
         }else {
-            page = JspPageName.USER_ALL_SONGS;
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+            page = JspPageName.USER_HOME;
         }
         return page;
     }

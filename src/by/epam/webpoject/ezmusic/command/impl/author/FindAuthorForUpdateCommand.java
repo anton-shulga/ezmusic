@@ -36,24 +36,25 @@ public class FindAuthorForUpdateCommand implements Command {
         if(isValidRequest) {
             try {
                 author = FindAuthorByIdService.find(ParameterParser.parseLong(authorId));
-                allSongs = FindAllSongsService.find();
-                allAlbums = FindAllAlbumsService.find();
-                authorSongs = FindSongsByAuthorIdService.find(ParameterParser.parseLong(authorId));
-                authorAlbums = FindAlbumByAuthorIdService.find(ParameterParser.parseLong(authorId));
+                if (author != null ) {
+                    allSongs = FindAllSongsService.find();
+                    allAlbums = FindAllAlbumsService.find();
+                    authorSongs = FindSongsByAuthorIdService.find(ParameterParser.parseLong(authorId));
+                    authorAlbums = FindAlbumByAuthorIdService.find(ParameterParser.parseLong(authorId));
+                    request.setAttribute(RequestParameter.AUTHOR_SONGS, authorSongs);
+                    request.setAttribute(RequestParameter.AUTHOR_ALBUMS, authorAlbums);
+                    request.setAttribute(RequestParameter.AUTHOR, author);
+                    request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
+                    request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+                    page = JspPageName.ADMIN_EDIT_AUTHOR;
+                } else {
+                    page = JspPageName.ADMIN_HOME;
+                }
             } catch (ServiceException e) {
                 throw new CommandException("Find author command exception", e);
             }
-            if (author != null && allAlbums != null && allSongs != null && authorAlbums != null && authorSongs != null) {
-                request.setAttribute(RequestParameter.AUTHOR_SONGS, authorSongs);
-                request.setAttribute(RequestParameter.AUTHOR_ALBUMS, authorAlbums);
-                request.setAttribute(RequestParameter.AUTHOR, author);
-                request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
-                request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
-                page = JspPageName.ADMIN_EDIT_AUTHOR;
-            } else {
-                page = JspPageName.ADMIN_HOME;
-            }
         }else{
+
             page = JspPageName.ADMIN_HOME;
         }
         return page;

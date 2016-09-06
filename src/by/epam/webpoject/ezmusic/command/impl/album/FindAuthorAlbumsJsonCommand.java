@@ -21,9 +21,10 @@ public class FindAuthorAlbumsJsonCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS + "[]");
-        Set<Album> authorAlbums = new HashSet<>();
+        Set<Album> authorAlbums = null;
         boolean isValidRequest = AlbumParametersValidator.validateFindJsonParameters(authorIds);
         if(isValidRequest) {
+            authorAlbums = new HashSet<>();
             Long[] longAuthorIds = ParameterParser.parseLongArray(authorIds);
             try {
                 for (Long authorId : longAuthorIds) {

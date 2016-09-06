@@ -24,6 +24,7 @@ public class UpdateSongCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
+
         String songId = request.getParameter(RequestParameter.SONG_ID);
         String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
         String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
@@ -33,15 +34,18 @@ public class UpdateSongCommand implements Command {
         String publicationDate = request.getParameter(RequestParameter.SONG_PUBLICATION_DATE);
         String cost = request.getParameter(RequestParameter.SONG_COST);
 
+        Song song = null;
+
         boolean isValidRequest = SongParametersValidator.validateUpdateParameters(albumIds, authorIds, songId, name, year, filePath, publicationDate, cost);
         if(isValidRequest) {
-            Song song = new Song();
+            song = new Song();
             song.setSongId(Long.parseLong(songId));
             song.setName(name);
             song.setYear(Integer.parseInt(year));
             song.setFilePath(filePath);
             song.setPublicationDate(Date.valueOf(publicationDate));
             song.setCost(Double.parseDouble(cost));
+
             if(albumIds != null) {
                 Album album = null;
                 ArrayList<Album> albums = new ArrayList<>();
@@ -66,12 +70,14 @@ public class UpdateSongCommand implements Command {
                 UpdateSongService.update(song);
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
+                request.setAttribute(RequestParameter.MESSAGE, "Successfully updated song");
                 page = JspPageName.ADMIN_ALL_SONGS;
             } catch (ServiceException e) {
                 throw new CommandException("Update song command exception", e);
             }
         }
         else {
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
             page = JspPageName.ADMIN_HOME;
         }
         return page;

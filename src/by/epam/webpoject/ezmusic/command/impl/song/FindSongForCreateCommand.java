@@ -22,19 +22,22 @@ public class FindSongForCreateCommand implements Command {
         String page = null;
         ArrayList<Album> allAlbums = null;
         ArrayList<Author> allAuthors = null;
-            try {
-                allAlbums = FindAllAlbumsService.find();
-                allAuthors = FindAllAuthorsService.find();
-            } catch (ServiceException e) {
-                throw new CommandException("Find songs command exception", e);
-            }
-            if(allAlbums != null && allAuthors != null){
+
+        try {
+            allAlbums = FindAllAlbumsService.find();
+            allAuthors = FindAllAuthorsService.find();
+            if (allAlbums != null && allAuthors != null) {
                 request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
                 request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
                 page = JspPageName.ADMIN_EDIT_SONG;
-            }else {
+            } else {
+                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
                 page = JspPageName.ADMIN_HOME;
             }
-            return page;
+        } catch (ServiceException e) {
+            throw new CommandException("Find songs command exception", e);
+        }
+
+        return page;
     }
 }

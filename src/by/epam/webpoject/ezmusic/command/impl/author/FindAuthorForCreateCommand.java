@@ -25,16 +25,18 @@ public class FindAuthorForCreateCommand implements Command {
         try {
             allSongs = FindAllSongsService.find();
             allAlbums = FindAllAlbumsService.find();
+            if(allSongs != null && allAlbums != null){
+                request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
+                request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+                page = JspPageName.ADMIN_EDIT_AUTHOR;
+            }else {
+                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                page = JspPageName.ADMIN_HOME;
+            }
         } catch (ServiceException e) {
             throw new CommandException("Find author command exception", e);
         }
-        if(allSongs != null && allAlbums != null){
-            request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
-            request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
-            page = JspPageName.ADMIN_EDIT_AUTHOR;
-        }else {
-            page = JspPageName.ADMIN_HOME;
-        }
+
         return page;
     }
 }

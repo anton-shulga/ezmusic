@@ -21,14 +21,15 @@ public class FindAllAuthorsCommand implements Command {
         ArrayList<Author> allAuthors = null;
         try {
             allAuthors = FindAllAuthorsService.find();
+            if(allAuthors != null){
+                request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                page = JspPageName.ADMIN_ALL_AUTHORS;
+            }else {
+                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                page = JspPageName.ADMIN_HOME;
+            }
         } catch (ServiceException e) {
-            throw new CommandException("Find authors command error", e);
-        }
-        if(allAuthors != null){
-            request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-            page = JspPageName.ADMIN_ALL_AUTHORS;
-        }else {
-            page = JspPageName.ADMIN_HOME;
+            throw new CommandException("Find authors command exception", e);
         }
         return page;
     }
