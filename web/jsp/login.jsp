@@ -25,7 +25,6 @@
 
 <body>
 <c:import url="header.jsp"/>
-<c:import url="common_navbar.jsp"/>
 <main>
 <div class="wrapper">
     <div class="container">
@@ -36,7 +35,7 @@
                         <span class="card-title text-darken-2">Sign in</span>
                         <div class="row">
                             <div class="input-field col s12 center">
-                                <img src="../img/logo/site-logo.png" alt="" class="responsive-img valign profile-image-login">
+                                <img src="${pageContext.request.contextPath}/img/logo/site-logo.png" alt="" class="responsive-img valign profile-image-login">
                             </div>
                         </div>
                         <form method="POST" action="${pageContext.request.contextPath}/controller">
@@ -71,10 +70,10 @@
         </div>
     </div>
 </div>
-    <c:if test="${requestScope.message != null}">
-        <script> Materialize.toast('${requestScope.message}', 4000);</script>
-    </c:if>
 </main>
+<c:if test="${requestScope.message != null}">
+    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+</c:if>
 <c:import url="footer.jsp"/>
 
 </body>

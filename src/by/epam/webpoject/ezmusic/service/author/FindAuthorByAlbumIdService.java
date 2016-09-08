@@ -17,7 +17,7 @@ public class FindAuthorByAlbumIdService {
         try {
             return dao.findByAlbumId(albumId);
         } catch (CommandException e) {
-            throw new ServiceException("Finding author error", e);
+            throw new ServiceException("Find author service exception", e);
         }
     }
 }

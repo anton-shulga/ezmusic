@@ -26,7 +26,7 @@ public class CreateAuthorService {
                 }
             }
         } catch (DAOException e) {
-            throw new ServiceException("Creating author error", e);
+            throw new ServiceException("Create album service exception", e);
         }
         return generatedId;
     }

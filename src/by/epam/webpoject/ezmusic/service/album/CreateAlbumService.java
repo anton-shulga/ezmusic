@@ -12,21 +12,21 @@ import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 public class CreateAlbumService {
     public static Long create(Album instance, Long[] songIds, Long[] authorIds) throws ServiceException {
         Long generatedId = null;
-        AlbumDAO dao = (AlbumDAO) DAOFactory.createAlbumDAO();
+        AlbumDAO albumDAO = (AlbumDAO) DAOFactory.createAlbumDAO();
         try {
-            generatedId =  dao.create(instance);
+            generatedId =  albumDAO.create(instance);
             if(songIds != null) {
                 for (Long songId : songIds) {
-                    dao.createAlbumSong(generatedId, songId);
+                    albumDAO.createAlbumSong(generatedId, songId);
                 }
             }
             if(authorIds != null) {
                 for (Long authorId : authorIds) {
-                    dao.createAlbumAuthor(generatedId, authorId);
+                    albumDAO.createAlbumAuthor(generatedId, authorId);
                 }
             }
         } catch (DAOException e) {
-            throw new ServiceException("Creating album error", e);
+            throw new ServiceException("Create album service exception", e);
         }
         return generatedId;
     }

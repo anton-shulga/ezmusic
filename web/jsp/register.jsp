@@ -75,7 +75,7 @@
                         <span class="card-title grey-text text-darken-2">Registration</span>
                         <div class="row">
                             <div class="input-field col s12 center">
-                                <img src="../img/logo/site-logo.png" alt="" class="responsive-img valign profile-image-login">
+                                <img src="${pageContext.request.contextPath}/img/logo/site-logo.png" alt="" class="responsive-img valign profile-image-login">
                             </div>
                         </div>
                         <form method="POST" action="${pageContext.request.contextPath}/controller">
@@ -139,13 +139,14 @@
                 </div>
             </div>
         </div>
-        <c:if test="${requestScope.message != null}">
-            <div class="card-title center">
-                    ${requestScope.message}
-            </div>
-        </c:if>
-    </div> <!-- End wrapper-->
-    </main>
+    </div>
+</div><!-- End wrapper-->
+</main>
+<c:if test="${requestScope.message != null}">
+    <div class="card-title center">
+            ${requestScope.message}
+    </div>
+</c:if>
 <c:import url="footer.jsp"/>
 </body>
 </html>

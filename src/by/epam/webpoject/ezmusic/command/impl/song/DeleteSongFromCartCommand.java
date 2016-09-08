@@ -4,9 +4,11 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
+import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
+import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
 import by.epam.webpoject.ezmusic.service.song.DeleteSongFromCartService;
 import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
 
@@ -21,11 +23,15 @@ public class DeleteSongFromCartCommand implements Command {
         String page = null;
 
         String  songId = request.getParameter(RequestParameter.SONG_ID);
+        User user = (User) request.getSession().getAttribute(RequestParameter.USER);
         Order cart = (Order) request.getSession().getAttribute(RequestParameter.CART);
+
         boolean isValidRequest = SongParametersValidator.validateDeleteParameters(songId);
         if(isValidRequest) {
             try {
-                DeleteSongFromCartService.delete(cart, ParameterParser.parseLong(songId));
+                DeleteSongFromCartService.delete(ParameterParser.parseLong(songId), cart);
+                cart = FindCartByUserIdService.find(user.getUserId());
+                request.getSession().setAttribute(RequestParameter.CART, cart);
                 request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted song from cart");
                 page = JspPageName.USER_CART;
             } catch (ServiceException e) {

@@ -14,7 +14,7 @@ public class DeleteUserService {
         try {
             dao.delete(id);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Delete user service exception", e);
         }
     }
 }

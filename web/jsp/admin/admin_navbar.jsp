@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
-    <ul id="slide-out" class="side-nav fixed">
+    <ul id="slide-out" class="side-nav">
         <li>
             <form name="homeForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="home_admin">
@@ -40,5 +40,7 @@
             </form>
         </li>
     </ul>
+    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+    <script>$(".button-collapse").sideNav();</script>
 </body>
 </html>

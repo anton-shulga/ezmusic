@@ -27,7 +27,7 @@ public class UpdateAuthorService {
                 }
             }
         } catch (DAOException e) {
-            throw new ServiceException("Updating author error", e);
+            throw new ServiceException("Update author service exception", e);
         }
     }
 }

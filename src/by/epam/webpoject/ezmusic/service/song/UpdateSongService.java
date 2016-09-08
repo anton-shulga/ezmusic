@@ -29,7 +29,7 @@ public class UpdateSongService {
                 }
             }
         } catch (DAOException e) {
-            throw new ServiceException("Updating song error", e);
+            throw new ServiceException("Update song service exeption", e);
         }
     }
 }

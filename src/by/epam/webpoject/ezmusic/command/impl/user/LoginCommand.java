@@ -9,7 +9,7 @@ import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
 import by.epam.webpoject.ezmusic.service.user.LoginUserService;
-import by.epam.webpoject.ezmusic.validator.LoginRequestValidator;
+import by.epam.webpoject.ezmusic.validator.UserParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,9 +21,11 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
         User user = null;
+
         String login = request.getParameter(RequestParameter.USER_LOGIN);
         String password = request.getParameter(RequestParameter.USER_PASSWORD);
-        boolean isValidRequest = LoginRequestValidator.validate(login, password);
+
+        boolean isValidRequest = UserParametersValidator.validateLoginParameters(login, password);
         if(isValidRequest) {
             try {
                 user = LoginUserService.execute(login, password);
@@ -45,6 +47,7 @@ public class LoginCommand implements Command {
                 throw new CommandException(e);
             }
         }else {
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
             page = JspPageName.LOGIN;
         }
         return page;

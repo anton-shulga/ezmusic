@@ -15,7 +15,7 @@ public class FindAlbumByIdService {
         try {
             return dao.find(id);
         } catch (DAOException e) {
-            throw new ServiceException("Finding album error", e);
+            throw new ServiceException("Find album service exception", e);
         }
     }
 }

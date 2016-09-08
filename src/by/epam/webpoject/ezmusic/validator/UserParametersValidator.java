@@ -8,6 +8,7 @@ public class UserParametersValidator {
         if (moneyAmount != null) {
             try {
                 Double.parseDouble(moneyAmount);
+                return true;
             } catch (NumberFormatException e) {
                 return false;
             }
@@ -23,5 +24,13 @@ public class UserParametersValidator {
             return false;
         }
 
+    }
+
+    public static boolean validateLoginParameters(String login, String password) {
+        if(login == null || login.isEmpty()){
+            return false;
+        }else {
+            return true;
+        }
     }
 }

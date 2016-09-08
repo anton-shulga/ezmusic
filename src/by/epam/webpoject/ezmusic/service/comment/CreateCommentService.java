@@ -15,7 +15,7 @@ public class CreateCommentService {
         try {
             return dao.create(instance);
         } catch (DAOException e) {
-            throw new ServiceException("Creating comment error", e);
+            throw new ServiceException("Create comment service exception", e);
         }
     }
 }

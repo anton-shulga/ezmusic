@@ -33,13 +33,13 @@
 <c:import url="user_navbar.jsp"/>
 <main>
     <div class="wrapper">
+        <c:if test="${not empty sessionScope.cart.songList}">
         <div class="container">
             <div class="row">
                 <div class="col s8 offset-s2">
                     <div class="card z-depth-4">
                         <div class="card-content">
                             <span class="card-title">Cart</span>
-                            <c:if test="${not empty sessionScope.cart.songList}">
                                 <ul class="collection">
                                     <c:forEach items="${sessionScope.cart.songList}" var="song">
                                         <li class="collection-item avatar">
@@ -56,10 +56,10 @@
                                                 </c:forEach>
                                             </p>
                                             <div class="secondary-content">
-                                                <form action="controller">
+                                                <form action="controller" method="POST">
                                                     <input type="hidden" name="command" value="delete_song_from_cart"/>
                                                     <input type="hidden" name="song_id" value="${song.songId}"/>
-                                                    <button class="btn-floating waves-effect waves-light black" onclick="addSongToOrder(${song.songId})"><i class="material-icons">delete</i></button>
+                                                    <button class="btn-floating waves-effect waves-light black" type="submit"><i class="material-icons">delete</i></button>
                                                 </form>
                                             </div>
                                         </li>
@@ -67,22 +67,24 @@
                                 </ul>
                                 <div class="card-action">
                                     <div class="row">
-                                        <form action="controller">
+                                        <form action="controller" method="POST">
                                             <input type="hidden" name="command" value="pay_for_order"/>
                                             <button class="btn col s12 waves-effect waves-light black" type="submit">Pay ${cart.totalCost}</button>
                                         </form>
                                     </div>
                                 </div>
-                            </c:if>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </c:if>
     </div>
 </main>
-
-        <c:import url="../footer.jsp"/>
+<c:if test="${requestScope.message != null}">
+    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+</c:if>
+<c:import url="../footer.jsp"/>
 
 </body>
 </html>

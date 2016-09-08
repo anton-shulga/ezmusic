@@ -7,6 +7,7 @@ import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.command.CommandException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
+import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
 import by.epam.webpoject.ezmusic.service.song.AddSongToOrderService;
 import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
 
@@ -27,7 +28,9 @@ public class AddSongToOrderCommand implements Command {
         boolean isValidRequest = SongParametersValidator.validateFindParameters(songId);
         if(isValidRequest){
             try {
-                AddSongToOrderService.add(ParameterParser.parseLong(songId), cart, user.getUserId());
+                AddSongToOrderService.add(ParameterParser.parseLong(songId), cart);
+                cart = FindCartByUserIdService.find(user.getUserId());
+                request.getSession().setAttribute(RequestParameter.CART, cart);
                 output = String.valueOf(cart.getSongList().size());
             }catch (ServiceException e) {
               throw new CommandException("Add song to order command exception", e);

@@ -18,15 +18,17 @@ public class FindCartUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
-
         User user = (User) request.getSession().getAttribute(RequestParameter.USER);
-
+        Order cart = null;
         try {
-            Order cart = FindCartByUserIdService.find(user.getUserId());
-            request.setAttribute(RequestParameter.CART, cart);
+            cart = FindCartByUserIdService.find(user.getUserId());
+            if(cart.getSongList().isEmpty()){
+                request.setAttribute(RequestParameter.MESSAGE, "Your cart is empty");
+            }
+            request.getSession().setAttribute(RequestParameter.CART, cart);
             page = JspPageName.USER_CART;
         } catch (ServiceException e) {
-            throw new CommandException("Find cart command exception", e);
+            throw new CommandException("Find cart user command", e);
         }
         return page;
     }

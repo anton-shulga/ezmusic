@@ -27,7 +27,7 @@ public class FindSongByAlbumIdService {
             }
 
         } catch (DAOException e) {
-            throw new ServiceException("Finding song error", e);
+            throw new ServiceException("Find song service exception", e);
         }
         return songList;
     }

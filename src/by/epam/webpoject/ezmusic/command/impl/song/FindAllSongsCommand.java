@@ -22,6 +22,9 @@ public class FindAllSongsCommand implements Command {
         try {
             songList = FindAllSongsService.find();
             if(songList != null ){
+                if(songList.isEmpty()){
+                    request.setAttribute(RequestParameter.MESSAGE, "Not found any songs.");
+                }
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 page = JspPageName.ADMIN_ALL_SONGS;
             }else {

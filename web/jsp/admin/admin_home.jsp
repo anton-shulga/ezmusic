@@ -20,10 +20,15 @@
 <c:import url="../header.jsp"/>
 <c:import url="admin_navbar.jsp"/>
 <main>
+    <div class="wrapper">
         <div class="container">
             <ctg:hello user="${user}"/>
         </div>
+        <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+    </div>
 </main>
-<c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+<c:if test="${requestScope.message != null}">
+    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+</c:if>
 </body>
 </html>

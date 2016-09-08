@@ -30,7 +30,7 @@ public class FindAllSongsService {
                 song.setAlbumList(songAlbums);
             }
         } catch (DAOException e) {
-            throw new ServiceException("Finding song error", e);
+            throw new ServiceException("Find songs service exception", e);
         }
         return allSongs;
     }

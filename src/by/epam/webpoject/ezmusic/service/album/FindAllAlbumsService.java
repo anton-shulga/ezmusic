@@ -17,7 +17,7 @@ public class FindAllAlbumsService {
         try {
             return dao.findAll();
         } catch (DAOException e) {
-            throw new ServiceException("Finding albums error", e);
+            throw new ServiceException("Find album service exception", e);
         }
     }
 }

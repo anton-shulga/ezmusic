@@ -14,11 +14,12 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
-<ul id="slide-out" class="side-nav fixed">
+<ul id="slide-out" class="side-nav">
     <li><a class="waves-effect" href="#!">Songs</a></li>
     <li><a href="#!">Albums</a></li>
     <li><a href="#!">Authors</a></li>
 </ul>
 <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+<script>$(".button-collapse").sideNav();</script>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class FindCommentById {
         try {
             return dao.find(commentId);
         } catch (DAOException e) {
-            throw new ServiceException("Finding comment error", e);
+            throw new ServiceException("Find comment service exception", e);
         }
     }
 }

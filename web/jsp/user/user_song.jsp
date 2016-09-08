@@ -41,14 +41,14 @@
                         </div>
                     </div>
                     <div class="col s5 pull-s7">
-                        <img src="../../img/album.jpeg" alt="" class="circle user-img responsive-img">
+                        <img src="${pageContext.request.contextPath}/img/album.jpeg" alt="" class="circle user-img responsive-img">
                     </div>
                 </div>
                 <div class="col s12">
                     <ul class="collection">
                         <c:forEach items="${song.commentList}" var="comment">
                             <li class="collection-item avatar">
-                                <img src="${comment.user.photoPath}" alt="" class="circle">
+                                <img src="${pageContext.request.contextPath}/${comment.user.photoPath}" alt="" class="circle">
                                 <span class="title">${comment.user.login}</span>
                                 <p>${comment.text}</p>
                                 <div class="secondary-content">
@@ -75,6 +75,9 @@
         </div>
     </div>
 </main>
+<c:if test="${requestScope.message != null}">
+    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+</c:if>
 <c:import url="/jsp/footer.jsp"/>
 </body>
 </html>

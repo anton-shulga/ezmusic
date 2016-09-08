@@ -22,6 +22,9 @@ public class FindAllAuthorsCommand implements Command {
         try {
             allAuthors = FindAllAuthorsService.find();
             if(allAuthors != null){
+                if(allAuthors.isEmpty()){
+                    request.setAttribute(RequestParameter.MESSAGE, "Not found any authors");
+                }
                 request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
                 page = JspPageName.ADMIN_ALL_AUTHORS;
             }else {

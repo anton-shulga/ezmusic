@@ -20,9 +20,9 @@ public class MySqlOrderDAO extends OrderDAO{
     private static final String FIND_ORDER_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE order_id = ?";
     private static final String DELETE_ORDER_QUERY = "DELETE FROM ezmusicdb.order WHERE order_id = ?";
     private static final String  UPDATE_ORDER_QUERY = "UPDATE ezmusicdb.order SET user_id = ?, order_is_paid = ?, order_total_cost = ? WHERE order_id = ?";
-    private static final String FIND_ORDER_BY_USER_ID_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE user_id = ?";
+    private static final String FIND_PAID_ORDERS_BY_USER_ID_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE user_id = ? AND order_is_paid = TRUE";
     private static final String FIND_UNPAID_ORDER_BY_USER_ID_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE user_id = ? AND order_is_paid = FALSE";
-    private static final String COUNT_ORDER_SONGS_NUMBER = "SELECT count(id_order) FROM ezmusicdb.order_song WHERE id_order = ?";
+
 
 
     private MySqlOrderDAO(){}
@@ -120,7 +120,7 @@ public class MySqlOrderDAO extends OrderDAO{
         PreparedStatement statement = null;
         ArrayList<Order> orderList = new ArrayList<>();
         try{
-            statement = connection.prepareStatement(FIND_ORDER_BY_USER_ID_QUERY);
+            statement = connection.prepareStatement(FIND_PAID_ORDERS_BY_USER_ID_QUERY);
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             Order order = null;
@@ -133,7 +133,7 @@ public class MySqlOrderDAO extends OrderDAO{
                 orderList.add(order);
             }
         } catch (SQLException e) {
-            throw new DAOException("Find order dao exception", e);
+            throw new DAOException("Find orders dao exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -158,32 +158,11 @@ public class MySqlOrderDAO extends OrderDAO{
                 order.setTotalCost(resultSet.getDouble(4));
             }
         }catch (SQLException e){
-            throw new DAOException("Find order dao exception", e);
+            throw new DAOException("Find orders dao exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
         }
         return order;
-    }
-
-    @Override
-    public Long getOrderSongsNumber(Long orderId) throws DAOException {
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement statement = null;
-        Long songsNumber = null;
-        try{
-            statement = connection.prepareStatement(COUNT_ORDER_SONGS_NUMBER);
-            statement.setLong(1, orderId);
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
-               songsNumber = resultSet.getLong(1);
-            }
-        }catch (SQLException e){
-            throw new DAOException("Find order dao exception", e);
-        }finally {
-            closeStatement(statement);
-            connection.close();
-        }
-        return songsNumber;
     }
 }

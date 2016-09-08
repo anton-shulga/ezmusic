@@ -17,7 +17,7 @@ public class FindAuthorsBySongIdService {
         try {
             return dao.findBySongId(songId);
         } catch (DAOException e) {
-            throw new ServiceException("Finding author error", e);
+            throw new ServiceException("Find author service exception", e);
         }
     }
 }

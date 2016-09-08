@@ -15,7 +15,7 @@ public class FindAuthorByIdService {
         try {
             return dao.find(authorId);
         } catch (DAOException e) {
-            throw new ServiceException("Finding author error", e);
+            throw new ServiceException("Find author service exception", e);
         }
     }
 }

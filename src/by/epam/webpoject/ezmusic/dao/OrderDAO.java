@@ -17,7 +17,6 @@ public abstract class OrderDAO implements AbstractDAO<Order, Long> {
 
     public abstract ArrayList<Order> findByUserId(Long userId) throws DAOException;
     public abstract Order findCartByUserId(Long userId) throws DAOException;
-    public abstract Long getOrderSongsNumber(Long orderId) throws DAOException;
     @Override
     public void closeStatement(Statement statement) {
         try {

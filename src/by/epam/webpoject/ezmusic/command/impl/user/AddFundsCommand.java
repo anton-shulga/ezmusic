@@ -27,6 +27,7 @@ public class AddFundsCommand implements Command {
             user.setBalance(user.getBalance() + ParameterParser.parseLong(moneyAmount));
             try {
                 UpdateUserService.update(user);
+                request.getSession().setAttribute(RequestParameter.USER, user);
                 output = String.valueOf(user.getBalance());
             } catch (ServiceException e) {
                 throw new CommandException("Add funds command exception", e);

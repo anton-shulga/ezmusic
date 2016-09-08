@@ -14,7 +14,6 @@ import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -31,19 +30,16 @@ public class CreateSongCommand implements Command {
         String name = request.getParameter(RequestParameter.SONG_NAME);
         String year = request.getParameter(RequestParameter.SONG_YEAR);
         String filePath = request.getParameter(RequestParameter.SONG_FILE_PATH);
-        String publicationDate = request.getParameter(RequestParameter.SONG_PUBLICATION_DATE);
         String cost = request.getParameter(RequestParameter.SONG_COST);
-
         Song song = null;
 
-        boolean isValidRequest = SongParametersValidator.validateCreateParameters(authorIds, albumIds, name, year, filePath, publicationDate, cost);
+        boolean isValidRequest = SongParametersValidator.validateCreateParameters(authorIds, albumIds, name, year, filePath, cost);
 
         if(isValidRequest) {
             song = new Song();
             song.setName(name);
             song.setYear(Integer.parseInt(year));
             song.setFilePath(filePath);
-            song.setPublicationDate(Date.valueOf(publicationDate));
             song.setCost(Double.parseDouble(cost));
 
             if(albumIds != null) {

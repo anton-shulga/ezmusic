@@ -61,6 +61,15 @@
         <url-pattern>/jsp/user/*</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>adminsecurityfilter</filter-name>
+        <filter-class>by.epam.webpoject.ezmusic.filter.AdminSecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>adminsecurityfilter</filter-name>
+        <url-pattern>/jsp/admin/*</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>by.epam.webpoject.ezmusic.listener.SessionListener</listener-class>
     </listener>

@@ -51,4 +51,29 @@ public class Comment {
     public void setText(String text) {
         this.text = text;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comment)) return false;
+
+        Comment comment = (Comment) o;
+
+        if (commentId != comment.commentId) return false;
+        if (songId != comment.songId) return false;
+        if (rating != comment.rating) return false;
+        if (!user.equals(comment.user)) return false;
+        return text.equals(comment.text);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (commentId ^ (commentId >>> 32));
+        result = 31 * result + (int) (songId ^ (songId >>> 32));
+        result = 31 * result + user.hashCode();
+        result = 31 * result + rating;
+        result = 31 * result + text.hashCode();
+        return result;
+    }
 }

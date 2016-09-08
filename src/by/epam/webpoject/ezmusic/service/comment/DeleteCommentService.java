@@ -15,7 +15,7 @@ public class DeleteCommentService {
         try {
             dao.delete(commentId);
         } catch (DAOException e) {
-            throw new ServiceException("Deleting comment error", e);
+            throw new ServiceException("Delete comment service exception", e);
         }
     }
 }

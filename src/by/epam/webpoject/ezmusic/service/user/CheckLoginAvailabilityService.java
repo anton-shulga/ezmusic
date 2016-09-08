@@ -14,7 +14,7 @@ public class CheckLoginAvailabilityService {
         try {
             return userDAO.isLoginExist(login);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Check login availability service exception", e);
         }
     }
 }

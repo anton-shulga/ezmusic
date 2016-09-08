@@ -1,5 +1,6 @@
 package by.epam.webpoject.ezmusic.filter;
 
+
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.User;
@@ -11,9 +12,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by Антон on 03.08.2016.
+ * Created by Антон on 07.09.2016.
  */
-public class UserSecurityFilter implements Filter {
+public class AdminSecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -21,16 +22,17 @@ public class UserSecurityFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute(RequestParameter.USER);
         if(currentUser == null){
-            request.setAttribute(RequestParameter.MESSAGE, "You have to log in to your account as user to access this page.");
+            request.setAttribute(RequestParameter.MESSAGE, "You have to log in to your account as admin to access this page.");
             request.getSession().getServletContext().getRequestDispatcher(JspPageName.LOGIN).forward(request, response);
         }else {
-            if(currentUser.getIsAdmin()){
-                request.setAttribute(RequestParameter.MESSAGE, "You have to log in to your account as user to access this page.");
+            if(!currentUser.getIsAdmin()){
+                request.setAttribute(RequestParameter.MESSAGE, "You have to log in to your account as admin to access this page.");
                 request.getSession().getServletContext().getRequestDispatcher(JspPageName.LOGIN).forward(request, response);
             }else {
                 filterChain.doFilter(servletRequest, servletResponse);

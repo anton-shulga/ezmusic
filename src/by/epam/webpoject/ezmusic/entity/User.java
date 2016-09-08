@@ -106,4 +106,43 @@ public class User {
         isBanned = banned;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (userId != user.userId) return false;
+        if (Double.compare(user.balance, balance) != 0) return false;
+        if (isAdmin != user.isAdmin) return false;
+        if (isBanned != user.isBanned) return false;
+        if (!name.equals(user.name)) return false;
+        if (!surname.equals(user.surname)) return false;
+        if (!login.equals(user.login)) return false;
+        if (!password.equals(user.password)) return false;
+        if (!email.equals(user.email)) return false;
+        if (!phone.equals(user.phone)) return false;
+        return photoPath.equals(user.photoPath);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = (int) (userId ^ (userId >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + login.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + phone.hashCode();
+        result = 31 * result + photoPath.hashCode();
+        temp = Double.doubleToLongBits(balance);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (isAdmin ? 1 : 0);
+        result = 31 * result + (isBanned ? 1 : 0);
+        return result;
+    }
 }

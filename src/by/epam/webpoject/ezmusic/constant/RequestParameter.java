@@ -52,4 +52,5 @@ public class RequestParameter {
     public static final String COMMENT_TEXT = "comment_text";
     public static final String MONEY_AMOUNT = "money_amount";
     public static final String COMMENT_RATING = "comment_rating";
+    public static final String ORDERS = "orders";
 }

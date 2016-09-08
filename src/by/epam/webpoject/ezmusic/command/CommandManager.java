@@ -61,6 +61,7 @@ public class CommandManager {
         availableCommands.put(CommandName.FIND_SONG_USER, new FindSongUserCommand());
         availableCommands.put(CommandName.CREATE_COMMENT, new CreateCommentCommand());
         availableCommands.put(CommandName.ADD_FUNDS, new AddFundsCommand());
+        availableCommands.put(CommandName.FIND_ORDERS_USER, new FindOrdersUserCommand());
     }
 
     public static Command getCommand(String commandName) throws CommandException {

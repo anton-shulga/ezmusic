@@ -3,14 +3,11 @@ package by.epam.webpoject.ezmusic.service.order;
 import by.epam.webpoject.ezmusic.dao.OrderDAO;
 import by.epam.webpoject.ezmusic.dao.SongDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
-import by.epam.webpoject.ezmusic.entity.Album;
-import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.dao.DAOException;
 import by.epam.webpoject.ezmusic.exception.service.ServiceException;
-import by.epam.webpoject.ezmusic.service.album.FindAlbumsBySongIdService;
-import by.epam.webpoject.ezmusic.service.author.FindAuthorsBySongIdService;
+import by.epam.webpoject.ezmusic.service.song.FindSongsByOrderIdService;
 
 import java.util.ArrayList;
 
@@ -23,18 +20,14 @@ public class FindCartByUserIdService {
         SongDAO songDAO = (SongDAO) DAOFactory.createSongDAO();
         try {
             Order cart = orderDAO.findCartByUserId(userId);
-            if(cart == null){
-                return null;
+            if (cart == null) {
+                cart = new Order();
+                cart.setPaid(false);
+                cart.setUserId(userId);
+                cart.setOrderId(orderDAO.create(cart));
+                cart.setSongList(new ArrayList<Song>());
             }
-            ArrayList<Song> songList = songDAO.findByOrderId(cart.getOrderId());
-            ArrayList<Author> songAuthors = null;
-            ArrayList<Album> songAlbums = null;
-            for(Song song : songList){
-                songAuthors  = FindAuthorsBySongIdService.find(song.getSongId());
-                songAlbums = FindAlbumsBySongIdService.find(song.getSongId());
-                song.setAuthorList(songAuthors);
-                song.setAlbumList(songAlbums);
-            }
+            ArrayList<Song> songList = FindSongsByOrderIdService.find(cart.getOrderId());
             cart.setSongList(songList);
             double totalCost = 0;
             for(Song song : cart.getSongList()){
@@ -43,7 +36,7 @@ public class FindCartByUserIdService {
             cart.setTotalCost(totalCost);
             return cart;
         } catch (DAOException e) {
-            throw new ServiceException("Find cart service exception", e);
+            throw new ServiceException("Find order service exception", e);
         }
     }
 }

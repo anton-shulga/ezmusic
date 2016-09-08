@@ -30,7 +30,7 @@
                                 <ul class="collection">
                                     <c:forEach items="${requestScope.all_authors}" var="author">
                                         <li class="collection-item avatar">
-                                            <img src="${author.photoPath}" alt="author" class="circle">
+                                            <img src="${pageContext.request.contextPath}/${author.photoPath}" alt="author" class="circle">
                                             <span class="title"><b>Name: </b>${author.name}</span>
                                             <p><b>Country:</b>${author.country}</p>
                                             <div class="secondary-content">
@@ -74,6 +74,9 @@
         </div>
     </div>
 </main>
+<c:if test="${requestScope.message != null}">
+    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+</c:if>
 <c:import url="../../jsp/footer.jsp"/>
 
 </body>

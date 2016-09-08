@@ -14,7 +14,7 @@ public class DeleteSongService {
         try {
             dao.delete(id);
         } catch (DAOException e) {
-            throw new ServiceException("Deleting song error", e);
+            throw new ServiceException("Delete song exception", e);
         }
     }
 }

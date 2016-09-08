@@ -16,8 +16,8 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
-    <c:import url="../header.jsp"/>
-    <c:import url="admin_navbar.jsp"/>
+<c:import url="../header.jsp"/>
+<c:import url="admin_navbar.jsp"/>
     <main>
         <div class="wrapper">
             <div class="container">
@@ -83,6 +83,9 @@
             </div>
         </div>
     </main>
+    <c:if test="${requestScope.message != null}">
+        <script> Materialize.toast('${requestScope.message}', 4000);</script>
+    </c:if>
     <c:import url="../footer.jsp"/>
 </body>
 </html>

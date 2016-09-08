@@ -17,7 +17,7 @@ public class FindAllAuthorsService {
         try {
             return dao.findAll();
         } catch (DAOException e) {
-            throw new ServiceException("Finding author error", e);
+            throw new ServiceException("Find authors service exception", e);
         }
     }
 }

@@ -22,9 +22,13 @@ public class FindAllAlbumsCommand implements Command {
         try {
             allAlbums = FindAllAlbumsService.find();
             if (allAlbums != null) {
+                if(allAlbums.isEmpty()){
+                    request.setAttribute(RequestParameter.MESSAGE, "Not found any albums");
+                }
                 request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
                 page = JspPageName.ADMIN_ALL_ALBUMS;
             }else {
+                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
                 page = JspPageName.ADMIN_HOME;
             }
         } catch (ServiceException e) {

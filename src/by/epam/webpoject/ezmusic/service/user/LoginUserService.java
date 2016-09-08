@@ -18,7 +18,7 @@ public class LoginUserService {
             String md5Hash = MD5Encryptor.getMD5(password);
             return userDAO.login(username, md5Hash);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Login user service exception", e);
         }
 
     }

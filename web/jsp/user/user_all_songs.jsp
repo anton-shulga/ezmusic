@@ -15,14 +15,20 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
     <script>
             function addSongToOrder(songId) {
+                var $previousBadge = $('#id-badge').text();
                 $.ajax({
                     url: 'JsonController',
                     type: 'post',
                     dataType: 'json',
                     data: {song_id:songId, command:"add_song_to_order"},
                     success: function (json) {
-                        var $select = $('#id-badge');
-                        $select.text(json);
+                        var $badge = $('#id-badge');
+                        $badge.text(json);
+                        if($previousBadge == $badge.text()){
+                            Materialize.toast("This song is already in cart", 1000);
+                        }else {
+                            Materialize.toast("Successfully added song to cart", 1000)
+                        }
                     }
                 });
             }
@@ -72,12 +78,15 @@
                                     </ul>
                                 </c:if>
                             </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
     <c:import url="../footer.jsp"/>
+    <c:if test="${requestScope.message != null}">
+        <script> Materialize.toast('${requestScope.message}', 4000);</script>
+    </c:if>
 </body>
 </html>

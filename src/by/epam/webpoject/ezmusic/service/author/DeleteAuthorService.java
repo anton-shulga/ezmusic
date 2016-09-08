@@ -14,7 +14,7 @@ public class DeleteAuthorService {
         try {
             dao.delete(authorId);
         } catch (DAOException e) {
-            throw new ServiceException("Deleting author error", e);
+            throw new ServiceException("Delete author service exception", e);
         }
     }
 }

@@ -19,7 +19,7 @@ public class RegisterUserService {
         try {
             return userDAO.create(instance);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Register user service exception", e);
         }
     }
 }

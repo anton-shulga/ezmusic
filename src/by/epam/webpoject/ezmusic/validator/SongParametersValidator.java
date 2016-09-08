@@ -1,12 +1,10 @@
 package by.epam.webpoject.ezmusic.validator;
 
-import java.sql.Date;
-
 /**
  * Created by Антон on 21.08.2016.
  */
 public class SongParametersValidator {
-    public static boolean validateCreateParameters(String[] authorIds, String[] albumIds, String name, String year, String filePath, String publicationDate, String cost) {
+    public static boolean validateCreateParameters(String[] authorIds, String[] albumIds, String name, String year, String filePath, String cost) {
         try {
             if (authorIds != null) {
                 for (String authorId : authorIds) {
@@ -37,15 +35,6 @@ public class SongParametersValidator {
             return false;
         }
 
-        if(publicationDate == null){
-            return false;
-        }else {
-            try {
-                Date.valueOf(publicationDate);
-            }catch (IllegalArgumentException e){
-                return false;
-            }
-        }
         if(cost == null){
             return false;
         }else {
@@ -97,7 +86,7 @@ public class SongParametersValidator {
         }
     }
 
-    public static boolean validateUpdateParameters(String[] albumIds, String[] authorIds, String songId, String name, String year, String filePath, String publicationDate, String cost) {
+    public static boolean validateUpdateParameters(String[] albumIds, String[] authorIds, String songId, String name, String year, String filePath,  String cost) {
         if(songId == null){
             return false;
         }else {
@@ -137,15 +126,6 @@ public class SongParametersValidator {
             return false;
         }
 
-        if(publicationDate == null){
-            return false;
-        }else {
-            try {
-                Date.valueOf(publicationDate);
-            }catch (IllegalArgumentException e){
-                return false;
-            }
-        }
         if(cost == null){
             return false;
         }else {

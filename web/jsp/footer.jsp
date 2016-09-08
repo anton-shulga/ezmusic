@@ -25,12 +25,10 @@
     </script>
 </head>
 <body>
-        <div class="footer-copyright black">
-            <div class="row right">
-                <input type="image" src="../img/logo/ru.png" onclick="changeLocale('ru_RU')"/>
-                <input type="image" src="../img/logo/eng.png" onclick="changeLocale('default')"/>
-            </div>
+<footer class="page-footer black">
+        <div class="container">
+            <span class="white-text">© 2016 Anton Shulha</span>
         </div>
-    </footer>
+</footer>
 </body>
 </html>

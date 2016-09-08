@@ -15,7 +15,7 @@ public class UpdateUserService {
         try {
             dao.update(instance);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Update user service exception", e);
         }
     }
 }

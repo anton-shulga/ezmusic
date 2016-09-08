@@ -127,37 +127,29 @@
                                 </div>
                             </div>
 
-
-
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input id="id-song-cost" type="text" name="song_cost" value="${song.cost}">
                                     <label for="id-song-cost">Cost</label>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input id="id-song-date" type="date" class="datepicker" name="song_publication_date" value="${song.publicationDate}">
-                                </div>
-                                <label for="id-song-date">Publication date</label>
-                            </div>
 
                             <div class="row">
                                 <div class="file-field input-field">
-                                    <div class="btn">
-                                        <span>File</span>
+                                    <div class="btn black">
+                                        <span class="white-text">File</span>
                                         <input type="file">
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input  id="id-song-file-path"class="file-path validate" type="text" name="song_file_path" value="${song.filePath}">
                                     </div>
                                 </div>
-                                <label for="id-song-file-path">File</label>
+
                             </div>
 
                             <div class="card-action">
                                 <div class="row">
-                                    <button class="btn col s12 teal" type="submit">Save changes</button>
+                                    <button class="btn col s12 black" type="submit">Save changes</button>
                                 </div>
                             </div>
                         </form>
@@ -166,10 +158,11 @@
             </div>
         </div>
     </div>
+    <c:import url="/jsp/footer.jsp"/>
 </div>
 </main>
-<c:import url="/jsp/footer.jsp"/>
-
-
+<c:if test="${requestScope.message != null}">
+    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+</c:if>
 </body>
 </html>

@@ -54,5 +54,28 @@ public class Order {
         isPaid = paid;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
 
+        Order order = (Order) o;
+
+        if (isPaid != order.isPaid) return false;
+        if (!orderId.equals(order.orderId)) return false;
+        if (!userId.equals(order.userId)) return false;
+        if (!songList.equals(order.songList)) return false;
+        return totalCost.equals(order.totalCost);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = orderId.hashCode();
+        result = 31 * result + userId.hashCode();
+        result = 31 * result + songList.hashCode();
+        result = 31 * result + totalCost.hashCode();
+        result = 31 * result + (isPaid ? 1 : 0);
+        return result;
+    }
 }

@@ -14,7 +14,7 @@ public class DeleteAlbumService {
         try {
             dao.delete(albumId);
         } catch (DAOException e) {
-            throw new ServiceException("Deleting album error", e);
+            throw new ServiceException("Delete album service exception", e);
         }
     }
 }

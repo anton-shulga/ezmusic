@@ -25,7 +25,7 @@ public class FindCommentBySongIdService {
                 comment.setUser(user);
             }
         } catch (DAOException e) {
-            throw new ServiceException("Finding comment error", e);
+            throw new ServiceException("Find comment service exception", e);
         }
         return commentList;
     }

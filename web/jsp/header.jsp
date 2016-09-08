@@ -24,20 +24,21 @@
 <nav class="nav-wrapper black">
     <a href="#" class="brand-logo center">EZMusic</a>
     <ul class="right hide-on-med-and-down">
+        <li>
         <c:if test="${empty sessionScope.user }">
-            <li>
                 <form name="toLoginForm" action="${pageContext.request.contextPath}/controller" method="POST">
                     <input type="hidden" name="command" value="to_login">
-                    <a href="javascript:document.toLoginForm.submit()"><img src="../img/logo/login-logo.png"></a>
+                    <a href="javascript:document.toLoginForm.submit()"><img  src="${pageContext.request.contextPath}/img/logo/login-logo.png"></a>
                 </form>
-            </li>
+
         </c:if>
         <c:if test="${not empty sessionScope.user }">
             <form name="logoutForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="logout">
-                <a href="javascript:document.logoutForm.submit()"><img src="../img/logo/logout-logo.png"></a>
+                <a href="javascript:document.logoutForm.submit()"><img  src="${pageContext.request.contextPath}/img/logo/login-logo.png"></a>
             </form>
         </c:if>
+        </li>
     </ul>
 </nav>
 

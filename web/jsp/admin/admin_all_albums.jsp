@@ -30,7 +30,7 @@
                                 <c:if test="${not empty requestScope.all_albums}">
                                     <c:forEach items="${requestScope.all_albums}" var="album">
                                         <li class="collection-item avatar">
-                                            <img src="${album.imageFilePath}" alt="album" class="circle">
+                                            <img src="${pageContext.request.contextPath}/${album.imageFilePath}" alt="album" class="circle">
                                             <span class="title"><b>Name: </b>${album.name}</span>
                                             <p><b>Year: </b>${album.year}</p>
                                             <div class="secondary-content">
@@ -72,11 +72,11 @@
                 </div>
             </div>
         </div>
-        <c:if test="${requestScope.message != null}">
-            <script> Materialize.toast('${requestScope.message}', 4000);</script>
-        </c:if>
     </div>
 </main>
+<c:if test="${requestScope.message != null}">
+    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+</c:if>
 <c:import url="../../jsp/footer.jsp"/>
 </body>
 </html>

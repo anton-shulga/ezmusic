@@ -27,7 +27,7 @@ public class UpdateAlbumService {
                 }
             }
         } catch (DAOException e) {
-            throw new ServiceException("Updating album error", e);
+            throw new ServiceException("Update album service exception", e);
         }
     }
 }

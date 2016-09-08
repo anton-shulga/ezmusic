@@ -15,7 +15,7 @@ public class UpdateCommentService {
         try {
             dao.update(instance);
         } catch (DAOException e) {
-            throw new ServiceException("Updating comment error", e);
+            throw new ServiceException("Update comment service exception", e);
         }
     }
 }

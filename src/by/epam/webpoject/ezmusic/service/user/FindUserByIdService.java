@@ -15,7 +15,7 @@ public class FindUserByIdService {
         try {
             return dao.find(id);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Find user service exception", e);
         }
     }
 }
