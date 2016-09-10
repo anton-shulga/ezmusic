@@ -5,8 +5,8 @@ import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.entity.Song;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.service.album.FindAllAlbumsService;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 
@@ -19,22 +19,25 @@ import java.util.ArrayList;
 public class FindAuthorForCreateCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
-        ArrayList<Song> allSongs = null;
-        ArrayList<Album> allAlbums = null;
+        ArrayList<Song> songList = null;
+        ArrayList<Album> albumList = null;
+
         try {
-            allSongs = FindAllSongsService.find();
-            allAlbums = FindAllAlbumsService.find();
-            if(allSongs != null && allAlbums != null){
-                request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
-                request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+            songList = FindAllSongsService.find();
+            albumList = FindAllAlbumsService.find();
+
+            if(songList != null && albumList != null){
+                request.setAttribute(RequestParameter.ALL_SONGS, songList);
+                request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
                 page = JspPageName.ADMIN_EDIT_AUTHOR;
             }else {
                 request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
                 page = JspPageName.ADMIN_HOME;
             }
         } catch (ServiceException e) {
-            throw new CommandException("Find author command exception", e);
+            throw new CommandException("Find author for create command exception", e);
         }
 
         return page;

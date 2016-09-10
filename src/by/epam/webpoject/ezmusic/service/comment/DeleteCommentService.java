@@ -2,8 +2,8 @@ package by.epam.webpoject.ezmusic.service.comment;
 
 import by.epam.webpoject.ezmusic.dao.CommentDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
-import by.epam.webpoject.ezmusic.exception.dao.DAOException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.DAOException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 
 
 /**

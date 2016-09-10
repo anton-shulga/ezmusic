@@ -49,7 +49,7 @@
         <li>
             <form name="songsForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_all_songs_user">
-                <a class="waves-effect waves-light black white-text" href="javascript:document.songsForm.submit()">Songs</a>
+                <a class="waves-effect" href="javascript:document.songsForm.submit()">Songs</a>
             </form>
         </li>
         <li>
@@ -61,7 +61,7 @@
         <li>
             <form name="albumsForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_all_albums_user">
-                <a class="waves-effect waves-light black white-text"  href="javascript:document.albumsForm.submit()">Albums</a>
+                <a class="waves-effect"  href="javascript:document.albumsForm.submit()">Albums</a>
             </form>
         </li>
         <li><div class="divider"></div></li>
@@ -74,7 +74,7 @@
         <li>
             <form name="ordersForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="find_orders_user">
-                <a class="waves-effect waves-light black white-text" href="javascript:document.ordersForm.submit()">My orders</a>
+                <a class="waves-effect" href="javascript:document.ordersForm.submit()">My orders</a>
             </form>
         </li>
         <li><a href="#!">My settings</a></li>

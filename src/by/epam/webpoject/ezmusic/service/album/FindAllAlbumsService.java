@@ -3,8 +3,8 @@ package by.epam.webpoject.ezmusic.service.album;
 import by.epam.webpoject.ezmusic.dao.AlbumDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
 import by.epam.webpoject.ezmusic.entity.Album;
-import by.epam.webpoject.ezmusic.exception.dao.DAOException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.DAOException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class FindAllAlbumsService {
         try {
             return dao.findAll();
         } catch (DAOException e) {
-            throw new ServiceException("Find album service exception", e);
+            throw new ServiceException("Find all albums service exception", e);
         }
     }
 }

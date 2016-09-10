@@ -5,8 +5,8 @@ import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.User;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
 import by.epam.webpoject.ezmusic.service.user.LoginUserService;
 import by.epam.webpoject.ezmusic.validator.UserParametersValidator;
@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         User user = null;
 
@@ -29,6 +30,7 @@ public class LoginCommand implements Command {
         if(isValidRequest) {
             try {
                 user = LoginUserService.execute(login, password);
+
                 if(user != null) {
                     if(user.getIsAdmin()){
                         request.getSession(true).setAttribute(RequestParameter.USER, user);
@@ -47,9 +49,10 @@ public class LoginCommand implements Command {
                 throw new CommandException(e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
             page = JspPageName.LOGIN;
         }
+
         return page;
 
     }

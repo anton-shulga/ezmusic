@@ -4,8 +4,8 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.album.CreateAlbumService;
 import by.epam.webpoject.ezmusic.service.album.FindAllAlbumsService;
@@ -20,21 +20,27 @@ import java.util.ArrayList;
 public class CreateAlbumCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         Long generatedId = null;
+        Album album = null;
+
         String[] selectedSongIds = request.getParameterValues(RequestParameter.SELECTED_SONGS);
-        String[] selectedAuthorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
+        String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
         String name = request.getParameter(RequestParameter.ALBUM_NAME);
         String year = request.getParameter(RequestParameter.ALBUM_YEAR);
         String filePath = request.getParameter(RequestParameter.ALBUM_IMAGE_FILE_PATH);
-        boolean isValidRequest = AlbumParametersValidator.validateCreateParameters(selectedSongIds, selectedAuthorIds, name, year, filePath);
+
+        boolean isValidRequest = AlbumParametersValidator.validateCreateParameters(selectedSongIds, authorIds, name, year, filePath);
         if (isValidRequest) {
-            Album album = new Album();
+            album = new Album();
             album.setName(name);
             album.setYear(ParameterParser.parseInt(year));
             album.setImageFilePath(filePath);
+
             try {
-                generatedId = CreateAlbumService.create(album, ParameterParser.parseLongArray(selectedSongIds), ParameterParser.parseLongArray(selectedAuthorIds));
+                generatedId = CreateAlbumService.create(album, ParameterParser.parseLongArray(selectedSongIds), ParameterParser.parseLongArray(authorIds));
+
                 if (generatedId != null) {
                     ArrayList<Album> albumList = FindAllAlbumsService.find();
                     request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
@@ -48,9 +54,10 @@ public class CreateAlbumCommand implements Command{
                 throw new CommandException("Create album command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
             page = JspPageName.ADMIN_EDIT_ALBUM;
         }
+
         return page;
     }
 }

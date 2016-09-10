@@ -4,8 +4,8 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.User;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
 import by.epam.webpoject.ezmusic.service.song.AddSongToOrderService;
@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AddSongToOrderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String output = null;
 
         String songId = request.getParameter(RequestParameter.SONG_ID);
@@ -29,6 +30,7 @@ public class AddSongToOrderCommand implements Command {
         if(isValidRequest){
             try {
                 AddSongToOrderService.add(ParameterParser.parseLong(songId), cart);
+
                 cart = FindCartByUserIdService.find(user.getUserId());
                 request.getSession().setAttribute(RequestParameter.CART, cart);
                 output = String.valueOf(cart.getSongList().size());

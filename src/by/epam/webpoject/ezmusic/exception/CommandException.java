@@ -1,4 +1,4 @@
-package by.epam.webpoject.ezmusic.exception.command;
+package by.epam.webpoject.ezmusic.exception;
 
 /**
  * Created by Антон on 20.07.2016.

@@ -2,7 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ChangeLocaleCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String locale = request.getParameter(RequestParameter.LOCALE);
         request.getSession().setAttribute(RequestParameter.LOCALE, locale);
         return null;

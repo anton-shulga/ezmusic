@@ -4,7 +4,7 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.command.CommandManager;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

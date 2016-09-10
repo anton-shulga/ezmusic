@@ -4,8 +4,8 @@ import by.epam.webpoject.ezmusic.connection.ConnectionPool;
 import by.epam.webpoject.ezmusic.connection.ProxyConnection;
 import by.epam.webpoject.ezmusic.dao.AuthorDAO;
 import by.epam.webpoject.ezmusic.entity.Author;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.dao.DAOException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.DAOException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,7 +56,7 @@ public class MySqlAuthorDAO extends AuthorDAO {
             throw new DAOException("Creating author error", e);
         }finally {
             closeStatement(statement);
-                connection.close();
+            connection.close();
         }
         return generatedId;
     }

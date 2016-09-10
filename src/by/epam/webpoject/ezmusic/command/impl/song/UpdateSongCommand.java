@@ -6,8 +6,8 @@ import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.service.song.UpdateSongService;
@@ -22,7 +22,9 @@ import java.util.ArrayList;
 public class UpdateSongCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
+        Song song = null;
 
         String songId = request.getParameter(RequestParameter.SONG_ID);
         String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
@@ -31,8 +33,6 @@ public class UpdateSongCommand implements Command {
         String year = request.getParameter(RequestParameter.SONG_YEAR);
         String filePath = request.getParameter(RequestParameter.SONG_FILE_PATH);
         String cost = request.getParameter(RequestParameter.SONG_COST);
-
-        Song song = null;
 
         boolean isValidRequest = SongParametersValidator.validateUpdateParameters(albumIds, authorIds, songId, name, year, filePath, cost);
         if(isValidRequest) {
@@ -53,6 +53,7 @@ public class UpdateSongCommand implements Command {
                 }
                 song.setAlbumList(albums);
             }
+
             if(authorIds != null) {
                 Author author = null;
                 ArrayList<Author> authors = new ArrayList<>();
@@ -63,6 +64,7 @@ public class UpdateSongCommand implements Command {
                 }
                 song.setAuthorList(authors);
             }
+
             try {
                 UpdateSongService.update(song);
                 ArrayList<Song> songList = FindAllSongsService.find();
@@ -77,8 +79,7 @@ public class UpdateSongCommand implements Command {
             request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
             page = JspPageName.ADMIN_HOME;
         }
+
         return page;
     }
-
-
 }

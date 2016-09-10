@@ -4,8 +4,8 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Author;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.author.DeleteAuthorService;
 import by.epam.webpoject.ezmusic.service.author.FindAllAuthorsService;
@@ -20,8 +20,11 @@ import java.util.ArrayList;
 public class DeleteAuthorCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
+
         String authorId = request.getParameter(RequestParameter.AUTHOR_ID);
+
         boolean isValidRequest = AuthorParametersValidator.validateDeleteParameters(authorId);
         if(isValidRequest) {
             try {
@@ -34,7 +37,7 @@ public class DeleteAuthorCommand implements Command {
                 throw new CommandException("Delete author command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
             page = JspPageName.ADMIN_HOME;
         }
         return page;

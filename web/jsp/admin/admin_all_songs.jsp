@@ -81,11 +81,12 @@
                     </div>
                 </div>
             </div>
+            <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
         </div>
     </main>
     <c:if test="${requestScope.message != null}">
         <script> Materialize.toast('${requestScope.message}', 4000);</script>
     </c:if>
-    <c:import url="../footer.jsp"/>
+
 </body>
 </html>

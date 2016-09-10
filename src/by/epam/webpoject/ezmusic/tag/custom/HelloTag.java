@@ -23,7 +23,7 @@ public class HelloTag extends TagSupport {
         if(user.getIsAdmin()){
             output = "Hello, " + user.getLogin() + "! You are admin!";
         }else {
-            output = "Hello, " + user.getLogin() + "! <br>Balance : <span id=\"id-balance\">" + user.getBalance() + "</span><br>" +
+            output = "Hello, " + user.getLogin() + "! <br>Balance : <span id=\"id-balance\">" + user.getBalance() + "BYR</span><br>" +
                     "<div class=\"row\">\n" +
                     "   <div class=\"input-field col s8 required\">\n" +
                     "       <input id=\"id-money-amount\" name= type=\"text\" required>\n" +

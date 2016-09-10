@@ -18,6 +18,19 @@ public class ProxyConnection implements Connection{
     ProxyConnection(Connection connection){
         this.connection = connection;
     }
+
+    @Override
+    public void close(){
+        ConnectionPool.getInstance().returnConnection(this);
+    }
+
+    void closeConnection(){
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            LOGGER.error("Connection close error", e);
+        }
+    }
     @Override
     public Statement createStatement() throws SQLException {
         return connection.createStatement();
@@ -58,18 +71,6 @@ public class ProxyConnection implements Connection{
         connection.rollback();
     }
 
-    @Override
-    public void close(){
-        ConnectionPool.getInstance().returnConnection(this);
-    }
-
-    void closeConnection(){
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            LOGGER.error("Connection close error", e);
-        }
-    }
     @Override
     public boolean isClosed() throws SQLException {
         return connection.isClosed();

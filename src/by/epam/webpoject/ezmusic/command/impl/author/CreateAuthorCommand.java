@@ -4,8 +4,8 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Author;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.author.CreateAuthorService;
 import by.epam.webpoject.ezmusic.service.author.FindAllAuthorsService;
@@ -20,14 +20,17 @@ import java.util.ArrayList;
 public class CreateAuthorCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         Long generatedId = null;
+        Author author = null;
+
         String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
         String[] songIds = request.getParameterValues(RequestParameter.SELECTED_SONGS);
         String name = request.getParameter(RequestParameter.AUTHOR_NAME);
         String country = request.getParameter(RequestParameter.AUTHOR_COUNTRY);
         String photoPath = request.getParameter(RequestParameter.AUTHOR_PHOTO_PATH);
-        Author author = null;
+
         boolean isValidRequest = AuthorParametersValidator.validateCreateParameters(albumIds, songIds, name, country, photoPath);
         if(isValidRequest) {
             author = new Author();
@@ -36,6 +39,7 @@ public class CreateAuthorCommand implements Command {
             author.setPhotoPath(photoPath);
             try {
                 generatedId = CreateAuthorService.create(author, ParameterParser.parseLongArray(albumIds), ParameterParser.parseLongArray(songIds));
+
                 if (generatedId != null) {
                     ArrayList<Author> allAuthors = FindAllAuthorsService.find();
                     request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);

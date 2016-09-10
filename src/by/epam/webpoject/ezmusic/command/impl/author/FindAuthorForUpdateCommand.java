@@ -6,10 +6,10 @@ import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
-import by.epam.webpoject.ezmusic.service.album.FindAlbumByAuthorIdService;
+import by.epam.webpoject.ezmusic.service.album.FindAlbumsByAuthorIdService;
 import by.epam.webpoject.ezmusic.service.album.FindAllAlbumsService;
 import by.epam.webpoject.ezmusic.service.author.FindAuthorByIdService;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
@@ -25,36 +25,42 @@ import java.util.ArrayList;
 public class FindAuthorForUpdateCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         Author author = null;
-        ArrayList<Song> allSongs = null;
-        ArrayList<Album> allAlbums = null;
+        ArrayList<Song> songList = null;
+        ArrayList<Album> albumList = null;
         ArrayList<Song> authorSongs = null;
         ArrayList<Album> authorAlbums = null;
+
         String authorId = request.getParameter(RequestParameter.AUTHOR_ID);
+
         boolean isValidRequest = AuthorParametersValidator.validateFindParameters(authorId);
         if(isValidRequest) {
             try {
-                author = FindAuthorByIdService.find(ParameterParser.parseLong(authorId));
+                Long longAuthorId = ParameterParser.parseLong(authorId);
+                author = FindAuthorByIdService.find(longAuthorId);
+
                 if (author != null ) {
-                    allSongs = FindAllSongsService.find();
-                    allAlbums = FindAllAlbumsService.find();
-                    authorSongs = FindSongsByAuthorIdService.find(ParameterParser.parseLong(authorId));
-                    authorAlbums = FindAlbumByAuthorIdService.find(ParameterParser.parseLong(authorId));
+                    songList = FindAllSongsService.find();
+                    albumList = FindAllAlbumsService.find();
+                    authorSongs = FindSongsByAuthorIdService.find(longAuthorId);
+                    authorAlbums = FindAlbumsByAuthorIdService.find(longAuthorId);
+                    request.setAttribute(RequestParameter.AUTHOR, author);
                     request.setAttribute(RequestParameter.AUTHOR_SONGS, authorSongs);
                     request.setAttribute(RequestParameter.AUTHOR_ALBUMS, authorAlbums);
-                    request.setAttribute(RequestParameter.AUTHOR, author);
-                    request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
-                    request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+                    request.setAttribute(RequestParameter.ALL_SONGS, songList);
+                    request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
                     page = JspPageName.ADMIN_EDIT_AUTHOR;
                 } else {
+                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
                     page = JspPageName.ADMIN_HOME;
                 }
             } catch (ServiceException e) {
-                throw new CommandException("Find author command exception", e);
+                throw new CommandException("Find author for update command exception", e);
             }
         }else{
-
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
             page = JspPageName.ADMIN_HOME;
         }
         return page;

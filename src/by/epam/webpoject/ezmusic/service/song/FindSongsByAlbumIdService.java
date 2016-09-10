@@ -9,22 +9,29 @@ import by.epam.webpoject.ezmusic.service.album.FindAlbumsBySongIdService;
 import by.epam.webpoject.ezmusic.service.author.FindAuthorsBySongIdService;
 import by.epam.webpoject.ezmusic.service.comment.FindCommentsBySongIdService;
 
+import java.util.ArrayList;
+
 /**
  * Created by Антон on 10.08.2016.
  */
-public class FindSongByIdService  {
-    public static Song find(Long songId) throws ServiceException {
-        SongDAO songDao = (SongDAO) DAOFactory.createSongDAO();
-        Song song = null;
-        try {
-            song = songDao.find(songId);
-            song.setAlbumList(FindAlbumsBySongIdService.find(songId));
-            song.setAuthorList(FindAuthorsBySongIdService.find(songId));
-            song.setCommentList(FindCommentsBySongIdService.find(songId));
-        } catch (DAOException e) {
-            throw new ServiceException("Find song service exception", e);
-        }
-        return song;
-    }
+public class FindSongsByAlbumIdService {
+    public static ArrayList<Song> find(Long albumId) throws ServiceException {
 
+        ArrayList<Song> songList = null;
+
+        SongDAO songDao = (SongDAO) DAOFactory.createSongDAO();
+
+        try {
+            songList = songDao.findByAlbumId(albumId);
+            for(Song song : songList){
+                song.setAlbumList(FindAlbumsBySongIdService.find(song.getSongId()));
+                song.setAuthorList(FindAuthorsBySongIdService.find(song.getSongId()));
+                song.setCommentList(FindCommentsBySongIdService.find(song.getSongId()));
+            }
+
+        } catch (DAOException e) {
+            throw new ServiceException("Find songs by album id service exception", e);
+        }
+        return songList;
+    }
 }

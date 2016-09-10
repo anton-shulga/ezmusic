@@ -13,24 +13,6 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>LoginAvailabilityController</servlet-name>
-        <servlet-class>by.epam.webpoject.ezmusic.controller.LoginAvailabilityController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginAvailabilityController</servlet-name>
-        <url-pattern>/LoginAvailabilityController</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>LocaleController</servlet-name>
-        <servlet-class>by.epam.webpoject.ezmusic.controller.LocaleController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LocaleController</servlet-name>
-        <url-pattern>/LocaleController</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>JsonController</servlet-name>
         <servlet-class>by.epam.webpoject.ezmusic.controller.JsonController</servlet-class>
     </servlet>

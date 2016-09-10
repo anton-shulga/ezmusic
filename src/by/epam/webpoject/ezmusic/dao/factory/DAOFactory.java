@@ -17,6 +17,7 @@ public class DAOFactory {
         switch (DB_TYPE){
             case MYSQL:
                 return MySqlUserDAO.getInstance();
+            //case ORACLE:...
             default:
                 return MySqlUserDAO.getInstance();
         }

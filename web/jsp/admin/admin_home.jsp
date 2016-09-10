@@ -17,7 +17,7 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
-<c:import url="../header.jsp"/>
+<c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <c:import url="admin_navbar.jsp"/>
 <main>
     <div class="wrapper">

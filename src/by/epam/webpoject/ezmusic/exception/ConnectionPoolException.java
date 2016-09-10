@@ -1,4 +1,4 @@
-package by.epam.webpoject.ezmusic.exception.connectionpool;
+package by.epam.webpoject.ezmusic.exception;
 
 /**
  * Created by Антон on 25.07.2016.

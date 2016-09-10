@@ -13,28 +13,15 @@
     <link type="text/css" rel="stylesheet" href="../../css/styles.css" media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
-    <script>
-        function addSongToOrder(songId) {
-            $.ajax({
-                url: 'JsonController',
-                type: 'post',
-                dataType: 'json',
-                data: {song_id:songId, command:"add_song_to_order"},
-                success: function (json) {
-                    var $select = $('#id-badge');
-                    $select.text(json);
-                }
-            });
-        }
-    </script>
 </head>
 <body>
 <c:import url="../header.jsp"/>
 <c:import url="user_navbar.jsp"/>
 <main>
     <div class="wrapper">
-        <c:if test="${not empty sessionScope.cart.songList}">
+
         <div class="container">
+            <c:if test="${not empty sessionScope.cart.songList}">
             <div class="row">
                 <div class="col s8 offset-s2">
                     <div class="card z-depth-4">
@@ -77,14 +64,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </c:if>
+            </c:if>
+        </div>
+        <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     </div>
 </main>
 <c:if test="${requestScope.message != null}">
     <script> Materialize.toast('${requestScope.message}', 4000);</script>
 </c:if>
-<c:import url="../footer.jsp"/>
-
 </body>
 </html>

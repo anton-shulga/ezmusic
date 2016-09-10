@@ -63,7 +63,7 @@
 </head>
 
 <body>
-<c:import url="header.jsp"/>
+<c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <c:import url="common_navbar.jsp"/>
 <main>
 <div class="wrapper">
@@ -140,6 +140,7 @@
             </div>
         </div>
     </div>
+    <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 </div><!-- End wrapper-->
 </main>
 <c:if test="${requestScope.message != null}">
@@ -147,6 +148,5 @@
             ${requestScope.message}
     </div>
 </c:if>
-<c:import url="footer.jsp"/>
 </body>
 </html>

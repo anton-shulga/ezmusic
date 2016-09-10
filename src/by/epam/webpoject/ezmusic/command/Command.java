@@ -1,6 +1,6 @@
 package by.epam.webpoject.ezmusic.command;
 
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -6,8 +6,9 @@ import by.epam.webpoject.ezmusic.command.impl.author.*;
 import by.epam.webpoject.ezmusic.command.impl.comment.CreateCommentCommand;
 import by.epam.webpoject.ezmusic.command.impl.song.*;
 import by.epam.webpoject.ezmusic.command.impl.user.*;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -16,7 +17,7 @@ import java.util.HashMap;
 public class CommandManager {
 
     private static HashMap<CommandName, Command> availableCommands = new HashMap<>();
-
+    private static ArrayList<Command> adminComands = new ArrayList<>();
     static {
         availableCommands.put(CommandName.GO_HOME, new GoHomeCommand());
         availableCommands.put(CommandName.TO_LOGIN, new ToLoginCommand());
@@ -62,8 +63,38 @@ public class CommandManager {
         availableCommands.put(CommandName.CREATE_COMMENT, new CreateCommentCommand());
         availableCommands.put(CommandName.ADD_FUNDS, new AddFundsCommand());
         availableCommands.put(CommandName.FIND_ORDERS_USER, new FindOrdersUserCommand());
+
+        adminComands.add(availableCommands.get(CommandName.GO_HOME));
+        adminComands.add(availableCommands.get(CommandName.CHANGE_LOCALE));
+        adminComands.add(availableCommands.get(CommandName.HOME_ADMIN));
+        adminComands.add(availableCommands.get(CommandName.LOGOUT));
+        adminComands.add(availableCommands.get(CommandName.CREATE_SONG));
+        adminComands.add(availableCommands.get(CommandName.UPDATE_SONG));
+        adminComands.add(availableCommands.get(CommandName.DELETE_SONG));
+        adminComands.add(availableCommands.get(CommandName.FIND_ALL_SONGS_ADMIN));
+        adminComands.add(availableCommands.get(CommandName.FIND_ALBUM_SONGS_JSON));
+        adminComands.add(availableCommands.get(CommandName.FIND_AUTHOR_SONGS_JSON));
+        adminComands.add(availableCommands.get(CommandName.FIND_SONG_FOR_CREATE));
+        adminComands.add(availableCommands.get(CommandName.FIND_SONG_FOR_CREATE));
+        adminComands.add(availableCommands.get(CommandName.CREATE_AUTHOR));
+        adminComands.add(availableCommands.get(CommandName.UPDATE_AUTHOR));
+        adminComands.add(availableCommands.get(CommandName.DELETE_AUTHOR));
+        adminComands.add(availableCommands.get(CommandName.FIND_ALL_AUTHORS_ADMIN));
+        adminComands.add(availableCommands.get(CommandName.FIND_AUTHOR_FOR_CREATE));
+        adminComands.add(availableCommands.get(CommandName.FIND_AUTHOR_FOR_UPDATE));
+        adminComands.add(availableCommands.get(CommandName.CREATE_ALBUM));
+        adminComands.add(availableCommands.get(CommandName.UPDATE_ALBUM));
+        adminComands.add(availableCommands.get(CommandName.DELETE_ALBUM));
+        adminComands.add(availableCommands.get(CommandName.FIND_ALL_ALBUMS_ADMIN));
+        adminComands.add(availableCommands.get(CommandName.FIND_ALBUM_FOR_CREATE));
+        adminComands.add(availableCommands.get(CommandName.FIND_ALBUM_FOR_UPDATE));
+        adminComands.add(availableCommands.get(CommandName.FIND_AUTHOR_ALBUMS_JSON));
+
     }
 
+    public static boolean isAdminCommand(String name) throws CommandException {
+       return true;
+    }
     public static Command getCommand(String commandName) throws CommandException {
         if(commandName != null) {
             if (!commandName.isEmpty()) {

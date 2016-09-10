@@ -6,8 +6,8 @@ import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.song.CreateSongService;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
@@ -22,8 +22,10 @@ import java.util.ArrayList;
 public class CreateSongCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         Long generatedId = null;
+        Song song = null;
 
         String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
         String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
@@ -31,7 +33,7 @@ public class CreateSongCommand implements Command {
         String year = request.getParameter(RequestParameter.SONG_YEAR);
         String filePath = request.getParameter(RequestParameter.SONG_FILE_PATH);
         String cost = request.getParameter(RequestParameter.SONG_COST);
-        Song song = null;
+
 
         boolean isValidRequest = SongParametersValidator.validateCreateParameters(authorIds, albumIds, name, year, filePath, cost);
 
@@ -63,8 +65,10 @@ public class CreateSongCommand implements Command {
                 }
                 song.setAuthorList(authors);
             }
+
             try {
                 generatedId = CreateSongService.create(song);
+
                 if(generatedId != null){
                     ArrayList<Song> songList = FindAllSongsService.find();
                     request.setAttribute(RequestParameter.ALL_SONGS, songList);
@@ -78,10 +82,10 @@ public class CreateSongCommand implements Command {
                 throw new CommandException("Create song command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
             page = JspPageName.ADMIN_HOME;
         }
-        return page;
 
+        return page;
     }
 }

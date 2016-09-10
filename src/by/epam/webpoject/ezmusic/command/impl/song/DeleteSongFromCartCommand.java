@@ -5,8 +5,8 @@ import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.User;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
 import by.epam.webpoject.ezmusic.service.song.DeleteSongFromCartService;
@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 public class DeleteSongFromCartCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
 
         String  songId = request.getParameter(RequestParameter.SONG_ID);
@@ -30,6 +31,7 @@ public class DeleteSongFromCartCommand implements Command {
         if(isValidRequest) {
             try {
                 DeleteSongFromCartService.delete(ParameterParser.parseLong(songId), cart);
+
                 cart = FindCartByUserIdService.find(user.getUserId());
                 request.getSession().setAttribute(RequestParameter.CART, cart);
                 request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted song from cart");
@@ -38,7 +40,7 @@ public class DeleteSongFromCartCommand implements Command {
                 throw new CommandException("Delete song from cart command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
             page = JspPageName.USER_HOME;
         }
         return page;

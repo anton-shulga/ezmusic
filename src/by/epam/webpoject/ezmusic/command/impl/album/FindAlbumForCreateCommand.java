@@ -5,8 +5,8 @@ import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.service.author.FindAllAuthorsService;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 
@@ -19,22 +19,26 @@ import java.util.ArrayList;
 public class FindAlbumForCreateCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
-        ArrayList<Author> allAuthors = null;
-        ArrayList<Song> allSongs = null;
+        ArrayList<Author> authorList = null;
+        ArrayList<Song> songList = null;
+
         try {
-            allAuthors = FindAllAuthorsService.find();
-            allSongs = FindAllSongsService.find();
-            if(allAuthors != null && allSongs != null) {
-                request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-                request.setAttribute(RequestParameter.ALL_SONGS, allSongs);
+            authorList = FindAllAuthorsService.find();
+            songList = FindAllSongsService.find();
+
+            if(authorList != null && songList != null) {
+                request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
+                request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 page = JspPageName.ADMIN_EDIT_ALBUM;
             }else {
                 request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
             }
         } catch (ServiceException e) {
-            throw new CommandException("Find album command exception", e);
+            throw new CommandException("Find album for create command exception", e);
         }
+
         return page;
     }
 }

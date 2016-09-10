@@ -1,8 +1,8 @@
 package by.epam.webpoject.ezmusic.dao;
 
 import by.epam.webpoject.ezmusic.entity.Author;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.dao.DAOException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

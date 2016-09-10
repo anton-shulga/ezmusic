@@ -5,7 +5,7 @@ import by.epam.webpoject.ezmusic.connection.ProxyConnection;
 import by.epam.webpoject.ezmusic.dao.CommentDAO;
 import by.epam.webpoject.ezmusic.entity.Comment;
 import by.epam.webpoject.ezmusic.entity.User;
-import by.epam.webpoject.ezmusic.exception.dao.DAOException;
+import by.epam.webpoject.ezmusic.exception.DAOException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

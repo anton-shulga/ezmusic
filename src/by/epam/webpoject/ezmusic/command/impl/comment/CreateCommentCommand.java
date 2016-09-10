@@ -6,8 +6,8 @@ import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Comment;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.entity.User;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.comment.CreateCommentService;
 import by.epam.webpoject.ezmusic.service.song.FindSongByIdService;
@@ -23,11 +23,13 @@ public class CreateCommentCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
         Long generatedId = null;
+        Comment comment = null;
+
         String songId = request.getParameter(RequestParameter.SONG_ID);
         String text = request.getParameter(RequestParameter.COMMENT_TEXT);
         String rating = request.getParameter(RequestParameter.COMMENT_RATING);
         User user = (User) request.getSession().getAttribute(RequestParameter.USER);
-        Comment comment = null;
+        rating = "1";
         boolean isValidRequest = CommentParametersValidator.validateCreateParameters(songId, text, rating);
         if(isValidRequest){
             comment = new Comment();
@@ -35,8 +37,10 @@ public class CreateCommentCommand implements Command {
             comment.setSongId(ParameterParser.parseLong(songId));
             comment.setText(text);
             comment.setRating(1);
+
             try {
                 generatedId =  CreateCommentService.create(comment);
+
                 if(generatedId != null) {
                     Song song = FindSongByIdService.find(ParameterParser.parseLong(songId));
                     request.setAttribute(RequestParameter.SONG, song);
@@ -46,9 +50,10 @@ public class CreateCommentCommand implements Command {
                 throw new CommandException("Create comment command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
             page = JspPageName.USER_HOME;
         }
+
         return page;
     }
 }

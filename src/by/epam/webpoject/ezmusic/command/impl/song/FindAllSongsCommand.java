@@ -4,8 +4,8 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Song;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +17,13 @@ import java.util.ArrayList;
 public class FindAllSongsCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         ArrayList<Song> songList = null;
+
         try {
             songList = FindAllSongsService.find();
+
             if(songList != null ){
                 if(songList.isEmpty()){
                     request.setAttribute(RequestParameter.MESSAGE, "Not found any songs.");
@@ -32,7 +35,7 @@ public class FindAllSongsCommand implements Command {
                 page = JspPageName.ADMIN_HOME;
             }
         } catch (ServiceException e) {
-            throw new CommandException("Find songs command exception", e);
+            throw new CommandException("Find all songs command exception", e);
         }
         return page;
     }

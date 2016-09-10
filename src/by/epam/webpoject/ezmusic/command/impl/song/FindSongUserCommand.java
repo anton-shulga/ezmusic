@@ -4,8 +4,8 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Song;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.song.FindSongByIdService;
 import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public class FindSongUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         Song song = null;
 
@@ -27,6 +28,7 @@ public class FindSongUserCommand implements Command {
         if(isValidRequest){
             try {
                 song = FindSongByIdService.find(ParameterParser.parseLong(songId));
+
                 if(song != null) {
                     request.setAttribute(RequestParameter.SONG, song);
                     page = JspPageName.USER_SONG;
@@ -38,7 +40,7 @@ public class FindSongUserCommand implements Command {
                 throw new CommandException("Find song user command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
             page = JspPageName.USER_HOME;
         }
         return page;

@@ -3,8 +3,8 @@ package by.epam.webpoject.ezmusic.service.author;
 import by.epam.webpoject.ezmusic.dao.AuthorDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
 import by.epam.webpoject.ezmusic.entity.Author;
-import by.epam.webpoject.ezmusic.exception.dao.DAOException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.DAOException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 
 import java.util.ArrayList;
 
@@ -13,11 +13,13 @@ import java.util.ArrayList;
  */
 public class FindAuthorsBySongIdService {
     public static ArrayList<Author> find(Long songId) throws ServiceException {
+
         AuthorDAO dao = (AuthorDAO) DAOFactory.createAuthorDAO();
+
         try {
             return dao.findBySongId(songId);
         } catch (DAOException e) {
-            throw new ServiceException("Find author service exception", e);
+            throw new ServiceException("Find authors by song id service exception", e);
         }
     }
 }

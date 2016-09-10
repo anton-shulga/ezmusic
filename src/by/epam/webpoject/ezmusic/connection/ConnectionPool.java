@@ -16,6 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by Антон on 16.07.2016.
  */
 public class ConnectionPool {
+
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static final int DEFAULT_POOL_SIZE = 5;
 
@@ -41,10 +42,15 @@ public class ConnectionPool {
             String username = dbResourceManager.getValue(DBParameter.DB_USER);
             String password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
 
-            poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
-            if(poolSize < DEFAULT_POOL_SIZE){
+            try {
+                poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
+                if(poolSize < DEFAULT_POOL_SIZE){
+                    poolSize = DEFAULT_POOL_SIZE;
+                }
+            }catch (NumberFormatException e){
                 poolSize = DEFAULT_POOL_SIZE;
             }
+
 
             Class.forName(driverName);
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
@@ -56,17 +62,15 @@ public class ConnectionPool {
                     connectionQueue.add(proxyConnection);
                     createdConnectionNumber++;
                 } catch (SQLException e) {
-                    LOGGER.error("Connection creation error", e);
+                    LOGGER.error("Create database connection error", e);
                 }
             }
             if(createdConnectionNumber <= DEFAULT_POOL_SIZE){
-                LOGGER.fatal("OMG! FATAL PIPEC!");
-                throw new RuntimeException("DataBase connection error");
+                LOGGER.fatal("Database connection fatal error");
+                throw new RuntimeException("Database connection error");
             }
-        }catch (NumberFormatException e){
-            poolSize = DEFAULT_POOL_SIZE;
         } catch (ClassNotFoundException | MissingResourceException e) {
-            LOGGER.fatal("OMG! FATAL PIPEC!", e);
+            LOGGER.fatal("Database connection fatal error");
             throw new RuntimeException(e);
         }
 
@@ -78,7 +82,7 @@ public class ConnectionPool {
             try {
                 if (instance == null) {
                     instance = new ConnectionPool();
-                    instanceCreated.set(true);
+                    instanceCreated.getAndSet(true);
                 }
             } finally {
                 lock.unlock();

@@ -5,8 +5,8 @@ import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.User;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.service.order.PayOrderService;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.service.order.PayForOrderService;
 
 import javax.servlet.http.HttpServletRequest;
 /**
@@ -15,12 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 public class PayForOrderCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
 
         User user = (User) request.getSession().getAttribute(RequestParameter.USER);
         Order cart = (Order) request.getSession().getAttribute(RequestParameter.CART);
 
-        boolean isPaid = PayOrderService.pay(user, cart);
+        boolean isPaid = PayForOrderService.pay(user, cart);
         if(isPaid){
             page = JspPageName.USER_HOME;
             request.getSession().removeAttribute(RequestParameter.CART);

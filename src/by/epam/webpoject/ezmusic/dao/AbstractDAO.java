@@ -1,6 +1,6 @@
 package by.epam.webpoject.ezmusic.dao;
 
-import by.epam.webpoject.ezmusic.exception.dao.DAOException;
+import by.epam.webpoject.ezmusic.exception.DAOException;
 
 import java.sql.Statement;
 

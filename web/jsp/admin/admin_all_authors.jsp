@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
 </head>
 <body>
-<c:import url="../../jsp/header.jsp"/>
+<c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
 <c:import url="admin_navbar.jsp"/>
 <main>
     <div class="wrapper">
@@ -72,12 +72,13 @@
                 </div>
             </div>
         </div>
+        <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     </div>
 </main>
 <c:if test="${requestScope.message != null}">
     <script> Materialize.toast('${requestScope.message}', 4000);</script>
 </c:if>
-<c:import url="../../jsp/footer.jsp"/>
+
 
 </body>
 </html>

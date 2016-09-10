@@ -6,8 +6,8 @@ import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
-import by.epam.webpoject.ezmusic.exception.command.CommandException;
-import by.epam.webpoject.ezmusic.exception.service.ServiceException;
+import by.epam.webpoject.ezmusic.exception.CommandException;
+import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.service.album.FindAllAlbumsService;
 import by.epam.webpoject.ezmusic.service.author.FindAllAuthorsService;
 import by.epam.webpoject.ezmusic.service.song.FindSongByIdService;
@@ -22,10 +22,11 @@ import java.util.ArrayList;
 public class FindSongForUpdateCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         Song song = null;
-        ArrayList<Album> allAlbums = null;
-        ArrayList<Author> allAuthors = null;
+        ArrayList<Album> albumList = null;
+        ArrayList<Author> authorList = null;
 
         String songId = request.getParameter(RequestParameter.SONG_ID);
 
@@ -33,13 +34,15 @@ public class FindSongForUpdateCommand implements Command {
         if(isValidRequest){
             try {
                 song = FindSongByIdService.find(Long.parseLong(songId));
-                allAlbums = FindAllAlbumsService.find();
-                allAuthors = FindAllAuthorsService.find();
-                if(song != null  && allAuthors != null && allAlbums != null){
-                    request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+
+                albumList = FindAllAlbumsService.find();
+                authorList = FindAllAuthorsService.find();
+
+                if(song != null  && authorList != null && albumList != null){
+                    request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
                     request.setAttribute(RequestParameter.SONG_AUTHORS, song.getAuthorList());
                     request.setAttribute(RequestParameter.SONG_ALBUMS, song.getAlbumList());
-                    request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
+                    request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
                     request.setAttribute(RequestParameter.SONG, song);
                     page = JspPageName.ADMIN_EDIT_SONG;
                 }else {
@@ -51,9 +54,10 @@ public class FindSongForUpdateCommand implements Command {
             }
 
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
             page = JspPageName.ADMIN_HOME;
         }
+
         return page;
     }
 }
