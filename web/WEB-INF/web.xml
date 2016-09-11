@@ -19,8 +19,18 @@
     <servlet-mapping>
         <servlet-name>JsonController</servlet-name>
         <url-pattern>/JsonController</url-pattern>
-
     </servlet-mapping>
+
+    <filter>
+        <filter-name>commandsecurityfilter</filter-name>
+        <filter-class>by.epam.webpoject.ezmusic.filter.CommandSecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>commandsecurityfilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
     <filter>
         <filter-name>encodingfilter</filter-name>
         <filter-class>by.epam.webpoject.ezmusic.filter.EncodingFilter</filter-class>

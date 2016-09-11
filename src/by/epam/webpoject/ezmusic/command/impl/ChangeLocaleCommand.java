@@ -3,6 +3,7 @@ package by.epam.webpoject.ezmusic.command.impl;
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.exception.CommandException;
+import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,6 @@ public class ChangeLocaleCommand implements Command {
 
         String locale = request.getParameter(RequestParameter.LOCALE);
         request.getSession().setAttribute(RequestParameter.LOCALE, locale);
-        return null;
+        return new Gson().toJson(locale);
     }
 }

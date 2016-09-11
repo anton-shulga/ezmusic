@@ -7,6 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.page_content"/>
 <html>
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -64,7 +66,6 @@
 
 <body>
 <c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
-<c:import url="common_navbar.jsp"/>
 <main>
 <div class="wrapper">
     <div class="container">

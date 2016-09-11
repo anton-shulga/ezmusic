@@ -24,6 +24,7 @@ public class Controller extends HttpServlet {
         String commandName = req.getParameter(RequestParameter.COMMAND);
         try {
             Command command = CommandManager.getCommand(commandName);
+            req.getSession().setAttribute(RequestParameter.COMMAND, command);
             page = command.execute(req);
         } catch (CommandException e) {
            page = JspPageName.ERROR;
@@ -38,6 +39,7 @@ public class Controller extends HttpServlet {
         String commandName = req.getParameter(RequestParameter.COMMAND);
         try {
             Command command = CommandManager.getCommand(commandName);
+            req.getSession().setAttribute(RequestParameter.COMMAND, command);
             page = command.execute(req);
         } catch (CommandException e) {
            throw new ServletException(e);

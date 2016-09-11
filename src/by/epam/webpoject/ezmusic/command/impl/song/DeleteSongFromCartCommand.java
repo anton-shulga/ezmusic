@@ -27,7 +27,7 @@ public class DeleteSongFromCartCommand implements Command {
         User user = (User) request.getSession().getAttribute(RequestParameter.USER);
         Order cart = (Order) request.getSession().getAttribute(RequestParameter.CART);
 
-        boolean isValidRequest = SongParametersValidator.validateDeleteParameters(songId);
+        boolean isValidRequest = SongParametersValidator.validateDeleteFromCartParameters(songId, cart);
         if(isValidRequest) {
             try {
                 DeleteSongFromCartService.delete(ParameterParser.parseLong(songId), cart);

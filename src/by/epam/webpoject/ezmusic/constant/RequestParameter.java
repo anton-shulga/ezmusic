@@ -53,4 +53,5 @@ public class RequestParameter {
     public static final String MONEY_AMOUNT = "money_amount";
     public static final String COMMENT_RATING = "comment_rating";
     public static final String ORDERS = "orders";
+    public static final String TOKEN = "token";
 }

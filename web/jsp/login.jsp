@@ -12,15 +12,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8" language="java" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="property.page_content"/>
+
 <html>
 <head>
+    <title><fmt:message key="title.sign_in"/></title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../css/styles.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="../js/bin/materialize.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8">
-    <title>Login</title>
+
 </head>
 
 <body>
@@ -32,7 +34,7 @@
             <div class="col s8 offset-s2">
                 <div class="card z-depth-5">
                     <div class="card-content">
-                        <span class="card-title text-darken-2">Sign in</span>
+                        <span class="card-title text-darken-2"><fmt:message key="title.sign_in"/></span>
                         <div class="row">
                             <div class="input-field col s12 center">
                                 <img src="${pageContext.request.contextPath}/img/logo/site-logo.png" alt="" class="responsive-img valign profile-image-login">
@@ -44,24 +46,24 @@
                                 <div class="input-field col s12 required">
                                     <i class="material-icons prefix">perm_identity</i>
                                     <input id="id-user-login" name="user_login" type="text" required>
-                                    <label for="id-user-login">Username</label>
+                                    <label for="id-user-login"><fmt:message key="label.username"/> </label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12 required">
                                     <i class="material-icons prefix">lock</i><input id="id-user-password" name="user_password" type="password" required>
-                                    <label for="id-user-password">Password</label>
+                                    <label for="id-user-password"><fmt:message key="label.password"/></label>
                                 </div>
                             </div>
                             <div class="row">
-                                <button id="id-sing-in-button" class="col s12 waves-effect waves-light btn black" type="submit">Sign in</button>
+                                <button id="id-sing-in-button" class="col s12 waves-effect waves-light btn black" type="submit"><fmt:message key="button.sign_in"/></button>
                             </div>
                             </form>
 
                             <div class="row">
                                 <form action="controller" method="POST">
                                     <input type="hidden" name="command" value="to_register">
-                                    <button class="col s12 waves-effect waves-light btn black" type="submit">Sign up</button>
+                                    <button class="col s12 waves-effect waves-light btn black" type="submit"><fmt:message key="button.sign_up"/> </button>
                                 </form>
                             </div>
                     </div>

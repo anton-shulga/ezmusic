@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -8,13 +9,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.page_content"/>
 <html>
 <head>
-    <title>Edit author</title>
+    <title><fmt:message key="title.edit_author"/> </title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../css/styles.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
     <script>
         $(document).ready(function() {
             $('select').material_select();
@@ -57,7 +60,7 @@
             <div class="col s8 offset-s2">
                 <div class="card z-depth-4">
                     <div class="card-content">
-                        <span class="card-title text-darken-2">Author</span>
+                        <span class="card-title text-darken-2"><fmt:message key="title.author"/></span>
                         <form action="${pageContext.request.contextPath}/controller" method="POST">
                             <c:if test="${not empty author}">
                                 <input type="hidden" name="command" value="update_author">
@@ -69,21 +72,20 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input id="id-author-name" type="text" name="author_name" value="${author.name}">
-                                    <label for="id-author-name">Name</label>
+                                    <label for="id-author-name"><fmt:message key="label.name"/></label>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input id="id-author-country" type="text" name="author_country" value="${author.country}">
-                                    <label for="id-author-country">Country</label>
+                                    <label for="id-author-country"><fmt:message key="label.country"/></label>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="input-field col s12">
                                     <select multiple class="icons" id="id-albums" name="selected_albums">
-                                        <option value="" disabled selected>Select albums</option>
                                         <c:forEach items="${requestScope.all_albums}" var="item">
                                             <c:choose>
                                                 <c:when test="${fn:contains(author_albums, item)}">
@@ -95,14 +97,13 @@
                                             </c:choose>
                                         </c:forEach>
                                     </select>
-                                    <label for="id-albums">Albums</label>
+                                    <label for="id-albums"><fmt:message key="label.albums"/></label>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="input-field col s12">
                                     <select multiple class="icons" id="id-songs" name="selected_songs">
-                                        <option value="" disabled selected>Select songs</option>
                                         <c:forEach items="${requestScope.all_songs}" var="item">
                                             <c:choose>
                                                 <c:when test="${fn:contains(author_songs, item)}">
@@ -114,14 +115,14 @@
                                             </c:choose>
                                         </c:forEach>
                                     </select>
-                                    <label for="id-songs">Songs</label>
+                                    <label for="id-songs"><fmt:message key="label.songs"/></label>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="file-field input-field">
-                                    <div class="btn">
-                                        <span>File</span>
+                                    <div class="btn black">
+                                        <span><fmt:message key="button.file"/></span>
                                         <input type="file">
                                     </div>
                                     <div class="file-path-wrapper">
@@ -132,7 +133,7 @@
 
                             <div class="card-action">
                                 <div class="row">
-                                    <button class="btn col s12 black" type="submit">Save changes</button>
+                                    <button class="btn col s12 black" type="submit"><fmt:message key="button.save_changes"/> </button>
                                 </div>
 
                             </div>

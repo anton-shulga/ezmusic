@@ -25,7 +25,7 @@ public class AddFundsCommand implements Command {
 
         boolean isValidRequest = UserParametersValidator.validateAddFundsParameters(moneyAmount);
         if(isValidRequest) {
-            user.setBalance(user.getBalance() + ParameterParser.parseLong(moneyAmount));
+            user.setBalance(user.getBalance() + ParameterParser.parseDouble(moneyAmount));
 
             try {
                 UpdateUserService.update(user);

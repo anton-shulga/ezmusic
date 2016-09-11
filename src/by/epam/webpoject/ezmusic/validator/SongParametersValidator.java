@@ -1,5 +1,7 @@
 package by.epam.webpoject.ezmusic.validator;
 
+import by.epam.webpoject.ezmusic.entity.Order;
+
 /**
  * Created by Антон on 21.08.2016.
  */
@@ -136,5 +138,21 @@ public class SongParametersValidator {
             }
         }
         return true;
+    }
+
+    public static boolean validateDeleteFromCartParameters(String songId, Order cart) {
+        if(songId != null) {
+            try {
+                Long.parseLong(songId);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        if(cart != null){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

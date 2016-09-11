@@ -1,5 +1,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isErrorPage="true" %>
 <%--
   Created by IntelliJ IDEA.
@@ -9,13 +10,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.page_content"/>
 <html>
 <head>
-    <title>Ooops! Something is wrong!</title>
+    <title><fmt:message key="title.oops"/>T</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../css/styles.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="../js/bin/materialize.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8">
 </head>
@@ -26,23 +29,23 @@
             <div class="container">
                 <div class="row">
                     <div class="card z-depth-4">
-                        <h1>Oops...</h1>
+                        <h1><fmt:message key="title.oops"/></h1>
                         <div class="row">
                             <table width="100%" border="1">
                                 <tr valign="top">
-                                    <td width="40%"><b>Error:</b></td>
+                                    <td width="40%"><b><fmt:message key="title.error"/></b></td>
                                     <td>${pageContext.exception}</td>
                                 </tr>
                                 <tr valign="top">
-                                    <td><b>URI:</b></td>
+                                    <td><b><fmt:message key="title.url"/> </b></td>
                                     <td>${pageContext.errorData.requestURI}</td>
                                 </tr>
                                 <tr valign="top">
-                                    <td><b>Status code:</b></td>
+                                    <td><b><fmt:message key="title.status_code"/></b></td>
                                     <td>${pageContext.errorData.statusCode}</td>
                                 </tr>
                                 <tr valign="top">
-                                    <td><b>Stack trace:</b></td>
+                                    <td><b><fmt:message key="title.stack_trace"/></b></td>
                                     <td>
                                         <c:forEach var="trace"
                                                    items="${pageContext.exception.stackTrace}">

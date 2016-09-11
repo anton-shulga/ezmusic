@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -8,13 +9,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="by.epam.webpoject.ezmusic.util.RandomTokenGenerator"%>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="property.page_content"/>
 <html>
 <head>
-    <title>Edit album</title>
+    <title><fmt:message key="title.edit_album"/></title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../css/styles.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('select').material_select();
@@ -49,7 +54,7 @@
 </head>
 <body>
 <c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
-<c:import url="admin_navbar.jsp"/>
+<c:import url="${pageContext.request.contextPath}/jsp/admin/admin_navbar.jsp"/>
 <main>
     <div class="wrapper">
         <div class="container">
@@ -57,7 +62,7 @@
                 <div class="col s8 offset-s2">
                     <div class="card z-depth-4">
                         <div class="card-content">
-                            <span class="card-title text-darken-2">Album</span>
+                            <span class="card-title text-darken-2"><fmt:message key="title.album"/> </span>
                             <form action="${pageContext.request.contextPath}/controller" method="POST">
                                 <c:if test="${not empty album}">
                                     <input type="hidden" name="command" value="update_album">
@@ -66,22 +71,22 @@
                                 <c:if test="${empty album}">
                                     <input type="hidden" name="command" value="create_album">
                                 </c:if>
+                                <input type="hidden" name="token" value="${RandomTokenGenerator.nextToken()}">
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="id-album-name" type="text" name="album_name" value="${album.name}" required>
-                                        <label for="id-album-name">Name</label>
+                                        <label for="id-album-name"><fmt:message key="label.name"/></label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="id-album-year" type="text" name="album_year" value="${album.year}" required>
-                                        <label for="id-album-year">Year</label>
+                                        <label for="id-album-year"><fmt:message key="label.year"/></label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <select multiple class="icons" id="id-authors" name="selected_authors">
-                                            <option value="" disabled selected>Select authors</option>
                                             <c:forEach items="${requestScope.all_authors}" var="item">
                                                 <c:choose>
                                                     <c:when test="${fn:contains(album_authors, item)}">
@@ -93,13 +98,12 @@
                                                 </c:choose>
                                             </c:forEach>
                                         </select>
-                                        <label for="id-authors">Authors</label>
+                                        <label for="id-authors"><fmt:message key="label.authors"/></label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <select multiple class="icons" id="id-songs" name="selected_songs">
-                                            <option value="" disabled selected>Select songs</option>
                                             <c:forEach items="${requestScope.all_songs}" var="item">
                                                 <c:choose>
                                                     <c:when test="${fn:contains(album_songs, item)}">
@@ -111,13 +115,13 @@
                                                 </c:choose>
                                             </c:forEach>
                                         </select>
-                                        <label for="id-songs">Albums</label>
+                                        <label for="id-songs"><fmt:message key="label.songs"/></label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="file-field input-field col s12">
                                         <div class="btn black">
-                                            <span>File</span>
+                                            <span><fmt:message key="button.file"/></span>
                                             <input type="file">
                                         </div>
                                         <div class="file-path-wrapper">
@@ -127,7 +131,7 @@
                                 </div>
                                 <div class="card-action">
                                     <div class="row">
-                                        <button class="btn col s12 black" type="submit">Save changes</button>
+                                        <button class="btn col s12 black" type="submit"><fmt:message key="button.save_changes"/> </button>
                                     </div>
                                 </div>
                             </form>

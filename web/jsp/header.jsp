@@ -13,11 +13,7 @@
 <fmt:setBundle basename="property.page_content"/>
 <html>
 <head>
-    <title>Header</title>
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../css/styles.css" media="screen,projection"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta charset="utf-8">
+    <title><fmt:message key="title.header"/> </title>
 </head>
 <body>
 
