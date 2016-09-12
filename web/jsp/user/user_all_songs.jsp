@@ -12,7 +12,7 @@
 <fmt:setBundle basename="property.page_content"/>
 <html>
 <head>
-    <title><fmt:message key="title.all_songs"></title>
+    <title><fmt:message key="title.all_songs"/></title>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
@@ -93,4 +93,4 @@
         <script> Materialize.toast('${requestScope.message}', 4000);</script>
     </c:if>
 </body>
-</html>
+

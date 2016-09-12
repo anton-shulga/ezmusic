@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -9,7 +10,7 @@
   Time: 22:46
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="by.epam.webpoject.ezmusic.util.RandomTokenGenerator"%>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="property.page_content"/>
 <html>
@@ -19,6 +20,7 @@
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script>
         $(document).ready(function() {
             $('#id-authors').on("change", function(event) {
@@ -65,6 +67,7 @@
                             <c:if test="${empty song}">
                                 <input type="hidden" name="command" value="create_song">
                             </c:if>
+                            <input type="hidden" name="token" value="${RandomTokenGenerator.nextToken()}">
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input id="id-song-name" type="text" name="song_name" value="${song.name}">

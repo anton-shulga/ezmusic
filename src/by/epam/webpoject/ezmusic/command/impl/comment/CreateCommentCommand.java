@@ -27,33 +27,53 @@ public class CreateCommentCommand implements Command {
 
         String songId = request.getParameter(RequestParameter.SONG_ID);
         String text = request.getParameter(RequestParameter.COMMENT_TEXT);
-        String rating = request.getParameter(RequestParameter.COMMENT_RATING);
         User user = (User) request.getSession().getAttribute(RequestParameter.USER);
-        rating = "1";
-        boolean isValidRequest = CommentParametersValidator.validateCreateParameters(songId, text, rating);
-        if(isValidRequest){
-            comment = new Comment();
-            comment.setUser(user);
-            comment.setSongId(ParameterParser.parseLong(songId));
-            comment.setText(text);
-            comment.setRating(1);
 
-            try {
-                generatedId =  CreateCommentService.create(comment);
+        String sessionToken = (String) request.getSession().getAttribute(RequestParameter.TOKEN);
+        String requestToken = request.getParameter(RequestParameter.TOKEN);
 
-                if(generatedId != null) {
-                    Song song = FindSongByIdService.find(ParameterParser.parseLong(songId));
-                    request.setAttribute(RequestParameter.SONG, song);
-                    page = JspPageName.USER_SONG;
+        try {
+            if (!f5Pressed(sessionToken, requestToken)) {
+                request.getSession().setAttribute(RequestParameter.TOKEN, requestToken);
+                boolean isValidRequest = CommentParametersValidator.validateCreateParameters(songId, text);
+                if (isValidRequest) {
+                    comment = new Comment();
+                    comment.setUser(user);
+                    comment.setSongId(ParameterParser.parseLong(songId));
+                    comment.setText(text);
+
+                    generatedId = CreateCommentService.create(comment);
+
+                    if (generatedId != null) {
+                        Song song = FindSongByIdService.find(ParameterParser.parseLong(songId));
+                        request.setAttribute(RequestParameter.SONG, song);
+                        page = JspPageName.USER_SONG;
+                    }
+
+                } else {
+                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+                    page = JspPageName.USER_HOME;
                 }
-            } catch (ServiceException e) {
-                throw new CommandException("Create comment command exception", e);
+            }else {
+                Song song = FindSongByIdService.find(ParameterParser.parseLong(songId));
+                request.setAttribute(RequestParameter.SONG, song);
+                page = JspPageName.USER_SONG;
             }
-        }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
-            page = JspPageName.USER_HOME;
+        }catch (ServiceException e){
+            throw new CommandException("Create comment command exception", e);
         }
 
         return page;
+    }
+
+    private boolean f5Pressed(String sessionToken, String requestToken){
+        if(sessionToken != null){
+            if(requestToken != null){
+                return sessionToken.equals(requestToken);
+            }
+        }else {
+            return false;
+        }
+        return false;
     }
 }

@@ -54,4 +54,5 @@ public class RequestParameter {
     public static final String COMMENT_RATING = "comment_rating";
     public static final String ORDERS = "orders";
     public static final String TOKEN = "token";
+    public static final String AUDIO_FILES_DIRECTORY = "audio.dir";
 }

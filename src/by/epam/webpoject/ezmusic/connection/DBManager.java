@@ -10,14 +10,10 @@ public class DBManager {
     private final static DBManager instance = new DBManager();
     private ResourceBundle bundle = null;
     private DBManager(){
-        initialize();
-    }
-    private void initialize(){
-        try {
-          bundle = ResourceBundle.getBundle("property.db");
-        }catch (MissingResourceException e){
 
-        }
+    }
+    public void initialize() throws MissingResourceException{
+            bundle = ResourceBundle.getBundle("property.db");
     }
 
     public static DBManager getInstance(){

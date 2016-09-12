@@ -19,19 +19,8 @@ import java.util.ArrayList;
  */
 public class CreateAlbumCommand implements Command{
 
-    private boolean f5Pressed(String sessionToken, String requestToken){
-        if(sessionToken != null){
-            if(requestToken != null){
-                return sessionToken.equals(requestToken);
-            }
-        }else {
-            return false;
-        }
-        return false;
-    }
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-
         String page = null;
         Long generatedId = null;
         Album album = null;
@@ -45,16 +34,16 @@ public class CreateAlbumCommand implements Command{
         String sessionToken = (String) request.getSession().getAttribute(RequestParameter.TOKEN);
         String requestToken = request.getParameter(RequestParameter.TOKEN);
 
+        try {
+            if (!f5Pressed(sessionToken, requestToken)) {
+                request.getSession().setAttribute(RequestParameter.TOKEN, requestToken);
+                boolean isValidRequest = AlbumParametersValidator.validateCreateParameters(selectedSongIds, authorIds, name, year, filePath);
+                if (isValidRequest) {
+                    album = new Album();
+                    album.setName(name);
+                    album.setYear(ParameterParser.parseInt(year));
+                    album.setImageFilePath(filePath);
 
-        if(!f5Pressed(sessionToken, requestToken)) {
-            request.getSession().setAttribute(RequestParameter.TOKEN, requestToken);
-            boolean isValidRequest = AlbumParametersValidator.validateCreateParameters(selectedSongIds, authorIds, name, year, filePath);
-            if (isValidRequest) {
-                album = new Album();
-                album.setName(name);
-                album.setYear(ParameterParser.parseInt(year));
-                album.setImageFilePath(filePath);
-                try {
                     generatedId = CreateAlbumService.create(album, ParameterParser.parseLongArray(selectedSongIds), ParameterParser.parseLongArray(authorIds));
 
                     if (generatedId != null) {
@@ -66,17 +55,31 @@ public class CreateAlbumCommand implements Command{
                         request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
                         page = JspPageName.ADMIN_EDIT_ALBUM;
                     }
-                } catch (ServiceException e) {
-                    throw new CommandException("Create album command exception", e);
+
+                } else {
+                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+                    page = JspPageName.ADMIN_EDIT_ALBUM;
                 }
             } else {
-                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
-                page = JspPageName.ADMIN_EDIT_ALBUM;
+                ArrayList<Album> albumList = FindAllAlbumsService.find();
+                request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
+                page = JspPageName.ADMIN_ALL_ALBUMS;
             }
-        }else {
-            page = JspPageName.ERROR;
+        } catch (ServiceException e) {
+            throw new CommandException("Create album command exception", e);
         }
 
         return page;
+    }
+
+    private boolean f5Pressed(String sessionToken, String requestToken){
+        if(sessionToken != null){
+            if(requestToken != null){
+                return sessionToken.equals(requestToken);
+            }
+        }else {
+            return false;
+        }
+        return false;
     }
 }

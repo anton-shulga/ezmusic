@@ -31,32 +31,55 @@ public class CreateAuthorCommand implements Command {
         String country = request.getParameter(RequestParameter.AUTHOR_COUNTRY);
         String photoPath = request.getParameter(RequestParameter.AUTHOR_PHOTO_PATH);
 
-        boolean isValidRequest = AuthorParametersValidator.validateCreateParameters(albumIds, songIds, name, country, photoPath);
-        if(isValidRequest) {
-            author = new Author();
-            author.setName(name);
-            author.setCountry(country);
-            author.setPhotoPath(photoPath);
-            try {
-                generatedId = CreateAuthorService.create(author, ParameterParser.parseLongArray(albumIds), ParameterParser.parseLongArray(songIds));
+        String sessionToken = (String) request.getSession().getAttribute(RequestParameter.TOKEN);
+        String requestToken = request.getParameter(RequestParameter.TOKEN);
+        try {
+            if (!f5Pressed(sessionToken, requestToken)) {
+                request.getSession().setAttribute(RequestParameter.TOKEN, requestToken);
+                boolean isValidRequest = AuthorParametersValidator.validateCreateParameters(albumIds, songIds, name, country, photoPath);
+                if (isValidRequest) {
+                    author = new Author();
+                    author.setName(name);
+                    author.setCountry(country);
+                    author.setPhotoPath(photoPath);
 
-                if (generatedId != null) {
-                    ArrayList<Author> allAuthors = FindAllAuthorsService.find();
-                    request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-                    request.setAttribute(RequestParameter.MESSAGE, "Successfully created author " + name);
-                    page = JspPageName.ADMIN_ALL_AUTHORS;
-                }else {
-                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                    generatedId = CreateAuthorService.create(author, ParameterParser.parseLongArray(albumIds), ParameterParser.parseLongArray(songIds));
+
+                    if (generatedId != null) {
+                        ArrayList<Author> allAuthors = FindAllAuthorsService.find();
+                        request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                        request.setAttribute(RequestParameter.MESSAGE, "Successfully created author " + name);
+                        page = JspPageName.ADMIN_ALL_AUTHORS;
+                    } else {
+                        request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                        page = JspPageName.ADMIN_HOME;
+                    }
+
+                } else {
+                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
                     page = JspPageName.ADMIN_HOME;
                 }
-            } catch (ServiceException e) {
-                throw new CommandException("Create author command exception", e);
+            }else {
+                ArrayList<Author> allAuthors = FindAllAuthorsService.find();
+                request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
+                page = JspPageName.ADMIN_ALL_AUTHORS;
             }
-        }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
-            page = JspPageName.ADMIN_HOME;
+        } catch (ServiceException e) {
+            throw new CommandException("Create author command exception", e);
         }
+
         return page;
 
+    }
+
+    private boolean f5Pressed(String sessionToken, String requestToken){
+        if(sessionToken != null){
+            if(requestToken != null){
+                return sessionToken.equals(requestToken);
+            }
+        }else {
+            return false;
+        }
+        return false;
     }
 }

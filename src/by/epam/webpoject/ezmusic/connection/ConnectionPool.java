@@ -37,6 +37,8 @@ public class ConnectionPool {
         try {
             DBManager dbResourceManager = DBManager.getInstance();
 
+            dbResourceManager.initialize();
+
             String driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
             String url = dbResourceManager.getValue(DBParameter.DB_URL);
             String username = dbResourceManager.getValue(DBParameter.DB_USER);
@@ -70,7 +72,7 @@ public class ConnectionPool {
                 throw new RuntimeException("Database connection error");
             }
         } catch (ClassNotFoundException | MissingResourceException e) {
-            LOGGER.fatal("Database connection fatal error");
+            LOGGER.fatal("Database connection error");
             throw new RuntimeException(e);
         }
 

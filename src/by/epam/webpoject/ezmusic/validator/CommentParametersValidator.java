@@ -4,7 +4,7 @@ package by.epam.webpoject.ezmusic.validator;
  * Created by Антон on 06.09.2016.
  */
 public class CommentParametersValidator {
-    public static boolean validateCreateParameters(String songId, String text, String rating) {
+    public static boolean validateCreateParameters(String songId, String text) {
         if(songId == null){
             return false;
         }else {
@@ -16,15 +16,6 @@ public class CommentParametersValidator {
         }
         if(text == null || text.isEmpty()){
             return false;
-        }
-        if(rating == null){
-            return false;
-        }else {
-            try{
-                Integer.parseInt(songId);
-            }catch (NumberFormatException e) {
-                return false;
-            }
         }
         return true;
     }

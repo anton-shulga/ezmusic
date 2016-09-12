@@ -9,6 +9,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="by.epam.webpoject.ezmusic.util.RandomTokenGenerator"%>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="property.page_content"/>
 <html>
@@ -69,6 +70,7 @@
                             <c:if test="${empty author}">
                                 <input type="hidden" name="command" value="create_author">
                             </c:if>
+                            <input type="hidden" name="token" value="${RandomTokenGenerator.nextToken()}">
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input id="id-author-name" type="text" name="author_name" value="${author.name}">

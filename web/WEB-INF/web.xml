@@ -3,6 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+    <context-param>
+        <param-name>audio.dir</param-name>
+        <param-value>audio</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>image.dir</param-name>
+        <param-value>img</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>by.epam.webpoject.ezmusic.controller.Controller</servlet-class>
@@ -22,16 +33,6 @@
     </servlet-mapping>
 
     <filter>
-        <filter-name>commandsecurityfilter</filter-name>
-        <filter-class>by.epam.webpoject.ezmusic.filter.CommandSecurityFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>commandsecurityfilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-
-    <filter>
         <filter-name>encodingfilter</filter-name>
         <filter-class>by.epam.webpoject.ezmusic.filter.EncodingFilter</filter-class>
         <init-param>
@@ -43,6 +44,16 @@
         <filter-name>encodingfilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>commandsecurityfilter</filter-name>
+        <filter-class>by.epam.webpoject.ezmusic.filter.CommandSecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>commandsecurityfilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <filter>
         <filter-name>usersecurityfilter</filter-name>
@@ -69,6 +80,11 @@
     <listener>
         <listener-class>by.epam.webpoject.ezmusic.listener.ContextListener</listener-class>
     </listener>
+
+    <listener>
+        <listener-class>by.epam.webpoject.ezmusic.listener.FileLocationContextListener</listener-class>
+    </listener>
+
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/jsp/error.jsp</location>
