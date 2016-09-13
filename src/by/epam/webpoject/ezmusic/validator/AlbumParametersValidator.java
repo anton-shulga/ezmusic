@@ -4,7 +4,7 @@ package by.epam.webpoject.ezmusic.validator;
  * Created by Антон on 21.08.2016.
  */
 public class AlbumParametersValidator {
-    public static boolean validateCreateParameters(String[] selectedSongIds, String[] selectedAuthorIds, String name, String year, String filePath){
+    public static boolean validateCreateParameters(String[] selectedSongIds, String[] selectedAuthorIds, String name, String year){
         try {
             if (selectedSongIds != null) {
                 for (String songId : selectedSongIds) {
@@ -30,9 +30,6 @@ public class AlbumParametersValidator {
             }catch (NumberFormatException e){
                 return false;
             }
-        }
-        if(filePath == null || filePath.isEmpty()){
-            return false;
         }
         return true;
     }

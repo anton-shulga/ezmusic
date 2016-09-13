@@ -8,6 +8,7 @@ import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.user.UpdateUserService;
 import by.epam.webpoject.ezmusic.validator.UserParametersValidator;
+import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +36,6 @@ public class AddFundsCommand implements Command {
                 throw new CommandException("Add funds command exception", e);
             }
         }
-        return output;
+        return new Gson().toJson(output);
     }
 }

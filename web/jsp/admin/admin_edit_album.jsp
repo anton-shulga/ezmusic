@@ -63,7 +63,7 @@
                     <div class="card z-depth-4">
                         <div class="card-content">
                             <span class="card-title text-darken-2"><fmt:message key="title.album"/> </span>
-                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                            <form action="${pageContext.request.contextPath}/controller" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
                                 <c:if test="${not empty album}">
                                     <input type="hidden" name="command" value="update_album">
                                     <input type="hidden" name="album_id" value="${album.albumId}">
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="id-album-year" type="text" name="album_year" value="${album.year}" required>
+                                        <input id="id-album-year" type="text" name="album_year" value="${album.year}" required pattern="^\d{4}$">
                                         <label for="id-album-year"><fmt:message key="label.year"/></label>
                                     </div>
                                 </div>
@@ -122,10 +122,10 @@
                                     <div class="file-field input-field col s12">
                                         <div class="btn black">
                                             <span><fmt:message key="button.file"/></span>
-                                            <input type="file">
+                                            <input type="file" name="album_image_file_path">
                                         </div>
                                         <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text" name="album_image_file_path" value="${album.imageFilePath}">
+                                            <input class="file-path validate" type="text" value="${album.imageFilePath}" required>
                                         </div>
                                     </div>
                                 </div>

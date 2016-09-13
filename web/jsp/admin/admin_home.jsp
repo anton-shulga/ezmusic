@@ -25,7 +25,7 @@
 <main>
     <div class="wrapper">
         <div class="container">
-            <ctg:hello user="${user}"/>
+
         </div>
         <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     </div>

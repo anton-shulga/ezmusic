@@ -70,14 +70,14 @@
                             <input type="hidden" name="token" value="${RandomTokenGenerator.nextToken()}">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="id-song-name" type="text" name="song_name" value="${song.name}">
+                                    <input id="id-song-name" type="text" name="song_name" value="${song.name}" required>
                                     <label for="id-song-name"><fmt:message key="label.name"/></label>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="id-song-year" type="text" name="song_year" value="${song.year}">
+                                    <input id="id-song-year" type="text" name="song_year" value="${song.year}" required pattern="^\d{4}$">
                                     <label for="id-song-year"><fmt:message key="label.year"/></label>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="id-song-cost" type="text" name="song_cost" value="${song.cost}">
+                                    <input id="id-song-cost" type="text" name="song_cost" value="${song.cost}" required pattern="^[0-9]+$">
                                     <label for="id-song-cost"><fmt:message key="label.cost"/></label>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                                         <input type="file">
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input  id="id-song-file-path"class="file-path validate" type="text" name="song_file_path" value="${song.filePath}">
+                                        <input  id="id-song-file-path"class="file-path validate" type="text" name="song_file_path" value="${song.filePath}" required>
                                     </div>
                                 </div>
 

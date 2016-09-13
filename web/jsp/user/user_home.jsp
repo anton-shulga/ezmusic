@@ -89,10 +89,11 @@
         </div>
         <div class="parallax"><img src="../../img/user-parallax2.jpg  " alt="Unsplashed background img 2"></div>
     </div>
+    <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+    <c:if test="${requestScope.message != null}">
+        <script> Materialize.toast('${requestScope.message}', 4000);</script>
+    </c:if>
 </main>
-<c:if test="${requestScope.message != null}">
-    <script> Materialize.toast('${requestScope.message}', 4000);</script>
-</c:if>
-<c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+
 </body>
 </html>

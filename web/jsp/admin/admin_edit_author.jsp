@@ -73,14 +73,14 @@
                             <input type="hidden" name="token" value="${RandomTokenGenerator.nextToken()}">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="id-author-name" type="text" name="author_name" value="${author.name}">
+                                    <input id="id-author-name" type="text" name="author_name" value="${author.name}" required>
                                     <label for="id-author-name"><fmt:message key="label.name"/></label>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="id-author-country" type="text" name="author_country" value="${author.country}">
+                                    <input id="id-author-country" type="text" name="author_country" value="${author.country}" required>
                                     <label for="id-author-country"><fmt:message key="label.country"/></label>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                                         <input type="file">
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" name="author_photo_path" value="${author.photoPath}">
+                                        <input class="file-path validate" type="text" name="author_photo_path" value="${author.photoPath}" required>
                                     </div>
                                 </div>
                             </div>

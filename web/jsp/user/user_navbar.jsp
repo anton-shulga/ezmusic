@@ -39,8 +39,22 @@
 <body>
     <ul id="slide-out" class="side-nav">
         <li>
-            <ctg:hello user="${user}"/>
+            <div class="userView">
+                   <a href="#"><img src="${sessionScope.user.photoPath}" alt="" class="circle"/></a>
+                   <span class="black-text">${sessionScope.login}</span>
+                   <br>
+                   <span id="id-balance" class="black-text">Balance: ${sessionScope.user.balance}</span>
+                <div class="row">
+                    <div class="input-field col s6 required">
+                        <input id="id-money-amount" name= type="text" required>
+                    </div>
+                    <button class="btn col s6\" onclick="addFunds()">
+                        <i class="material-icons">add</i>
+                    </button>
+                </div>
+            </div>
         </li>
+        <li><div class="divider"></div></li>
         <li>
             <form name="homeForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="home_user">

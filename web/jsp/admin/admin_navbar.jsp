@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -18,6 +19,9 @@
 </head>
 <body>
     <ul id="slide-out" class="side-nav">
+        <li>
+            <ctg:hello user="${user}"/>
+        </li>
         <li>
             <form name="homeForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="home_admin">

@@ -1,6 +1,7 @@
 package by.epam.webpoject.ezmusic.command.impl.album;
 
 import by.epam.webpoject.ezmusic.command.Command;
+import by.epam.webpoject.ezmusic.constant.ContextParameter;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
@@ -11,8 +12,16 @@ import by.epam.webpoject.ezmusic.service.album.CreateAlbumService;
 import by.epam.webpoject.ezmusic.service.album.FindAllAlbumsService;
 import by.epam.webpoject.ezmusic.validator.AlbumParametersValidator;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Антон on 10.08.2016.
@@ -29,7 +38,6 @@ public class CreateAlbumCommand implements Command{
         String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
         String name = request.getParameter(RequestParameter.ALBUM_NAME);
         String year = request.getParameter(RequestParameter.ALBUM_YEAR);
-        String filePath = request.getParameter(RequestParameter.ALBUM_IMAGE_FILE_PATH);
 
         String sessionToken = (String) request.getSession().getAttribute(RequestParameter.TOKEN);
         String requestToken = request.getParameter(RequestParameter.TOKEN);
@@ -37,12 +45,18 @@ public class CreateAlbumCommand implements Command{
         try {
             if (!f5Pressed(sessionToken, requestToken)) {
                 request.getSession().setAttribute(RequestParameter.TOKEN, requestToken);
-                boolean isValidRequest = AlbumParametersValidator.validateCreateParameters(selectedSongIds, authorIds, name, year, filePath);
+                boolean isValidRequest = AlbumParametersValidator.validateCreateParameters(selectedSongIds, authorIds, name, year);
                 if (isValidRequest) {
                     album = new Album();
                     album.setName(name);
                     album.setYear(ParameterParser.parseInt(year));
-                    album.setImageFilePath(filePath);
+
+                    if (request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream().available() != 0){
+                        String imagePath = loadImage(request);
+                        if(imagePath != null){
+                            album.setImageFilePath(imagePath);
+                        }
+                    }
 
                     generatedId = CreateAlbumService.create(album, ParameterParser.parseLongArray(selectedSongIds), ParameterParser.parseLongArray(authorIds));
 
@@ -65,11 +79,51 @@ public class CreateAlbumCommand implements Command{
                 request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
                 page = JspPageName.ADMIN_ALL_ALBUMS;
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             throw new CommandException("Create album command exception", e);
         }
 
         return page;
+    }
+
+    private String loadImage(HttpServletRequest request) throws CommandException {
+        String appPath = request.getServletContext().getRealPath(File.separator);
+        String imageDirectoryName = request.getServletContext().getInitParameter(ContextParameter.ALBUM_IMAGE_DIRECTORY);
+        String filePath = appPath + File.separator + imageDirectoryName;
+
+        try {
+            if (!Files.exists(Paths.get(filePath))) {
+                Files.createDirectory(Paths.get(filePath));
+            }
+        } catch (IOException e) {
+            throw new CommandException("Can't create directory for album image", e);
+        }
+
+        String imageName = Double.toString(new Date().getTime()) + ".jpg";
+        File file = new File(filePath + File.separator +  imageName);
+
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            throw new CommandException("Can't load image", e);
+        }
+
+        try(
+                InputStream inputStream = request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream();
+                FileOutputStream outputStream = new FileOutputStream(file)
+        )
+        {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+        } catch (ServletException | IOException e) {
+            throw new CommandException("Can't copy image", e);
+        }
+
+        return imageDirectoryName + File.separator + imageName;
+
     }
 
     private boolean f5Pressed(String sessionToken, String requestToken){

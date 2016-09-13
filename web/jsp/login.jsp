@@ -45,13 +45,13 @@
                             <div class="row">
                                 <div class="input-field col s12 required">
                                     <i class="material-icons prefix">perm_identity</i>
-                                    <input id="id-user-login" name="user_login" type="text" required>
+                                    <input id="id-user-login" class="validate" name="user_login" type="text" required minlength="3">
                                     <label for="id-user-login"><fmt:message key="label.username"/> </label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12 required">
-                                    <i class="material-icons prefix">lock</i><input id="id-user-password" name="user_password" type="password" required>
+                                    <i class="material-icons prefix">lock</i><input id="id-user-password" class="validate" name="user_password" type="password" required minlength="3">
                                     <label for="id-user-password"><fmt:message key="label.password"/></label>
                                 </div>
                             </div>

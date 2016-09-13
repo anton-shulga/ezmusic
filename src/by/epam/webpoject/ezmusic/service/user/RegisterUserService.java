@@ -1,5 +1,6 @@
 package by.epam.webpoject.ezmusic.service.user;
 
+import by.epam.webpoject.ezmusic.constant.FilePath;
 import by.epam.webpoject.ezmusic.dao.UserDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
 import by.epam.webpoject.ezmusic.encryptor.MD5Encryptor;
@@ -19,6 +20,7 @@ public class RegisterUserService {
         String md5hash = MD5Encryptor.getMD5(userPassword);
 
         instance.setPassword(md5hash);
+        instance.setPhotoPath(FilePath.DEFAULT_USER_PHOTO);
         try {
             return userDAO.create(instance);
         } catch (DAOException e) {

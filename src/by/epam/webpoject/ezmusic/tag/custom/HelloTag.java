@@ -21,18 +21,23 @@ public class HelloTag extends TagSupport {
     public int doStartTag() throws JspException {
         String output = null;
         if(user.getIsAdmin()){
-            output = "Hello, " + user.getLogin() + "! You are admin!";
+            output = "<div class=\"userView\">\n" +
+                    "   <img src=\""+ user.getPhotoPath() + "\" alt=\"\" class=\"circle\">\n" +
+                    "   <span class=\"black-text\">"+ user.getLogin() + "</span>\n" +
+                    "</div>";
         }else {
-            output = "Hello, " + user.getLogin() + "! <br>Balance : <span id=\"id-balance\">" + user.getBalance() + "BYR</span><br>" +
-                    "<div class=\"row\">\n" +
-                    "   <div class=\"input-field col s8 required\">\n" +
+            output = "<div class=\"userView\">\n" +
+                    "   <img src=\""+ user.getPhotoPath() + "\" alt=\"\" class=\"circle\">\n" +
+                    "   <span class=\"black-text\">"+ user.getLogin() + "</span>\n" +
+                    "   <br>" +
+                    "   <span class=\"black-text\">" + user.getBalance() + "</span>\n"+
+                    "   <div class=\"input-field col s6 required\">\n" +
                     "       <input id=\"id-money-amount\" name= type=\"text\" required>\n" +
                     "   </div>\n" +
-                    "   <label for=\"id-money-amount\">Add funds</label>" +
-                    "   <button class=\"btn-floating waves-effect waves-light black\" onclick=\"addFunds()\">" +
+                    "   <label for=\"id-money-amount\"><fmt:message key=\"label.name\"/></label>" +
+                    "   <button class=\"btn col s12\" onclick=\"addFunds()\">" +
                     "       <i class=\"material-icons\">add</i>" +
-                    "   </button>\n" +
-                    "</div>";
+                    "   </button>";
         }
         try {
             pageContext.getOut().write("<hr/>" + output + "<hr/>");

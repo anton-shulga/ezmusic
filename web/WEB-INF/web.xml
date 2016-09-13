@@ -5,13 +5,18 @@
          version="3.1">
 
     <context-param>
-        <param-name>audio.dir</param-name>
+        <param-name>song_file_directory</param-name>
         <param-value>audio</param-value>
     </context-param>
 
     <context-param>
-        <param-name>image.dir</param-name>
-        <param-value>img</param-value>
+        <param-name>album_image_directory</param-name>
+        <param-value>img\album</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>author_image_directory</param-name>
+        <param-value>img\author</param-value>
     </context-param>
 
     <servlet>

@@ -7,7 +7,7 @@ import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.service.user.RegisterUserService;
-import by.epam.webpoject.ezmusic.validator.RegisterRequestValidator;
+import by.epam.webpoject.ezmusic.validator.UserParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,7 +29,7 @@ public class RegisterUserCommand implements Command {
         String email = request.getParameter(RequestParameter.USER_EMAIL);
         String phone = request.getParameter(RequestParameter.USER_PHONE);
 
-        boolean isValidRequest = RegisterRequestValidator.validate(login, password, firstName, surname, email, phone);
+        boolean isValidRequest = UserParametersValidator.validateRegisterParameters(login, password, firstName, surname, email, phone);
         if (isValidRequest) {
             user = new User();
             user.setName(firstName);

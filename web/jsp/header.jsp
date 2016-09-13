@@ -22,7 +22,7 @@
 <body>
 
 <nav class="nav-wrapper black">
-    <a href="#" class="brand-logo center">EZMusic</a>
+    <a href="#" class="brand-logo center"><img src="${pageContext.request.contextPath}"></a>
     <ul class="right hide-on-med-and-down">
         <li>
         <c:if test="${empty sessionScope.user }">
