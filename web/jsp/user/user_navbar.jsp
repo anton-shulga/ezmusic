@@ -23,7 +23,7 @@
         function addFunds() {
             var moneyAmount = $('#id-money-amount').val();
             $.ajax({
-                url: 'JsonController',
+                url: 'jsoncontroller',
                 method: "post",
                 data: {
                     money_amount: moneyAmount, command: "add_funds"

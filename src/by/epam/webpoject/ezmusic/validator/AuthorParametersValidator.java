@@ -4,7 +4,7 @@ package by.epam.webpoject.ezmusic.validator;
  * Created by Антон on 21.08.2016.
  */
 public class AuthorParametersValidator {
-    public static boolean validateCreateParameters(String[] albumIds, String[] songIds, String name, String country, String photoPath) {
+    public static boolean validateCreateParameters(String[] albumIds, String[] songIds, String name, String country) {
         try {
             if (albumIds != null) {
                 for (String albumId : albumIds) {
@@ -23,9 +23,6 @@ public class AuthorParametersValidator {
             return false;
         }
         if(country == null || country.isEmpty()){
-            return false;
-        }
-        if(photoPath == null || photoPath.isEmpty()){
             return false;
         }
         return true;
@@ -57,7 +54,7 @@ public class AuthorParametersValidator {
         }
     }
 
-    public static boolean validateUpdateParameters(String authorId, String[] albumIds, String[] songIds, String name, String country, String photoPath) {
+    public static boolean validateUpdateParameters(String authorId, String[] albumIds, String[] songIds, String name, String country) {
         if(authorId == null){
             return false;
         }else {
@@ -86,9 +83,6 @@ public class AuthorParametersValidator {
         }
 
         if(country == null || country.isEmpty()){
-            return false;
-        }
-        if(photoPath == null || photoPath.isEmpty()){
             return false;
         }
         return true;

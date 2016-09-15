@@ -30,6 +30,7 @@ public class MySqlAuthorDAO extends AuthorDAO {
     private static final String DELETE_AUTHOR_SONG_QUERY = "DELETE FROM ezmusicdb.author_song WHERE id_author = ?";
 
     private static final MySqlAuthorDAO instance = new MySqlAuthorDAO();
+    private static final String FIND_AUTHOR_BY_SEARCH_REQUEST_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author WHERE author_name LIKE ?";
 
     private MySqlAuthorDAO(){}
 
@@ -277,5 +278,32 @@ public class MySqlAuthorDAO extends AuthorDAO {
             closeStatement(statement);
             connection.close();
         }
+    }
+
+    @Override
+    public ArrayList<Author> findBySearchRequest(String searchRequest) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ArrayList<Author> authorList = new ArrayList<>();
+        try{
+            statement = connection.prepareStatement(FIND_AUTHOR_BY_SEARCH_REQUEST_QUERY);
+            statement.setString(1, "%" + searchRequest + "%");
+            ResultSet resultSet = statement.executeQuery();
+            Author author = null;
+            while (resultSet.next()){
+                author = new Author();
+                author.setAuthorId(resultSet.getLong(1));
+                author.setName(resultSet.getString(2));
+                author.setCountry(resultSet.getString(3));
+                author.setPhotoPath(resultSet.getString(4));
+                authorList.add(author);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Find author by search request DAO exception", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return authorList;
     }
 }

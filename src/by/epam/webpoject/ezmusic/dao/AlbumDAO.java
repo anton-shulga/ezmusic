@@ -22,6 +22,7 @@ public abstract class AlbumDAO implements AbstractDAO<Album, Long> {
     public abstract boolean createAlbumAuthor(Long albumId, Long authorId) throws DAOException;
     public abstract void deleteAlbumSong(Long albumId) throws DAOException;
     public abstract void deleteAlbumAuthor(Long albumId) throws DAOException;
+    public abstract ArrayList<Album> findBySearchRequest(String searchRequest) throws DAOException;
 
     @Override
     public void closeStatement(Statement statement) {

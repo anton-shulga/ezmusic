@@ -73,7 +73,7 @@ public class AlbumParametersValidator {
         return true;
     }
 
-    public static boolean validateUpdateParameters(String albumId, String[] selectedAuthorIds, String[] selectedSongIds, String name, String year, String filePath) {
+    public static boolean validateUpdateParameters(String albumId, String[] selectedAuthorIds, String[] selectedSongIds, String name, String year) {
         if(albumId == null){
             return false;
         }else {
@@ -108,9 +108,6 @@ public class AlbumParametersValidator {
             }catch (NumberFormatException e){
                 return false;
             }
-        }
-        if(filePath == null || filePath.isEmpty()){
-            return false;
         }
         return true;
     }

@@ -30,8 +30,6 @@ public class FindAuthorSongsJsonCommand implements Command {
         if(isValidRequest) {
             authorSongs = new HashSet<>();
 
-
-
             try {
                 if(authorIds == null){
                     authorSongs.addAll(FindAllSongsService.find());

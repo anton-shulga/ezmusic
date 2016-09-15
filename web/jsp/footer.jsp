@@ -13,22 +13,22 @@
 <head>
     <title><fmt:message key="title.footer"/></title>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('select').material_select();
         });</script>
     <script>
-        $(document).ready(function() {
-            $('#id-locale').on("change", function(event) {
+        $(document).ready(function () {
+            $('#id-locale').on("change", function (event) {
                 var selectedLocale = $('#id-locale').val();
                 $.ajax({
-                    url : "JsonController",
-                    method : "post",
+                    url: "jsoncontroller",
+                    method: "post",
                     dataType: "Json",
-                    data : {
-                        locale : selectedLocale,
-                        command : "change_locale"
+                    data: {
+                        locale: selectedLocale,
+                        command: "change_locale"
                     }
-                }).done(function(data) {
+                }).done(function (data) {
                     location.reload();
                 });
             })
@@ -37,16 +37,12 @@
 </head>
 <body>
 <footer class="page-footer black">
-            <span class="center-align white-text"><fmt:message key="footer.copyright"/> </span>
-            <div class="right">
-                <div>
-                    <select id="id-locale" class="white-text">
-                        <option value="" disabled selected><fmt:message key="option.language"/></option>
-                        <option value="ru_RU">Русский</option>
-                        <option value="default">English</option>
-                    </select>
-                </div>
-            </div>
+    <span class="center-align white-text"><fmt:message key="footer.copyright"/> </span>
+    <select id="id-locale" class="right white-text">
+        <option value="" disabled selected><fmt:message key="option.language"/></option>
+        <option value="ru_RU">Русский</option>
+        <option value="default">English</option>
+    </select>
 </footer>
 </body>
 </html>

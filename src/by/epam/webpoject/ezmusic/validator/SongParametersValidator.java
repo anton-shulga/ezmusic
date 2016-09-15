@@ -6,7 +6,7 @@ import by.epam.webpoject.ezmusic.entity.Order;
  * Created by Антон on 21.08.2016.
  */
 public class SongParametersValidator {
-    public static boolean validateCreateParameters(String[] authorIds, String[] albumIds, String name, String year, String filePath, String cost) {
+    public static boolean validateCreateParameters(String[] authorIds, String[] albumIds, String name, String year, String cost) {
         try {
             if (authorIds != null) {
                 for (String authorId : authorIds) {
@@ -33,10 +33,6 @@ public class SongParametersValidator {
                 return false;
             }
         }
-        if(filePath == null || filePath.isEmpty()){
-            return false;
-        }
-
         if(cost == null){
             return false;
         }else {
@@ -88,7 +84,7 @@ public class SongParametersValidator {
         }
     }
 
-    public static boolean validateUpdateParameters(String[] albumIds, String[] authorIds, String songId, String name, String year, String filePath,  String cost) {
+    public static boolean validateUpdateParameters(String[] albumIds, String[] authorIds, String songId, String name, String year,  String cost) {
         if(songId == null){
             return false;
         }else {
@@ -124,10 +120,6 @@ public class SongParametersValidator {
                 return false;
             }
         }
-        if(filePath == null || filePath.isEmpty()){
-            return false;
-        }
-
         if(cost == null){
             return false;
         }else {

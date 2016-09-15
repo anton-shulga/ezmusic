@@ -22,8 +22,17 @@
 <body>
 
 <nav class="nav-wrapper black">
-    <a href="#" class="brand-logo center"><img src="${pageContext.request.contextPath}"></a>
+    <a href="#" class="brand-logo center">EZMusic</a>
     <ul class="right hide-on-med-and-down">
+        <li>
+            <form action="${pageContext.request.contextPath}/controller" method="GET">
+                <div class="input-field">
+                    <input type="hidden" name="command" value="search"/>
+                    <input id="search" type="search" name="search_request" required>
+                    <label for="search"><i class="material-icons white-text">search</i></label>
+                </div>
+            </form>
+        </li>
         <li>
         <c:if test="${empty sessionScope.user }">
                 <form name="toLoginForm" action="${pageContext.request.contextPath}/controller" method="POST">

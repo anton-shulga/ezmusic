@@ -7,6 +7,7 @@ import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.service.order.PayForOrderService;
+import by.epam.webpoject.ezmusic.validator.UserParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
 /**
@@ -21,14 +22,39 @@ public class PayForOrderCommand implements Command{
         User user = (User) request.getSession().getAttribute(RequestParameter.USER);
         Order cart = (Order) request.getSession().getAttribute(RequestParameter.CART);
 
-        boolean isPaid = PayForOrderService.pay(user, cart);
-        if(isPaid){
-            page = JspPageName.USER_HOME;
-            request.getSession().removeAttribute(RequestParameter.CART);
+        String sessionToken = (String) request.getSession().getAttribute(RequestParameter.TOKEN);
+        String requestToken = request.getParameter(RequestParameter.TOKEN);
+
+        if(!f5Pressed(sessionToken, requestToken)) {
+            request.getSession().setAttribute(RequestParameter.TOKEN, requestToken);
+            boolean isValidRequest = UserParametersValidator.validatePayForOrderParameters(user, cart);
+            if(isValidRequest) {
+                boolean isPaid = PayForOrderService.pay(user, cart);
+                if (isPaid) {
+                    page = JspPageName.USER_HOME;
+                    request.getSession().removeAttribute(RequestParameter.CART);
+                } else {
+                    request.setAttribute(RequestParameter.MESSAGE, "You do not have enough money. Please, add funds");
+                    page = JspPageName.USER_CART;
+                }
+            }else {
+                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
+                page = JspPageName.USER_HOME;
+            }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "You do not have enough money. Please, add funds");
-            return JspPageName.USER_CART;
+            page = JspPageName.USER_CART;
         }
         return page;
+    }
+
+    private boolean f5Pressed(String sessionToken, String requestToken){
+        if(sessionToken != null){
+            if(requestToken != null){
+                return sessionToken.equals(requestToken);
+            }
+        }else {
+            return false;
+        }
+        return false;
     }
 }

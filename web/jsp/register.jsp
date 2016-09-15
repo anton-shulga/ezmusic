@@ -23,9 +23,9 @@
         $(document).ready(function() {
             $('#id-user-login').on("change", function(event) {
                 var login = $('#id-user-login').val();
-                if(login.length > 3) {
+                if(login.length > 2) {
                     $.ajax({
-                        url: '${pageContext.request.contextPath}/JsonController',
+                        url: '${pageContext.request.contextPath}/jsonController',
                         type: 'post',
                         dataType: 'json',
                         data: {user_login:login,command:"check_login_availability"},

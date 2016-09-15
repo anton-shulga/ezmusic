@@ -42,7 +42,7 @@
                 <br><br>
             </div>
         </div>
-        <div class="parallax"><img src="../../img/paralax-user.jpg" alt="guitar"></div>
+        <div class="parallax"><img src="${pageContext.request.contextPath}/img/paralax-user.jpg" alt="guitar"></div>
     </div>
 
     <div class="container">
@@ -77,23 +77,10 @@
 
         </div>
     </div>
-
-
-    <div class="parallax-container valign-wrapper">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <div class="row center">
-                    <h5 class="header col s12 white-text">A modern responsive front-end framework based on Material Design</h5>
-                </div>
-            </div>
-        </div>
-        <div class="parallax"><img src="../../img/user-parallax2.jpg  " alt="Unsplashed background img 2"></div>
-    </div>
-    <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
-    <c:if test="${requestScope.message != null}">
-        <script> Materialize.toast('${requestScope.message}', 4000);</script>
-    </c:if>
 </main>
-
+<c:if test="${requestScope.message != null}">
+    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+</c:if>
+<c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 </body>
 </html>

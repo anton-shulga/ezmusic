@@ -8,6 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="by.epam.webpoject.ezmusic.util.RandomTokenGenerator"%>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="property.page_content"/>
 <html>
@@ -42,11 +43,13 @@
                                                 <b><fmt:message key="title.authors"/> :</b>
                                                 <c:forEach items="${song.albumList}" var="album">
                                                     ${album.name};
-                                                </c:forEach>
+                                                </c:forEach><br>
+                                                <b><fmt:message key="title.cost"/></b>${song.cost}
                                             </p>
                                             <div class="secondary-content">
                                                 <form action="controller" method="POST">
                                                     <input type="hidden" name="command" value="delete_song_from_cart"/>
+                                                    <input type="hidden" name="token" value="${RandomTokenGenerator.nextToken()}">
                                                     <input type="hidden" name="song_id" value="${song.songId}"/>
                                                     <button class="btn-floating waves-effect waves-light black" type="submit"><i class="material-icons">delete</i></button>
                                                 </form>

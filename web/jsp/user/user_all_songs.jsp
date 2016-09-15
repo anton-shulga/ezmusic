@@ -20,7 +20,7 @@
             function addSongToOrder(songId) {
                 var $previousBadge = $('#id-badge').text();
                 $.ajax({
-                    url: 'JsonController',
+                    url: 'jsoncontroller',
                     type: 'post',
                     dataType: 'json',
                     data: {song_id:songId, command:"add_song_to_order"},
@@ -62,7 +62,8 @@
                                                     <b><fmt:message key="title.albums"/></b>
                                                     <c:forEach items="${song.albumList}" var="album">
                                                         ${album.name};
-                                                    </c:forEach>
+                                                    </c:forEach><br>
+                                                    <b><fmt:message key="title.cost"/></b>${song.cost}
                                                 </p>
                                                 <div class="secondary-content">
                                                     <div style="float: left">

@@ -6,8 +6,6 @@ package by.epam.webpoject.ezmusic.constant;
 public class FilePath {
     public static final String USER_PHOTO = "img/user/";
     public static final String DEFAULT_USER_PHOTO = "img/user/default_photo.jpg";
-    public static final String ALBUM_PHOTO = "img/album/";
-    public static final String AUTHOR_PHOTO = "img/author/";
-    public static final String SONG_FULL_FILE = "audio/song/full/";
-    public static final String SONG_SHORT_FILE = "audio/song/short/";
+    public static final String DEFAULT_ALBUM_PHOTO = "img/album/default_photo.jsp";
+    public static final String DEFAULT_AUTHOR_PHOTO = "img/author/default_photo.jpg";
 }

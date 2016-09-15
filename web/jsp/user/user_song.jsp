@@ -14,9 +14,9 @@
 <html>
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../css/styles.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css"  media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="../../js/bin/materialize.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8">
 </head>
@@ -29,45 +29,55 @@
     <div class="wrapper">
         <div class="container">
             <div class="row">
-                <div class="col s12 ">
+                <div class="col s8 offset-s2">
                     <div class="card z-depth-4">
                         <div class="card-content">
                             <span class="card-title">${requestScope.song.name}</span>
                             <div class="row">
-                                <div class="col s10 offset-s2">
-                                    <img src="${pageContext.request.contextPath}/img/album.jpeg" alt="" class="circle user-img responsive-img center">
+                                <div class="center">
+                                    <img src="${pageContext.request.contextPath}/img/song-image.jpg" alt="" class="circle responsive-img center">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="center text">
-                                    <h2>
+                                    <h4>
+                                        <fmt:message key="title.name"/>
+                                        ${song.name}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="center text">
+                                    <h4>
                                         <fmt:message key="title.authors"/>
                                         <c:forEach items="${song.authorList}" var="author">
                                             ${author.name};
                                         </c:forEach>
-                                    </h2>
+                                    </h4>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="center text">
-                                    <h2>
+                                    <h4>
                                         <fmt:message key="title.albums"/>
                                         <c:forEach items="${song.albumList}" var="album">
                                             ${album.name};
                                         </c:forEach>
-                                    </h2>
+                                    </h4>
                                 </div>
                             </div>
                             <div class="row">
-                                <ul class="collection">
-                                    <c:forEach items="${song.commentList}" var="comment">
-                                        <li class="collection-item avatar">
-                                            <img src="${pageContext.request.contextPath}/${comment.user.photoPath}" alt="" class="circle">
-                                            <span class="title">${comment.user.login}</span>
-                                            <p>${comment.text}</p>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
+                                <c:if test="${not empty song.commentList}">
+                                    <ul class="collection">
+                                        <c:forEach items="${song.commentList}" var="comment">
+                                            <li class="collection-item avatar">
+                                                <img src="${pageContext.request.contextPath}/${comment.user.photoPath}" alt="" class="circle">
+                                                <span class="title">${comment.user.login}</span>
+                                                <p>${comment.text}</p>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </c:if>
                             </div>
                             <div class="card-action">
                                 <div class="row">

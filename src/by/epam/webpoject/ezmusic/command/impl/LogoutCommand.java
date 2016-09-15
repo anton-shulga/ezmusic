@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        request.getSession().invalidate();
+        request.getSession().removeAttribute(RequestParameter.USER);
         return JspPageName.INDEX;
     }
 }

@@ -54,7 +54,8 @@ public class RequestParameter {
     public static final String COMMENT_RATING = "comment_rating";
     public static final String ORDERS = "orders";
     public static final String TOKEN = "token";
-
-
-
+    public static final String OLD_ALBUM_IMAGE_FILE_PATH = "old_album_image_file_path";
+    public static final String OLD_AUTHOR_PHOTO_PATH = "old_author_photo_file_path";
+    public static final String OLD_SONG_FILE_PATH = "old_file_path";
+    public static final String SEARCH_REQUEST = "search_request";
 }

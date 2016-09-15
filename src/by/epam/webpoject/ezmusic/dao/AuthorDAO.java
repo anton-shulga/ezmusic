@@ -23,6 +23,7 @@ public abstract class AuthorDAO implements AbstractDAO<Author, Long> {
     public abstract Long createAuthorSong(Long authorId, Long songId) throws DAOException;
     public abstract void deleteAuthorAlbum(Long authorId) throws DAOException;
     public abstract void deleteAuthorSong(Long authorId) throws DAOException;
+    public abstract ArrayList<Author> findBySearchRequest(String searchRequest) throws DAOException;
 
     @Override
     public void closeStatement(Statement statement) {

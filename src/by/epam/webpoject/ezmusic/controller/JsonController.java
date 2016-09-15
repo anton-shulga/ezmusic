@@ -17,6 +17,22 @@ import java.io.IOException;
  */
 public class JsonController extends HttpServlet {
 
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String commandName = req.getParameter(RequestParameter.COMMAND);
+        String json = null;
+        try {
+            Command command = CommandManager.getCommand(commandName);
+            json = command.execute(req);
+        } catch (CommandException e) {
+            resp.sendRedirect(JspPageName.ERROR);
+        }
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(json);
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String commandName = req.getParameter(RequestParameter.COMMAND);

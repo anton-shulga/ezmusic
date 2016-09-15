@@ -30,7 +30,6 @@ public class CommandSecurityFilter implements Filter {
             command = CommandManager.getCommand(request.getParameter(RequestParameter.COMMAND));
         } catch (CommandException e) {
             request.setAttribute(RequestParameter.MESSAGE, "Invalid command");
-            request.getServletContext().getRequestDispatcher(JspPageName.INDEX).forward(request, response);
         }
 
         if(command != null) {

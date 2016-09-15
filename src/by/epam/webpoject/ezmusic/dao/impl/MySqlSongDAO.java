@@ -32,7 +32,7 @@ public class MySqlSongDAO extends SongDAO {
     private static final String CREATE_SONG_ORDER_QUERY = "INSERT INTO ezmusicdb.order_song (id_order, id_song) VALUES (?, ?)";
     private static final String DELETE_SONG_ORDER_QUERY = "DELETE FROM ezmusicdb.order_song WHERE id_order = ? AND id_song = ?";
     private static final MySqlSongDAO instance = new MySqlSongDAO();
-
+    private static final String  FIND_SONG_BY_SEARCH_REQUEST_QUERY = "SELECT song_id, song_name, song_year, song_file_path, song_publication_date, song_cost FROM ezmusicdb.song WHERE song_name LIKE ?";
 
 
     private MySqlSongDAO() {
@@ -391,5 +391,34 @@ public class MySqlSongDAO extends SongDAO {
             closeStatement(statement);
             connection.close();
         }
+    }
+
+    @Override
+    public ArrayList<Song> findBySearchRequest(String searchRequest) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ArrayList<Song> songList = new ArrayList<>();
+        try{
+            statement = connection.prepareStatement(FIND_SONG_BY_SEARCH_REQUEST_QUERY);
+            statement.setString(1, "%" + searchRequest + "%");
+            ResultSet resultSet = statement.executeQuery();
+            Song song = null;
+            while (resultSet.next()){
+                song = new Song();
+                song.setSongId(resultSet.getLong(1));
+                song.setName(resultSet.getString(2));
+                song.setYear(resultSet.getInt(3));
+                song.setFilePath(resultSet.getString(4));
+                song.setPublicationDate(resultSet.getDate(5));
+                song.setCost(resultSet.getDouble(6));
+                songList.add(song);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Find song by search request DAO exception", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return songList;
     }
 }

@@ -22,14 +22,14 @@
     <script>
         $(document).ready(function() {
             $('select').material_select();
-        });
+        })
     </script>
     <script>
         $(document).ready(function() {
             $('#id-albums').on("change", function(event) {
                 var selectedAlbums = $('#id-albums').val();
                 $.ajax({
-                    url: 'JsonController',
+                    url: 'sonController',
                     type: 'post',
                     dataType: 'json',
                     data: {selected_albums:selectedAlbums, command:"find_album_songs_json"},
@@ -62,7 +62,7 @@
                 <div class="card z-depth-4">
                     <div class="card-content">
                         <span class="card-title text-darken-2"><fmt:message key="title.author"/></span>
-                        <form action="${pageContext.request.contextPath}/controller" method="POST">
+                        <form action="${pageContext.request.contextPath}/controller" method="POST" enctype="multipart/form-data">
                             <c:if test="${not empty author}">
                                 <input type="hidden" name="command" value="update_author">
                                 <input type="hidden" name="author_id" value="${author.authorId}">
@@ -88,13 +88,13 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <select multiple class="icons" id="id-albums" name="selected_albums">
-                                        <c:forEach items="${requestScope.all_albums}" var="item">
+                                        <c:forEach items="${requestScope.all_albums}" var="album">
                                             <c:choose>
-                                                <c:when test="${fn:contains(author_albums, item)}">
-                                                    <option value="${item.albumId}" selected data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                                <c:when test="${fn:contains(author_albums, album)}">
+                                                    <option value="${album.albumId}" selected data-icon="${pageContext.request.contextPath}/${album.imageFilePath}" class="circle">${album.name}</option>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <option value="${item.albumId}" data-icon="${pageContext.request.contextPath}/img/album.jpeg" class="circle">${item.name}</option>
+                                                    <option value="${album.albumId}" data-icon="${pageContext.request.contextPath}/${album.imageFilePath}" class="circle">${album.name}</option>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
@@ -106,13 +106,13 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <select multiple class="icons" id="id-songs" name="selected_songs">
-                                        <c:forEach items="${requestScope.all_songs}" var="item">
+                                        <c:forEach items="${requestScope.all_songs}" var="song">
                                             <c:choose>
-                                                <c:when test="${fn:contains(author_songs, item)}">
-                                                    <option value="${item.songId}" selected >${item.name}</option>
+                                                <c:when test="${fn:contains(author_songs, song)}">
+                                                    <option value="${song.songId}" selected >${song.name}</option>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <option value="${item.songId}">${item.name}</option>
+                                                    <option value="${song.songId}">${song.name}</option>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
@@ -125,10 +125,10 @@
                                 <div class="file-field input-field">
                                     <div class="btn black">
                                         <span><fmt:message key="button.file"/></span>
-                                        <input type="file">
+                                        <input type="file" name="author_photo_path">
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" name="author_photo_path" value="${author.photoPath}" required>
+                                        <input class="file-path validate" type="text" name="old_author_photo_file_path" value="${author.photoPath}" required>
                                     </div>
                                 </div>
                             </div>

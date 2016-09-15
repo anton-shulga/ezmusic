@@ -29,6 +29,7 @@ public class MySqlAlbumDAO extends AlbumDAO {
     private static final String DELETE_ALBUM_AUTHOR_QUERY = "DELETE FROM ezmusicdb.album_author WHERE id_album = ?";
 
     private static final MySqlAlbumDAO instance = new MySqlAlbumDAO();
+    private static final String FIND_ALBUM_BY_SEARCH_REQUEST_QUERY = "SELECT  album_id, album_name, album_year, album_image_path FROM ezmusicdb.album WHERE album_name LIKE ?";
 
     private MySqlAlbumDAO(){}
 
@@ -273,5 +274,31 @@ public class MySqlAlbumDAO extends AlbumDAO {
             closeStatement(statement);
             connection.close();
         }
+    }
+
+    @Override
+    public ArrayList<Album> findBySearchRequest(String searchRequest) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ArrayList<Album> albumList = new ArrayList<>();
+        try{
+            statement = connection.prepareStatement(FIND_ALBUM_BY_SEARCH_REQUEST_QUERY);
+            statement.setString(1, "%" + searchRequest + "%");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                Album album = new Album();
+                album.setAlbumId(resultSet.getLong(1));
+                album.setName(resultSet.getString(2));
+                album.setYear(resultSet.getInt(3));
+                album.setImageFilePath(resultSet.getString(4));
+                albumList.add(album);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Find album by search request DAO exception", e);
+        }finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return albumList;
     }
 }

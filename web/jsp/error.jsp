@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="card z-depth-4">
                         <h1><fmt:message key="title.oops"/></h1>
-                        <div class="row">
+
                             <table width="100%" border="1">
                                 <tr valign="top">
                                     <td width="40%"><b><fmt:message key="title.error"/></b></td>
@@ -56,7 +56,7 @@
                             </table>
                         </div>
 
-                    </div>
+
                 </div>
             </div>
             <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>

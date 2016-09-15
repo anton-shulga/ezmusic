@@ -30,7 +30,7 @@
             $('#id-authors').on("change", function(event) {
                 var selectedAuthors = $('#id-authors').val();
                 $.ajax({
-                    url: 'JsonController',
+                    url: 'jsoncontroller',
                     type: 'post',
                     dataType: 'json',
                     data: {selected_authors:selectedAuthors, command:"find_author_songs_json"},
@@ -87,13 +87,13 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <select multiple class="icons" id="id-authors" name="selected_authors">
-                                            <c:forEach items="${requestScope.all_authors}" var="item">
+                                            <c:forEach items="${requestScope.all_authors}" var="song">
                                                 <c:choose>
-                                                    <c:when test="${fn:contains(album_authors, item)}">
-                                                        <option value="${item.authorId}" selected data-icon="${item.photoPath}" class="circle">${item.name}</option>
+                                                    <c:when test="${fn:contains(album_authors, song)}">
+                                                        <option value="${song.authorId}" selected data-icon="${song.photoPath}" class="circle">${song.name}</option>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <option value="${item.authorId}" data-icon="${item.photoPath}" class="circle">${item.name}</option>
+                                                        <option value="${song.authorId}" data-icon="${song.photoPath}" class="circle">${song.name}</option>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:forEach>
@@ -104,13 +104,13 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <select multiple class="icons" id="id-songs" name="selected_songs">
-                                            <c:forEach items="${requestScope.all_songs}" var="item">
+                                            <c:forEach items="${requestScope.all_songs}" var="song">
                                                 <c:choose>
-                                                    <c:when test="${fn:contains(album_songs, item)}">
-                                                        <option value="${item.songId}" selected>${item.name}</option>
+                                                    <c:when test="${fn:contains(album_songs, song)}">
+                                                        <option value="${song.songId}" selected>${song.name}</option>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <option value="${item.songId}">${item.name}</option>
+                                                        <option value="${song.songId}">${song.name}</option>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:forEach>
@@ -125,7 +125,7 @@
                                             <input type="file" name="album_image_file_path">
                                         </div>
                                         <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text" value="${album.imageFilePath}" required>
+                                            <input class="file-path validate" name="old_album_image_file_path" type="text" value="${album.imageFilePath}" required>
                                         </div>
                                     </div>
                                 </div>

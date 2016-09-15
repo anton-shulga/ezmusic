@@ -47,7 +47,8 @@
                                                         <b><fmt:message key="title.albums"/></b>
                                                         <c:forEach items="${song.albumList}" var="album">
                                                             ${album.name};
-                                                        </c:forEach>
+                                                        </c:forEach><br>
+                                                        <b><fmt:message key="title.cost"/></b>${song.cost}
                                                     </p>
                                                     <div class="secondary-content">
                                                         <button class="btn-floating black" onclick="addSongToOrder(${song.songId})"><i class="material-icons">system_update_alt</i></button>

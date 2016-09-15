@@ -26,8 +26,11 @@ public class Controller extends HttpServlet {
         String commandName = req.getParameter(RequestParameter.COMMAND);
         try {
             Command command = CommandManager.getCommand(commandName);
-            req.getSession().setAttribute(RequestParameter.COMMAND, command);
-            page = command.execute(req);
+            if(command !=null) {
+                page = command.execute(req);
+            }else {
+                page = JspPageName.INDEX;
+            }
         } catch (CommandException e) {
            page = JspPageName.ERROR;
         }
@@ -37,12 +40,16 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // configures upload settings
+
         String page = null;
         String commandName = req.getParameter(RequestParameter.COMMAND);
         try {
             Command command = CommandManager.getCommand(commandName);
-            page = command.execute(req);
+            if(command !=null) {
+                page = command.execute(req);
+            }else {
+                page = JspPageName.INDEX;
+            }
         } catch (CommandException e) {
             throw new ServletException(e);
         }

@@ -34,7 +34,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>JsonController</servlet-name>
-        <url-pattern>/JsonController</url-pattern>
+        <url-pattern>/jsoncontroller</url-pattern>
     </servlet-mapping>
 
     <filter>

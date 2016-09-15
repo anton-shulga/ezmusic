@@ -1,5 +1,8 @@
 package by.epam.webpoject.ezmusic.validator;
 
+import by.epam.webpoject.ezmusic.entity.Order;
+import by.epam.webpoject.ezmusic.entity.User;
+
 /**
  * Created by Антон on 06.09.2016.
  */
@@ -53,6 +56,16 @@ public class UserParametersValidator {
             return false;
         }
         if(phone == null || phone.isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean validatePayForOrderParameters(User user, Order cart) {
+        if(user == null){
+            return false;
+        }
+        if (cart == null){
             return false;
         }
         return true;

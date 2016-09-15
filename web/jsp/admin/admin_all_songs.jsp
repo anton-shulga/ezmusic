@@ -43,7 +43,9 @@
                                                     <b><fmt:message key="title.albums"/></b>
                                                     <c:forEach items="${song.albumList}" var="album">
                                                         ${album.name};
-                                                    </c:forEach>
+                                                    </c:forEach><br>
+                                                    <b><fmt:message key="title.cost"/></b>${song.cost}
+
                                                 </p>
                                                 <div class="secondary-content">
                                                     <div style="float: left">

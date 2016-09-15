@@ -1,9 +1,7 @@
 package by.epam.webpoject.ezmusic.command.impl.album;
 
 import by.epam.webpoject.ezmusic.command.Command;
-import by.epam.webpoject.ezmusic.constant.ContextParameter;
-import by.epam.webpoject.ezmusic.constant.JspPageName;
-import by.epam.webpoject.ezmusic.constant.RequestParameter;
+import by.epam.webpoject.ezmusic.constant.*;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
@@ -51,11 +49,15 @@ public class CreateAlbumCommand implements Command{
                     album.setName(name);
                     album.setYear(ParameterParser.parseInt(year));
 
-                    if (request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream().available() != 0){
-                        String imagePath = loadImage(request);
-                        if(imagePath != null){
-                            album.setImageFilePath(imagePath);
+                    try {
+                        if (request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream().available() != 0){
+                            String imagePath = loadImage(request);
+                            if(imagePath != null){
+                                album.setImageFilePath(imagePath);
+                            }
                         }
+                    } catch (IOException | ServletException e) {
+                            album.setImageFilePath(FilePath.DEFAULT_ALBUM_PHOTO);
                     }
 
                     generatedId = CreateAlbumService.create(album, ParameterParser.parseLongArray(selectedSongIds), ParameterParser.parseLongArray(authorIds));
@@ -79,7 +81,7 @@ public class CreateAlbumCommand implements Command{
                 request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
                 page = JspPageName.ADMIN_ALL_ALBUMS;
             }
-        } catch (ServiceException | ServletException | IOException e) {
+        } catch (ServiceException e) {
             throw new CommandException("Create album command exception", e);
         }
 
@@ -99,7 +101,7 @@ public class CreateAlbumCommand implements Command{
             throw new CommandException("Can't create directory for album image", e);
         }
 
-        String imageName = Double.toString(new Date().getTime()) + ".jpg";
+        String imageName = Double.toString(new Date().getTime()) + FileExtention.JPG;
         File file = new File(filePath + File.separator +  imageName);
 
         try {
