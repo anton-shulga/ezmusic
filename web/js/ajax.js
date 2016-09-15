@@ -7,7 +7,7 @@ $("#id-user-login").on("change",function() {
         $(".status").html("Checking availability...");
         $.ajax({
             type: "POST",
-            url: "${pageContext.request.contextPath}/LoginAvailabilityController",
+            url: "jsoncontroller",
             data: "user-login=" + login + "&" +
             "command=" + "check_login_availability",
             success: function(msg) {

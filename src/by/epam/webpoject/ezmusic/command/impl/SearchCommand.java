@@ -30,6 +30,7 @@ public class SearchCommand implements Command{
             ArrayList<Album> albumList = FindAlbumsBySearchRequestService.find(searchRequest);
             ArrayList<Author> authorList = FIndAuthorsBySearchRequestService.find(searchRequest);
             ArrayList<Song> songList = FindSongsBySearchRequestService.find(searchRequest);
+            request.setAttribute(RequestParameter.MESSAGE, "Songs : " + songList.size() + ", authors : " + authorList.size() + ", albums : " + albumList.size());
             request.setAttribute(RequestParameter.ALL_SONGS, songList);
             request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
             request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by Антон on 21.08.2016.
  */
-public class MySqlOrderDAO extends OrderDAO{
+public class MySqlOrderDAO implements OrderDAO{
     private static final String CREATE_ORDER_QUERY = "INSERT INTO ezmusicdb.order (user_id, order_is_paid) VALUES (? ,?)";
     private static final MySqlOrderDAO instance = new MySqlOrderDAO();
     private static final String FIND_ORDER_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE order_id = ?";

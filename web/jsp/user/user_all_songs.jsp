@@ -52,8 +52,9 @@
                                     <ul class="collection">
                                         <c:forEach items="${requestScope.all_songs}" var="song">
                                             <li class="collection-item avatar">
-                                                <i class="material-icons circle red">play_arrow</i>
-                                                <span class="title"><b>Name: </b>${song.name}</span>
+                                                <img src="${pageContext.request.contextPath}/img/song-image.jpg"
+                                                     alt="song"
+                                                     class="circle"/>                                                <span class="title"><b>Name: </b>${song.name}</span>
                                                 <p>
                                                     <b><fmt:message key="title.authors"/></b>
                                                     <c:forEach items="${song.authorList}" var="author">
@@ -67,7 +68,7 @@
                                                 </p>
                                                 <div class="secondary-content">
                                                     <div style="float: left">
-                                                        <form action="controller" method="POST">
+                                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
                                                             <input type="hidden" name="command" value="find_song_user">
                                                             <input type="hidden" name="song_id" value="${song.songId}">
                                                             <button class="btn-floating black" type="submit"><i class="material-icons">info_outline</i></button>

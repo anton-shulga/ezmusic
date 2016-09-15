@@ -29,7 +29,7 @@
             $('#id-albums').on("change", function(event) {
                 var selectedAlbums = $('#id-albums').val();
                 $.ajax({
-                    url: 'sonController',
+                    url: 'jsoncontroller',
                     type: 'post',
                     dataType: 'json',
                     data: {selected_albums:selectedAlbums, command:"find_album_songs_json"},

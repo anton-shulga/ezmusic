@@ -66,6 +66,7 @@ public class CommandManager {
         availableCommands.put(CommandName.ADD_FUNDS, new AddFundsCommand());
         availableCommands.put(CommandName.FIND_ORDERS_USER, new FindOrdersUserCommand());
         availableCommands.put(CommandName.SEARCH, new SearchCommand());
+        availableCommands.put(CommandName.FIND_AUTHOR_USER, new FindAuthorUserCommand());
 
         adminCommands.add(availableCommands.get(CommandName.HOME_ADMIN));
         adminCommands.add(availableCommands.get(CommandName.CREATE_SONG));
@@ -102,6 +103,7 @@ public class CommandManager {
         userCommands.add(availableCommands.get(CommandName.CREATE_COMMENT));
         userCommands.add(availableCommands.get(CommandName.FIND_ALBUM_USER));
         userCommands.add(availableCommands.get(CommandName.FIND_SONG_USER));
+        userCommands.add(availableCommands.get(CommandName.FIND_AUTHOR_USER));
     }
 
     public static boolean isAdminCommand(Command command){

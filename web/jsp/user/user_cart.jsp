@@ -33,8 +33,9 @@
                                 <ul class="collection">
                                     <c:forEach items="${sessionScope.cart.songList}" var="song">
                                         <li class="collection-item avatar">
-                                            <i class="material-icons circle red">play_arrow</i>
-                                            <span class="title"><b><fmt:message key="title.name"/></b>${song.name}</span>
+                                            <img src="${pageContext.request.contextPath}/img/song-image.jpg"
+                                                 alt="song"
+                                                 class="circle"/>                                            <span class="title"><b><fmt:message key="title.name"/></b>${song.name}</span>
                                             <p>
                                                 <b><fmt:message key="title.authors"/> </b>
                                                 <c:forEach items="${song.authorList}" var="author">
@@ -47,7 +48,7 @@
                                                 <b><fmt:message key="title.cost"/></b>${song.cost}
                                             </p>
                                             <div class="secondary-content">
-                                                <form action="controller" method="POST">
+                                                <form action="${pageContext.request.contextPath}/controller" method="POST">
                                                     <input type="hidden" name="command" value="delete_song_from_cart"/>
                                                     <input type="hidden" name="token" value="${RandomTokenGenerator.nextToken()}">
                                                     <input type="hidden" name="song_id" value="${song.songId}"/>
@@ -59,7 +60,7 @@
                                 </ul>
                                 <div class="card-action">
                                     <div class="row">
-                                        <form action="controller" method="POST">
+                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
                                             <input type="hidden" name="command" value="pay_for_order"/>
                                             <button class="btn col s12 waves-effect waves-light black" type="submit"><fmt:message key="button.pay"/> ${cart.totalCost}</button>
                                         </form>

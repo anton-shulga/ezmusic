@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by Антон on 07.08.2016.
  */
-public class MySqlAlbumDAO extends AlbumDAO {
+public class MySqlAlbumDAO implements AlbumDAO {
     private static final String CREATE_ALBUM_QUERY = "INSERT INTO ezmusicdb.album (album_name, album_year, album_image_path) VALUES (?, ?, ?)";
     private static final String FIND_ALBUM_QUERY = "SELECT album_id, album_name, album_year, album_image_path FROM ezmusicdb.album WHERE album_id = ?";
     private static final String DELETE_ALBUM_QUERY = "DELETE FROM ezmusicdb.album WHERE album_id = ?";

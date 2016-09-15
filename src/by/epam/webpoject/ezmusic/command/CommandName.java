@@ -54,4 +54,5 @@ public enum CommandName {
     CREATE_COMMENT,
     FIND_ORDERS_USER,
     SEARCH,
+    FIND_AUTHOR_USER,
 }

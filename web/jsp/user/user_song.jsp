@@ -8,13 +8,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="by.epam.webpoject.ezmusic.util.RandomTokenGenerator"%>
-<fmt:setLocale value="${locale}"/>
+<%@ page import="by.epam.webpoject.ezmusic.util.RandomTokenGenerator" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="property.page_content"/>
 <html>
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css"
+          media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -35,64 +36,105 @@
                             <span class="card-title">${requestScope.song.name}</span>
                             <div class="row">
                                 <div class="center">
-                                    <img src="${pageContext.request.contextPath}/img/song-image.jpg" alt="" class="circle responsive-img center">
+                                    <img src="${pageContext.request.contextPath}/img/song-image.jpg" alt=""
+                                         class="circle responsive-img center">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="center text">
-                                    <h4>
-                                        <fmt:message key="title.name"/>
-                                        ${song.name}
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="center text">
-                                    <h4>
-                                        <fmt:message key="title.authors"/>
-                                        <c:forEach items="${song.authorList}" var="author">
-                                            ${author.name};
-                                        </c:forEach>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="center text">
-                                    <h4>
-                                        <fmt:message key="title.albums"/>
-                                        <c:forEach items="${song.albumList}" var="album">
-                                            ${album.name};
-                                        </c:forEach>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <c:if test="${not empty song.commentList}">
-                                    <ul class="collection">
-                                        <c:forEach items="${song.commentList}" var="comment">
-                                            <li class="collection-item avatar">
-                                                <img src="${pageContext.request.contextPath}/${comment.user.photoPath}" alt="" class="circle">
-                                                <span class="title">${comment.user.login}</span>
-                                                <p>${comment.text}</p>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </c:if>
-                            </div>
+
+                            <c:if test="${not empty requestScope.song.authorList}">
+                                <ul class="collection with-header">
+                                    <li>
+                                        <div class="collection-header">
+                                            <h5><fmt:message key="title.song_authors"/></h5>
+                                        </div>
+                                    </li>
+                                    <c:forEach items="${requestScope.song.authorList}" var="author">
+                                        <li class="collection-item avatar">
+                                            <img src="${pageContext.request.contextPath}/${author.photoPath}"
+                                                 alt="author" class="circle">
+                                            <span class="title"><b><fmt:message
+                                                    key="title.name"/></b>${author.name}</span>
+                                            <p><b><fmt:message key="title.country"/></b>${author.country}</p>
+                                            <div class="secondary-content">
+                                                <form action="${pageContext.request.contextPath}/controller"
+                                                      method="POST">
+                                                    <input type="hidden" name="command" value="find_author_user">
+                                                    <input type="hidden" name="author_id" value="${author.authorId}">
+                                                    <button class="btn-floating black" type="submit"><i
+                                                            class="material-icons">info_outline</i></button>
+                                                </form>
+                                            </div>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </c:if>
+
+                            <c:if test="${not empty requestScope.song.albumList}">
+                                <ul class="collection with-header">
+                                    <li>
+                                        <div class="collection-header">
+                                            <h5><fmt:message key="title.song_albums"/></h5>
+                                        </div>
+                                    </li>
+                                    <c:forEach items="${requestScope.song.albumList}" var="album">
+                                        <li class="collection-item avatar">
+                                            <img src="${pageContext.request.contextPath}/${album.imageFilePath}"
+                                                 alt="album" class="circle">
+                                            <span class="title"><b><fmt:message
+                                                    key="title.name"/></b>${album.name}</span>
+                                            <p><b><fmt:message key="title.year"/></b>${album.year}</p>
+                                            <div class="secondary-content">
+                                                <form action="${pageContext.request.contextPath}/controller"
+                                                      method="POST">
+                                                    <input type="hidden" name="command" value="find_album_user">
+                                                    <input type="hidden" name="album_id" value="${album.albumId}">
+                                                    <button class="btn-floating black" type="submit"><i
+                                                            class="material-icons">info_outline</i></button>
+                                                </form>
+                                            </div>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </c:if>
+
+                            <c:if test="${not empty requestScope.song.commentList}">
+                                <ul class="collection with-header">
+                                    <li>
+                                        <div class="collection-header">
+                                            <h5><fmt:message key="title.comments"/></h5>
+                                        </div>
+                                    </li>
+                                    <c:forEach items="${requestScope.song.commentList}" var="comment">
+                                        <li class="collection-item avatar">
+                                            <span class="title">${comment.user.login}</span>
+                                            <img src="${pageContext.request.contextPath}/${comment.user.photoPath}"
+                                                 alt="user" class="circle">
+                                            <p>${comment.text}</p>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </c:if>
+
                             <div class="card-action">
                                 <div class="row">
                                     <form>
                                         <div class="input-field col s12">
-                                                <i class="material-icons prefix">mode_edit</i>
-                                                <input type="hidden" name="command" value="create_comment"/>
-                                                <input type="hidden" name="song_id" value="${requestScope.song.songId}"/>
-                                                <input type="hidden" name="token" value="${RandomTokenGenerator.nextToken()}">
-                                                <textarea id="id_textarea" name="comment_text" class="materialize-textarea" length="100"></textarea>
-                                                <label for="id_textarea"><fmt:message key="label.comment"/> </label>
+                                            <i class="material-icons prefix">textsms</i>
+                                            <input type="hidden" name="command" value="create_comment"/>
+                                            <input type="hidden" name="song_id" value="${requestScope.song.songId}"/>
+                                            <input type="hidden" name="token"
+                                                   value="${RandomTokenGenerator.nextToken()}">
+                                            <textarea id="id_textarea" name="comment_text" class="materialize-textarea"
+                                                      required
+                                                      maxlength="30"></textarea>
+                                            <label for="id_textarea"><fmt:message key="label.comment"/> </label>
                                         </div>
-                                        <button class="black btn col s12" type="submit"><i class="material-icons">mode_edit</i></button>
+                                        <button class="black btn col s12" type="submit"><i
+                                                class="material-icons">textsms</i></button>
                                     </form>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>

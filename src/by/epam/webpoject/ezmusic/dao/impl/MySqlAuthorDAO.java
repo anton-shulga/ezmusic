@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Антон on 15.08.2016.
  */
-public class MySqlAuthorDAO extends AuthorDAO {
+public class MySqlAuthorDAO implements AuthorDAO {
     private static final String CREATE_AUTHOR_QUERY = "INSERT INTO ezmusicdb.author (author_name, author_country, author_image_path) VALUES (?,?,?)";
     private static final String FIND_AUTHOR_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author WHERE author_id = ?";
     private static final String DELETE_AUTHOR_QUERY = "DELETE FROM ezmusicdb.author WHERE author_id = ?";

@@ -25,4 +25,5 @@ public class JspPageName {
     public static final String USER_SEARCH_RESULT = "jsp/user/user_search_result.jsp";
     public static final String USER_ORDERS = "jsp/user/user_orders.jsp";
     public static final String USER_ALBUM = "jsp/user/user_album.jsp";
+    public static final String USER_AUTHOR = "jsp/user/user_author.jsp";
 }

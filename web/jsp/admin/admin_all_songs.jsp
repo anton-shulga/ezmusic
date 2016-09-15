@@ -19,7 +19,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
 </head>
 <body>
-    <c:import url="../header.jsp"/>
+    <c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
     <c:import url="admin_navbar.jsp"/>
     <main>
         <div class="wrapper">
@@ -33,8 +33,9 @@
                                     <ul class="collection">
                                         <c:forEach items="${requestScope.all_songs}" var="song">
                                             <li class="collection-item avatar">
-                                                <i class="material-icons circle red">play_arrow</i>
-                                                <span class="title"><b><fmt:message key="title.name"/></b>${song.name}</span>
+                                                <img src="${pageContext.request.contextPath}/img/song-image.jpg"
+                                                     alt="song"
+                                                     class="circle"/>                                                <span class="title"><b><fmt:message key="title.name"/></b>${song.name}</span>
                                                 <p>
                                                     <b><fmt:message key="title.authors"/></b>
                                                     <c:forEach items="${song.authorList}" var="author">

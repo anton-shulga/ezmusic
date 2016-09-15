@@ -20,7 +20,7 @@
 </head>
 <body>
 <c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
-<c:import url="${pageContext.request.contextPath}/jsp/admin/admin_navbar.jsp"/>
+<c:import url="${pageContext.request.contextPath}/jsp/user/user_navbar.jsp"/>
 <main>
     <div class="wrapper">
         <div class="container">
@@ -29,15 +29,16 @@
                     <div class="card z-depth-4">
                         <div class="card-content">
                             <span class="card-title"><fmt:message key="title.all_albums"/></span>
-                            <ul class="collection">
-                                <c:if test="${not empty requestScope.all_albums}">
+
+                            <c:if test="${not empty requestScope.all_albums}">
+                                <ul class="collection">
                                     <c:forEach items="${requestScope.all_albums}" var="album">
                                         <li class="collection-item avatar">
                                             <img src="${pageContext.request.contextPath}/${album.imageFilePath}" alt="album" class="circle">
                                             <span class="title"><b><fmt:message key="title.name"/></b>${album.name}</span>
                                             <p><b><fmt:message key="title.year"/></b>${album.year}</p>
                                             <div class="secondary-content">
-                                                <form action="controller" method="POST">
+                                                <form action="${pageContext.request.contextPath}/controller" method="POST">
                                                     <input type="hidden" name="command" value="find_album_user">
                                                     <input type="hidden" name="album_id" value="${album.albumId}">
                                                     <button class="btn-floating black" type="submit"><i class="material-icons">info_outline</i></button>
@@ -45,8 +46,8 @@
                                             </div>
                                         </li>
                                     </c:forEach>
-                                </c:if>
-                            </ul>
+                                </ul>
+                            </c:if>
                         </div>
                     </div>
                 </div>

@@ -61,7 +61,7 @@
                             </form>
 
                             <div class="row">
-                                <form action="controller" method="POST">
+                                <form action="${pageContext.request.contextPath}/controller" method="POST">
                                     <input type="hidden" name="command" value="to_register">
                                     <button class="col s12 waves-effect waves-light btn black" type="submit"><fmt:message key="button.sign_up"/> </button>
                                 </form>

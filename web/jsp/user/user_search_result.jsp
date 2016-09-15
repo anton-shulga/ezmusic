@@ -13,7 +13,8 @@
 <html>
 <head>
     <title><fmt:message key="title.search_result"/></title>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css"
+          media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
     <script>
@@ -23,13 +24,13 @@
                 url: 'jsoncontroller',
                 type: 'post',
                 dataType: 'json',
-                data: {song_id:songId, command:"add_song_to_order"},
+                data: {song_id: songId, command: "add_song_to_order"},
                 success: function (json) {
                     var $badge = $('#id-badge');
                     $badge.text(json);
-                    if($previousBadge == $badge.text()){
+                    if ($previousBadge == $badge.text()) {
                         Materialize.toast("This song is already in cart", 1000);
-                    }else {
+                    } else {
                         Materialize.toast("Successfully added song to cart", 1000)
                     }
                 }
@@ -43,16 +44,18 @@
 <main>
     <div class="wrapper">
         <div class="container">
-            <div class="row">
-                <div class="col s8 offset-s2">
-                    <div class="card z-depth-4">
-                        <div class="card-content">
-                            <span class="card-title"><fmt:message key="title.all_songs"/></span>
-                            <c:if test="${not empty requestScope.all_songs}">
+            <c:if test="${not empty requestScope.all_songs}">
+                <div class="row">
+                    <div class="col s8 offset-s2">
+                        <div class="card z-depth-4">
+                            <div class="card-content">
+                                <span class="card-title"><fmt:message key="title.all_songs"/></span>
                                 <ul class="collection">
                                     <c:forEach items="${requestScope.all_songs}" var="song">
                                         <li class="collection-item avatar">
-                                            <i class="material-icons circle red">play_arrow</i>
+                                            <img src="${pageContext.request.contextPath}/img/song-image.jpg"
+                                                 alt="song"
+                                                 class="circle"/>
                                             <span class="title"><b>Name: </b>${song.name}</span>
                                             <p>
                                                 <b><fmt:message key="title.authors"/></b>
@@ -67,66 +70,88 @@
                                             </p>
                                             <div class="secondary-content">
                                                 <div style="float: left">
-                                                    <form action="controller" method="POST">
+                                                    <form action="${pageContext.request.contextPath}/controller"
+                                                          method="POST">
                                                         <input type="hidden" name="command" value="find_song_user">
                                                         <input type="hidden" name="song_id" value="${song.songId}">
-                                                        <button class="btn-floating black" type="submit"><i class="material-icons">info_outline</i></button>
+                                                        <button class="btn-floating black" type="submit"><i
+                                                                class="material-icons">info_outline</i></button>
                                                     </form>
                                                 </div>
                                                 <div style="float: right">
-                                                    <button class="btn-floating black" onclick="addSongToOrder(${song.songId})"><i class="material-icons">shopping_cart</i></button>
+                                                    <button class="btn-floating black"
+                                                            onclick="addSongToOrder(${song.songId})"><i
+                                                            class="material-icons">shopping_cart</i></button>
                                                 </div>
                                             </div>
                                         </li>
                                     </c:forEach>
                                 </ul>
-                            </c:if>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col s8 offset-s2">
-                    <div class="card z-depth-4">
-                        <div class="card-content">
-                            <span class="card-title"><fmt:message key="title.all_authors"/></span>
-                            <c:if test="${not empty requestScope.all_authors}">
+            </c:if>
+            <c:if test="${not empty requestScope.all_authors}">
+                <div class="row">
+                    <div class="col s8 offset-s2">
+                        <div class="card z-depth-4">
+                            <div class="card-content">
+                                <span class="card-title"><fmt:message key="title.all_authors"/></span>
+
                                 <ul class="collection">
                                     <c:forEach items="${requestScope.all_authors}" var="author">
                                         <li class="collection-item avatar">
-                                            <img src="${pageContext.request.contextPath}/${author.photoPath}" alt="author" class="circle">
-                                            <span class="title"><b><fmt:message key="title.name"/></b>${author.name}</span>
+                                            <img src="${pageContext.request.contextPath}/${author.photoPath}"
+                                                 alt="author" class="circle">
+                                            <span class="title"><b><fmt:message
+                                                    key="title.name"/></b>${author.name}</span>
                                             <p><b><fmt:message key="title.country"/></b>${author.country}</p>
+                                            <div class="secondary-content">
+                                                <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                                    <input type="hidden" name="command" value="find_author_user">
+                                                    <input type="hidden" name="author_id" value="${author.authorId}">
+                                                    <button class="btn-floating black" type="submit"><i class="material-icons">info_outline</i></button>
+                                                </form>
+                                            </div>
                                         </li>
                                     </c:forEach>
                                 </ul>
-                            </c:if>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col s8 offset-s2">
-                    <div class="card z-depth-4">
-                        <div class="card-content">
-                            <span class="card-title"><fmt:message key="title.all_albums"/></span>
-
-                                <c:if test="${not empty requestScope.all_albums}">
-                            <ul class="collection">
+            </c:if>
+            <c:if test="${not empty requestScope.all_albums}">
+                <div class="row">
+                    <div class="col s8 offset-s2">
+                        <div class="card z-depth-4">
+                            <div class="card-content">
+                                <span class="card-title"><fmt:message key="title.all_albums"/></span>
+                                <ul class="collection">
                                     <c:forEach items="${requestScope.all_albums}" var="album">
                                         <li class="collection-item avatar">
-                                            <img src="${pageContext.request.contextPath}/${album.imageFilePath}" alt="album" class="circle">
-                                            <span class="title"><b><fmt:message key="title.name"/></b>${album.name}</span>
+                                            <img src="${pageContext.request.contextPath}/${album.imageFilePath}"
+                                                 alt="album" class="circle">
+                                            <span class="title"><b><fmt:message
+                                                    key="title.name"/></b>${album.name}</span>
                                             <p><b><fmt:message key="title.year"/></b>${album.year}</p>
+                                            <div class="secondary-content">
+                                                <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                                    <input type="hidden" name="command" value="find_album_user">
+                                                    <input type="hidden" name="album_id" value="${album.albumId}">
+                                                    <button class="btn-floating black" type="submit"><i class="material-icons">info_outline</i></button>
+                                                </form>
+                                            </div>
                                         </li>
                                     </c:forEach>
-                            </ul>
-                                </c:if>
-
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </c:if>
         </div>
         <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     </div>

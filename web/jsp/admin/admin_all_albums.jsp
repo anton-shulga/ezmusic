@@ -38,7 +38,7 @@
                                                 <p><b><fmt:message key="title.year"/></b>${album.year}</p>
                                                 <div class="secondary-content">
                                                     <div style="float: left">
-                                                        <form action="controller" method="POST">
+                                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
                                                             <input type="hidden" name="command" value="find_album_for_update">
                                                             <input type="hidden" name="album_id" value="${album.albumId}">
                                                             <button class="waves-effect waves-circle waves-light btn-floating black" type="submit">
@@ -47,7 +47,7 @@
                                                         </form>
                                                     </div>
                                                     <div style="float: right">
-                                                        <form action="controller" method="POST">
+                                                        <form action="${pageContext.request.contextPath}/controller" method="POST">
                                                             <input type="hidden" name="command" value="delete_album">
                                                             <input type="hidden" name="album_id" value="${album.albumId}">
                                                             <button class="waves-effect waves-circle waves-light btn-floating red" type="submit">
