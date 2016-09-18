@@ -28,7 +28,7 @@
                 var login = $('#id-user-login').val();
                 if (login.length > 2) {
                     $.ajax({
-                        url: '${pageContext.request.contextPath}/jsonController',
+                        url: 'jsoncontroller',
                         type: 'post',
                         dataType: 'json',
                         data: {user_login: login, command: "check_login_availability"},
