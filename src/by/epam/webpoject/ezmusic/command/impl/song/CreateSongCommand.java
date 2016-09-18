@@ -105,7 +105,7 @@ public class CreateSongCommand implements Command {
 
                 } else {
                     request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
-                    page = JspPageName.ADMIN_HOME;
+                    page = JspPageName.ADMIN_EDIT_SONG;
                 }
             }else {
                 ArrayList<Song> songList = FindAllSongsService.find();

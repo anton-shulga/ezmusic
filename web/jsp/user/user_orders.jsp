@@ -8,13 +8,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="${locale}"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="property.page_content"/>
 <html>
 <head>
     <title>My orders</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css"
+          media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bin/materialize.min.js"></script>
 </head>
@@ -39,7 +40,8 @@
                                                 <li class="collection-item avatar">
                                                     <img src="${pageContext.request.contextPath}/img/song-image.jpg"
                                                          alt="song"
-                                                         class="circle"/>                                                    <span class="title"><b><fmt:message key="title.name"/></b>${song.name}</span>
+                                                         class="circle"/> <span class="title"><b><fmt:message
+                                                        key="title.name"/></b>${song.name}</span>
                                                     <p>
                                                         <b><fmt:message key="title.authors"/></b>
                                                         <c:forEach items="${song.authorList}" var="author">
@@ -52,7 +54,9 @@
                                                         <b><fmt:message key="title.cost"/></b>${song.cost}
                                                     </p>
                                                     <div class="secondary-content">
-                                                        <button class="btn-floating black" onclick="addSongToOrder(${song.songId})"><i class="material-icons">system_update_alt</i></button>
+                                                        <button class="btn-floating black"
+                                                                onclick="addSongToOrder(${song.songId})"><i
+                                                                class="material-icons">system_update_alt</i></button>
                                                     </div>
                                                 </li>
                                             </c:forEach>

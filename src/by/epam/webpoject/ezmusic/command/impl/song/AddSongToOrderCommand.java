@@ -10,6 +10,7 @@ import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.order.FindCartByUserIdService;
 import by.epam.webpoject.ezmusic.service.song.AddSongToOrderService;
 import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
+import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,7 +39,7 @@ public class AddSongToOrderCommand implements Command {
               throw new CommandException("Add song to order command exception", e);
             }
         }
-        return output;
+        return new Gson().toJson(output);
     }
 
 }

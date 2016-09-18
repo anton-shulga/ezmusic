@@ -1,5 +1,7 @@
 package by.epam.webpoject.ezmusic.connection;
 
+import by.epam.webpoject.ezmusic.constant.FilePath;
+
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -13,7 +15,7 @@ public class DBManager {
 
     }
     public void initialize() throws MissingResourceException{
-            bundle = ResourceBundle.getBundle("property.db");
+            bundle = ResourceBundle.getBundle(FilePath.DB_CONFIGURATION);
     }
 
     public static DBManager getInstance(){

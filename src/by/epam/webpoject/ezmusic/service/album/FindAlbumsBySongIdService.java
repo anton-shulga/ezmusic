@@ -19,7 +19,7 @@ public class FindAlbumsBySongIdService {
         try {
             return dao.findBySongId(songId);
         } catch (DAOException e) {
-            throw new ServiceException("Find albums by song id service exception");
+            throw new ServiceException("Find albums by song id service exception", e);
         }
     }
 }

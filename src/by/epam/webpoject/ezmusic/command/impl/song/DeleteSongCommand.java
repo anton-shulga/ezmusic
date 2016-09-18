@@ -6,8 +6,10 @@ import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
+import by.epam.webpoject.ezmusic.parser.ParameterParser;
 import by.epam.webpoject.ezmusic.service.song.DeleteSongService;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
+import by.epam.webpoject.ezmusic.service.song.IsOrderedSongService;
 import by.epam.webpoject.ezmusic.validator.SongParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,11 +29,18 @@ public class DeleteSongCommand implements Command {
         boolean isValidRequest = SongParametersValidator.validateDeleteParameters(songId);
         if(isValidRequest){
             try {
-                DeleteSongService.delete(Long.parseLong(songId));
-                ArrayList<Song> songList = FindAllSongsService.find();
-                request.setAttribute(RequestParameter.ALL_SONGS, songList);
-                request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted song");
-                page = JspPageName.ADMIN_ALL_SONGS;
+                if(!IsOrderedSongService.isOrdered(ParameterParser.parseLong(songId))) {
+                    DeleteSongService.delete(Long.parseLong(songId));
+                    ArrayList<Song> songList = FindAllSongsService.find();
+                    request.setAttribute(RequestParameter.ALL_SONGS, songList);
+                    request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted song");
+                    page = JspPageName.ADMIN_ALL_SONGS;
+                }else {
+                    ArrayList<Song> songList = FindAllSongsService.find();
+                    request.setAttribute(RequestParameter.ALL_SONGS, songList);
+                    request.setAttribute(RequestParameter.MESSAGE, "You can't delete this song");
+                    page = JspPageName.ADMIN_ALL_SONGS;
+                }
             } catch (ServiceException e) {
                 throw new CommandException("Delete song command exception", e);
             }

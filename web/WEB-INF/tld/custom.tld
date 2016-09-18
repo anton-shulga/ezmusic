@@ -18,6 +18,16 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    <tag>
+        <name>message</name>
+        <tag-class>by.epam.webpoject.ezmusic.tag.custom.MessageTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>message</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 
 
 </taglib>

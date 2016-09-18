@@ -49,11 +49,13 @@ public class CreateAuthorCommand implements Command {
                     author.setCountry(country);
 
                     try {
-                        if (request.getPart(RequestParameter.AUTHOR_PHOTO_PATH).getInputStream().available() != 0){
+                        if (request.getPart(RequestParameter.AUTHOR_PHOTO_PATH).getInputStream().available() != 0) {
                             String imagePath = loadImage(request);
-                            if(imagePath != null){
+                            if (imagePath != null) {
                                 author.setPhotoPath(imagePath);
                             }
+                        }else {
+                            author.setPhotoPath(FilePath.DEFAULT_AUTHOR_PHOTO);
                         }
                     } catch (IOException | ServletException e) {
                         author.setPhotoPath(FilePath.DEFAULT_AUTHOR_PHOTO);
@@ -75,10 +77,10 @@ public class CreateAuthorCommand implements Command {
                     request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
                     page = JspPageName.ADMIN_HOME;
                 }
-            }else {
+            } else {
                 ArrayList<Author> allAuthors = FindAllAuthorsService.find();
                 request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-                page = JspPageName.ADMIN_ALL_AUTHORS;
+                page = JspPageName.ADMIN_EDIT_AUTHOR;
             }
         } catch (ServiceException e) {
             throw new CommandException("Create author command exception", e);
@@ -102,7 +104,7 @@ public class CreateAuthorCommand implements Command {
         }
 
         String imageName = Double.toString(new Date().getTime()) + FileExtention.JPG;
-        File file = new File(filePath + File.separator +  imageName);
+        File file = new File(filePath + File.separator + imageName);
 
         try {
             file.createNewFile();
@@ -110,11 +112,10 @@ public class CreateAuthorCommand implements Command {
             throw new CommandException("Can't load image", e);
         }
 
-        try(
+        try (
                 InputStream inputStream = request.getPart(RequestParameter.AUTHOR_PHOTO_PATH).getInputStream();
                 FileOutputStream outputStream = new FileOutputStream(file)
-        )
-        {
+        ) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = inputStream.read(buffer)) > 0) {
@@ -128,12 +129,12 @@ public class CreateAuthorCommand implements Command {
 
     }
 
-    private boolean f5Pressed(String sessionToken, String requestToken){
-        if(sessionToken != null){
-            if(requestToken != null){
+    private boolean f5Pressed(String sessionToken, String requestToken) {
+        if (sessionToken != null) {
+            if (requestToken != null) {
                 return sessionToken.equals(requestToken);
             }
-        }else {
+        } else {
             return false;
         }
         return false;

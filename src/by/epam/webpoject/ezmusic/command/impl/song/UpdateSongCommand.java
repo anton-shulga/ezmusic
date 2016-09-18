@@ -98,7 +98,7 @@ public class UpdateSongCommand implements Command {
         }
         else {
             request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
-            page = JspPageName.ADMIN_HOME;
+            page = JspPageName.ADMIN_EDIT_SONG;
         }
 
         return page;

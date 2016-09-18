@@ -42,6 +42,7 @@ public class SongParametersValidator {
                 return false;
             }
         }
+
         return true;
     }
 

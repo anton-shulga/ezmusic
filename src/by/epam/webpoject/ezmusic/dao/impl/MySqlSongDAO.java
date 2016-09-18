@@ -33,10 +33,12 @@ public class MySqlSongDAO implements SongDAO {
     private static final String DELETE_SONG_ORDER_QUERY = "DELETE FROM ezmusicdb.order_song WHERE id_order = ? AND id_song = ?";
     private static final MySqlSongDAO instance = new MySqlSongDAO();
     private static final String FIND_SONG_BY_SEARCH_REQUEST_QUERY = "SELECT song_id, song_name, song_year, song_file_path, song_publication_date, song_cost FROM ezmusicdb.song WHERE song_name LIKE ?";
+    private static final String IS_ORDERED_SONG_QUERY = "SELECT o.order_id, o.user_id, o.order_is_paid, o.order_total_cost FROM ezmusicdb.order AS o INNER JOIN ezmusicdb.order_song AS o_s ON o.order_id = o_s.id_order WHERE o_s.id_song = ? AND o.order_is_paid = TRUE";
 
 
     private MySqlSongDAO() {
     }
+
 
     public static MySqlSongDAO getInstance() {
         return instance;
@@ -61,7 +63,7 @@ public class MySqlSongDAO implements SongDAO {
                 generatedId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating song error", e);
+            throw new DAOException("Create song DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -88,7 +90,7 @@ public class MySqlSongDAO implements SongDAO {
                 song.setCost(resultSet.getDouble(6));
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding song error", e);
+            throw new DAOException("Find song DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -105,7 +107,7 @@ public class MySqlSongDAO implements SongDAO {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting song error", e);
+            throw new DAOException("Delete song DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -126,41 +128,12 @@ public class MySqlSongDAO implements SongDAO {
             statement.setLong(6, instance.getSongId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Updating song error", e);
+            throw new DAOException("Update song DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
         }
 
-    }
-
-    @Override
-    public ArrayList<Song> findByUserId(Long userId) throws DAOException {
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement statement = null;
-        ArrayList<Song> songList = null;
-        try {
-            statement = connection.prepareStatement(FIND_SONG_BY_USER_ID_QUERY);
-            statement.setLong(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-            songList = new ArrayList<>();
-            while (resultSet.next()) {
-                Song song = new Song();
-                song.setSongId(resultSet.getLong(1));
-                song.setName(resultSet.getString(2));
-                song.setYear(resultSet.getInt(3));
-                song.setFilePath(resultSet.getString(4));
-                song.setPublicationDate(resultSet.getDate(5));
-                song.setCost(resultSet.getDouble(6));
-                songList.add(song);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Finding song error", e);
-        } finally {
-            closeStatement(statement);
-            connection.close();
-        }
-        return songList;
     }
 
     @Override
@@ -184,7 +157,7 @@ public class MySqlSongDAO implements SongDAO {
                 songList.add(song);
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding song error", e);
+            throw new DAOException("Find songs by album id DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -213,7 +186,7 @@ public class MySqlSongDAO implements SongDAO {
                 songList.add(song);
             }
         } catch (SQLException e) {
-            throw new DAOException("Find song dao exception", e);
+            throw new DAOException("Find songs by author id DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -242,7 +215,7 @@ public class MySqlSongDAO implements SongDAO {
                 songList.add(song);
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding song error", e);
+            throw new DAOException("Find songs by order id DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -270,7 +243,7 @@ public class MySqlSongDAO implements SongDAO {
                 songList.add(song);
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding song error", e);
+            throw new DAOException("Find all songs DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -292,7 +265,7 @@ public class MySqlSongDAO implements SongDAO {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating song-album error", e);
+            throw new DAOException("Create song album DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -314,7 +287,7 @@ public class MySqlSongDAO implements SongDAO {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating song-author error", e);
+            throw new DAOException("Create song author DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -336,7 +309,7 @@ public class MySqlSongDAO implements SongDAO {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating song-author error", e);
+            throw new DAOException("Create song order DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -353,7 +326,7 @@ public class MySqlSongDAO implements SongDAO {
             statement.setLong(1, songId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting song-album error", e);
+            throw new DAOException("Delete song album DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -369,7 +342,7 @@ public class MySqlSongDAO implements SongDAO {
             statement.setLong(1, songId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting song-author error", e);
+            throw new DAOException("Delete song author DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -420,5 +393,25 @@ public class MySqlSongDAO implements SongDAO {
             connection.close();
         }
         return songList;
+    }
+
+    @Override
+    public boolean isOrderedSong(Long songId) throws DAOException {
+        PreparedStatement statement = null;
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        try {
+            statement = connection.prepareStatement(IS_ORDERED_SONG_QUERY);
+            statement.setLong(1, songId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Is ordered song DAO exception", e);
+        } finally {
+            closeStatement(statement);
+            connection.close();
+        }
+        return false;
     }
 }

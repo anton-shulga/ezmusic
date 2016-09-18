@@ -10,8 +10,6 @@ import java.util.ArrayList;
  */
 public interface SongDAO extends AbstractDAO<Song, Long> {
 
-    ArrayList<Song> findByUserId(Long userId) throws DAOException;
-
     ArrayList<Song> findByAlbumId(Long albumId) throws DAOException;
 
     ArrayList<Song> findByAuthorId(Long authorId) throws DAOException;
@@ -33,6 +31,8 @@ public interface SongDAO extends AbstractDAO<Song, Long> {
     void deleteSongOrder(Long songId, Long albumId) throws DAOException;
 
     ArrayList<Song> findBySearchRequest(String searchRequest) throws DAOException;
+
+    boolean isOrderedSong(Long songId) throws DAOException;
 
 
 }

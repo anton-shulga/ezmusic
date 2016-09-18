@@ -19,21 +19,23 @@ public class MySqlAlbumDAO implements AlbumDAO {
     private static final String CREATE_ALBUM_QUERY = "INSERT INTO ezmusicdb.album (album_name, album_year, album_image_path) VALUES (?, ?, ?)";
     private static final String FIND_ALBUM_QUERY = "SELECT album_id, album_name, album_year, album_image_path FROM ezmusicdb.album WHERE album_id = ?";
     private static final String DELETE_ALBUM_QUERY = "DELETE FROM ezmusicdb.album WHERE album_id = ?";
-    private static final String UPDATE_ALBUM_QUERY = "UPDATE ezmusicdb.album SET album_name = ?, album_year = ?, album_image_path = ? WHERE album_id = ?" ;
+    private static final String UPDATE_ALBUM_QUERY = "UPDATE ezmusicdb.album SET album_name = ?, album_year = ?, album_image_path = ? WHERE album_id = ?";
     private static final String FIND_ALBUM_BY_AUTHOR_ID_QUERY = "SELECT album_id, album_name, album_year, album_image_path FROM ezmusicdb.album AS a INNER JOIN ezmusicdb.album_author as a_a on a.album_id = a_a.id_album where a_a.id_author = ?";
     private static final String FIND_ALL_ALBUMS = "SELECT  album_id, album_name, album_year, album_image_path FROM ezmusicdb.album";
-    private static final String  FIND_ALBUM_BY_SONG_ID_QUERY = "SELECT album_id, album_name, album_year, album_image_path FROM ezmusicdb.album AS a INNER JOIN ezmusicdb.album_song AS a_s ON a.album_id = a_s.id_album WHERE a_s.id_song = ?";
+    private static final String FIND_ALBUM_BY_SONG_ID_QUERY = "SELECT album_id, album_name, album_year, album_image_path FROM ezmusicdb.album AS a INNER JOIN ezmusicdb.album_song AS a_s ON a.album_id = a_s.id_album WHERE a_s.id_song = ?";
     private static final String CREATE_ALBUM_SONG_QUERY = "INSERT  INTO ezmusicdb.album_song (id_album, id_song) VALUES (?, ?)";
     private static final String CREATE_ALBUM_AUTHOR_QUERY = "INSERT INTO ezmusicdb.album_author (id_author, id_album) VALUES (?, ?)";
     private static final String DELETE_ALBUM_SONG_QUERY = "DELETE FROM ezmusicdb.album_song WHERE id_album =?";
     private static final String DELETE_ALBUM_AUTHOR_QUERY = "DELETE FROM ezmusicdb.album_author WHERE id_album = ?";
-
-    private static final MySqlAlbumDAO instance = new MySqlAlbumDAO();
     private static final String FIND_ALBUM_BY_SEARCH_REQUEST_QUERY = "SELECT  album_id, album_name, album_year, album_image_path FROM ezmusicdb.album WHERE album_name LIKE ?";
 
-    private MySqlAlbumDAO(){}
+    private static final MySqlAlbumDAO instance = new MySqlAlbumDAO();
 
-    public static MySqlAlbumDAO getInstance(){
+
+    private MySqlAlbumDAO() {
+    }
+
+    public static MySqlAlbumDAO getInstance() {
         return instance;
     }
 
@@ -49,12 +51,12 @@ public class MySqlAlbumDAO implements AlbumDAO {
             statement.setString(3, instance.getImageFilePath());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 generatedId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating album error", e);
-        }finally {
+            throw new DAOException("Create album DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -70,7 +72,7 @@ public class MySqlAlbumDAO implements AlbumDAO {
             statement = connection.prepareStatement(FIND_ALBUM_QUERY);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 album = new Album();
                 album.setAlbumId(resultSet.getLong(1));
                 album.setName(resultSet.getString(2));
@@ -78,8 +80,8 @@ public class MySqlAlbumDAO implements AlbumDAO {
                 album.setImageFilePath(resultSet.getString(4));
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding album error", e);
-        }finally {
+            throw new DAOException("Find album DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -92,11 +94,11 @@ public class MySqlAlbumDAO implements AlbumDAO {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(DELETE_ALBUM_QUERY);
-            statement.setLong(1,id);
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting album error", e);
-        }finally {
+            throw new DAOException("Delete album DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -114,8 +116,8 @@ public class MySqlAlbumDAO implements AlbumDAO {
             statement.setLong(4, instance.getAlbumId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Updating album error", e);
-        }finally {
+            throw new DAOException("Update album DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -130,7 +132,7 @@ public class MySqlAlbumDAO implements AlbumDAO {
             statement = connection.prepareStatement(FIND_ALBUM_BY_AUTHOR_ID_QUERY);
             statement.setLong(1, authorId);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Album album = new Album();
                 album.setAlbumId(resultSet.getLong(1));
                 album.setName(resultSet.getString(2));
@@ -139,8 +141,8 @@ public class MySqlAlbumDAO implements AlbumDAO {
                 albumList.add(album);
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding albums error", e);
-        }finally {
+            throw new DAOException("Find album by author id DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -152,11 +154,11 @@ public class MySqlAlbumDAO implements AlbumDAO {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         Statement statement = null;
         ArrayList<Album> albumList = new ArrayList<>();
-        try{
+        try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(FIND_ALL_ALBUMS);
             Album album = null;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 album = new Album();
                 album.setAlbumId(resultSet.getLong(1));
                 album.setName(resultSet.getString(2));
@@ -165,8 +167,8 @@ public class MySqlAlbumDAO implements AlbumDAO {
                 albumList.add(album);
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding albums error", e);
-        }finally {
+            throw new DAOException("Find all albums DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -177,13 +179,13 @@ public class MySqlAlbumDAO implements AlbumDAO {
     public ArrayList<Album> findBySongId(Long songId) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        ArrayList<Album> albumList =  new ArrayList<>();
-        try{
+        ArrayList<Album> albumList = new ArrayList<>();
+        try {
             statement = connection.prepareStatement(FIND_ALBUM_BY_SONG_ID_QUERY);
             statement.setLong(1, songId);
             ResultSet resultSet = statement.executeQuery();
             Album album = null;
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 album = new Album();
                 album.setAlbumId(resultSet.getLong(1));
                 album.setName(resultSet.getString(2));
@@ -192,8 +194,8 @@ public class MySqlAlbumDAO implements AlbumDAO {
                 albumList.add(album);
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding album error", e);
-        }finally {
+            throw new DAOException("Find album by song id DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -204,18 +206,18 @@ public class MySqlAlbumDAO implements AlbumDAO {
     public boolean createAlbumSong(Long albumId, Long songId) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        try{
-            statement = connection.prepareStatement(CREATE_ALBUM_SONG_QUERY,  PreparedStatement.RETURN_GENERATED_KEYS);
+        try {
+            statement = connection.prepareStatement(CREATE_ALBUM_SONG_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, albumId);
             statement.setLong(2, songId);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating album song error", e);
-        }finally {
+            throw new DAOException("Create album song DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -226,18 +228,18 @@ public class MySqlAlbumDAO implements AlbumDAO {
     public boolean createAlbumAuthor(Long albumId, Long authorId) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        try{
-            statement = connection.prepareStatement(CREATE_ALBUM_AUTHOR_QUERY,  PreparedStatement.RETURN_GENERATED_KEYS);
+        try {
+            statement = connection.prepareStatement(CREATE_ALBUM_AUTHOR_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, authorId);
             statement.setLong(2, albumId);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating album author error", e);
-        }finally {
+            throw new DAOException("Create album author DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -248,13 +250,13 @@ public class MySqlAlbumDAO implements AlbumDAO {
     public void deleteAlbumSong(Long albumId) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        try{
+        try {
             statement = connection.prepareStatement(DELETE_ALBUM_SONG_QUERY);
             statement.setLong(1, albumId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting album song error", e);
-        }finally {
+            throw new DAOException("Delete album song DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -264,13 +266,13 @@ public class MySqlAlbumDAO implements AlbumDAO {
     public void deleteAlbumAuthor(Long albumId) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        try{
+        try {
             statement = connection.prepareStatement(DELETE_ALBUM_AUTHOR_QUERY);
             statement.setLong(1, albumId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting album author error", e);
-        }finally {
+            throw new DAOException("Delete album author DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -281,11 +283,11 @@ public class MySqlAlbumDAO implements AlbumDAO {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         ArrayList<Album> albumList = new ArrayList<>();
-        try{
+        try {
             statement = connection.prepareStatement(FIND_ALBUM_BY_SEARCH_REQUEST_QUERY);
             statement.setString(1, "%" + searchRequest + "%");
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Album album = new Album();
                 album.setAlbumId(resultSet.getLong(1));
                 album.setName(resultSet.getString(2));
@@ -295,7 +297,7 @@ public class MySqlAlbumDAO implements AlbumDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Find album by search request DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }

@@ -55,7 +55,7 @@ public class MySqlUserDAO implements UserDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating user error", e);
+            throw new DAOException("Create user DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -87,7 +87,7 @@ public class MySqlUserDAO implements UserDAO {
                 user.setBanned(resultSet.getBoolean(11));
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding user error", e);
+            throw new DAOException("Find user DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -103,7 +103,7 @@ public class MySqlUserDAO implements UserDAO {
             statement = connection.prepareStatement(DELETE_USER_BY_ID);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting user error", e);
+            throw new DAOException("Delete user DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -129,7 +129,7 @@ public class MySqlUserDAO implements UserDAO {
             statement.setLong(11, instance.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Updating user error", e);
+            throw new DAOException("Update user DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -161,7 +161,7 @@ public class MySqlUserDAO implements UserDAO {
                 user.setBanned(resultSet.getBoolean(11));
             }
         } catch (SQLException e) {
-            throw new DAOException("Login user error", e);
+            throw new DAOException("Login DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();
@@ -180,7 +180,7 @@ public class MySqlUserDAO implements UserDAO {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Is login exist DAO exception", e);
         } finally {
             closeStatement(statement);
             connection.close();

@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -117,7 +118,7 @@
 
                             <div class="card-action">
                                 <div class="row">
-                                    <form>
+                                    <form action="${pageContext.request.contextPath}/controller" method="POST">
                                         <div class="input-field col s12">
                                             <i class="material-icons prefix">textsms</i>
                                             <input type="hidden" name="command" value="create_comment"/>
@@ -145,7 +146,7 @@
     </div>
 </main>
 <c:if test="${requestScope.message != null}">
-    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+    <ctg:message message="${requestScope.message}"/>
 </c:if>
 
 </body>

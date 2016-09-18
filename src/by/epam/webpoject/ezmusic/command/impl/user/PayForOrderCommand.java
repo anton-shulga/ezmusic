@@ -31,6 +31,7 @@ public class PayForOrderCommand implements Command{
             if(isValidRequest) {
                 boolean isPaid = PayForOrderService.pay(user, cart);
                 if (isPaid) {
+                    request.setAttribute(RequestParameter.MESSAGE, "Order successfully paid");
                     page = JspPageName.USER_HOME;
                     request.getSession().removeAttribute(RequestParameter.CART);
                 } else {

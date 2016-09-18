@@ -35,6 +35,8 @@ public class AddFundsCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Add funds command exception", e);
             }
+        }else {
+            output = String.valueOf(user.getBalance());
         }
         return new Gson().toJson(output);
     }

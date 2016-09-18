@@ -1,5 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Антон
@@ -8,7 +9,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="${locale}"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="property.page_content"/>
 <html>
 <head>
@@ -40,7 +41,12 @@
 </head>
 <body>
 <c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
-<c:import url="${pageContext.request.contextPath}/jsp/user/user_navbar.jsp"/>
+<c:if test="${sessionScope.user.isAdmin}">
+    <c:import url="${pageContext.request.contextPath}/jsp/admin/admin_navbar.jsp"/>
+</c:if>
+<c:if test="${not sessionScope.user.isAdmin}">
+    <c:import url="${pageContext.request.contextPath}/jsp/user/user_navbar.jsp"/>
+</c:if>
 <main>
     <div class="wrapper">
         <div class="container">
@@ -69,20 +75,45 @@
                                                 <b><fmt:message key="title.cost"/></b>${song.cost}
                                             </p>
                                             <div class="secondary-content">
-                                                <div style="float: left">
-                                                    <form action="${pageContext.request.contextPath}/controller"
-                                                          method="POST">
-                                                        <input type="hidden" name="command" value="find_song_user">
-                                                        <input type="hidden" name="song_id" value="${song.songId}">
-                                                        <button class="btn-floating black" type="submit"><i
-                                                                class="material-icons">info_outline</i></button>
-                                                    </form>
-                                                </div>
-                                                <div style="float: right">
-                                                    <button class="btn-floating black"
-                                                            onclick="addSongToOrder(${song.songId})"><i
-                                                            class="material-icons">shopping_cart</i></button>
-                                                </div>
+                                                <c:if test="${not sessionScope.user.isAdmin}">
+                                                    <div style="float: left">
+                                                        <form action="${pageContext.request.contextPath}/controller"
+                                                              method="POST">
+                                                            <input type="hidden" name="command" value="find_song_user">
+                                                            <input type="hidden" name="song_id" value="${song.songId}">
+                                                            <button class="btn-floating black" type="submit"><i
+                                                                    class="material-icons">info_outline</i></button>
+                                                        </form>
+                                                    </div>
+                                                    <div style="float: right">
+                                                        <button class="btn-floating black"
+                                                                onclick="addSongToOrder(${song.songId})"><i
+                                                                class="material-icons">shopping_cart</i></button>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${sessionScope.user.isAdmin}">
+                                                    <div style="float: left">
+                                                        <form action="${pageContext.request.contextPath}/controller"
+                                                              method="POST">
+                                                            <input type="hidden" name="command"
+                                                                   value="find_song_for_update">
+                                                            <input type="hidden" name="song_id" value="${song.songId}">
+                                                            <button class="btn-floating black" type="submit">
+                                                                <i class="material-icons">mode_edit</i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    <div style="float: right">
+                                                        <form action="${pageContext.request.contextPath}/controller"
+                                                              method="POST">
+                                                            <input type="hidden" name="command" value="delete_song">
+                                                            <input type="hidden" name="song_id" value="${song.songId}">
+                                                            <button class="btn-floating red" type="submit">
+                                                                <i class="material-icons">delete</i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </c:if>
                                             </div>
                                         </li>
                                     </c:forEach>
@@ -98,7 +129,6 @@
                         <div class="card z-depth-4">
                             <div class="card-content">
                                 <span class="card-title"><fmt:message key="title.all_authors"/></span>
-
                                 <ul class="collection">
                                     <c:forEach items="${requestScope.all_authors}" var="author">
                                         <li class="collection-item avatar">
@@ -108,12 +138,45 @@
                                                     key="title.name"/></b>${author.name}</span>
                                             <p><b><fmt:message key="title.country"/></b>${author.country}</p>
                                             <div class="secondary-content">
-                                                <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                                    <input type="hidden" name="command" value="find_author_user">
-                                                    <input type="hidden" name="author_id" value="${author.authorId}">
-                                                    <button class="btn-floating black" type="submit"><i class="material-icons">info_outline</i></button>
-                                                </form>
+                                                <c:if test="${not sessionScope.user.isAdmin}">
+                                                    <form action="${pageContext.request.contextPath}/controller"
+                                                          method="POST">
+                                                        <input type="hidden" name="command" value="find_author_user">
+                                                        <input type="hidden" name="author_id"
+                                                               value="${author.authorId}">
+                                                        <button class="btn-floating black" type="submit"><i
+                                                                class="material-icons">info_outline</i></button>
+                                                    </form>
+                                                </c:if>
+                                                <c:if test="${sessionScope.user.isAdmin}">
+                                                <div style="float: left">
+                                                    <form action="${pageContext.request.contextPath}/controller"
+                                                          method="POST">
+                                                        <input type="hidden" name="command"
+                                                               value="find_author_for_update">
+                                                        <input type="hidden" name="author_id"
+                                                               value="${author.authorId}">
+                                                        <button class="waves-effect waves-circle waves-light btn-floating black"
+                                                                type="submit">
+                                                            <i class="material-icons">mode_edit</i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div style="float: right">
+                                                    <form action="${pageContext.request.contextPath}/controller"
+                                                          method="POST">
+                                                        <input type="hidden" name="command" value="delete_author">
+                                                        <input type="hidden" name="author_id"
+                                                               value="${author.authorId}">
+                                                        <button class="waves-effect waves-circle waves-light btn-floating red"
+                                                                type="submit">
+                                                            <i class="material-icons">delete</i>
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
+                                            </c:if>
+
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -138,11 +201,43 @@
                                                     key="title.name"/></b>${album.name}</span>
                                             <p><b><fmt:message key="title.year"/></b>${album.year}</p>
                                             <div class="secondary-content">
-                                                <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                                    <input type="hidden" name="command" value="find_album_user">
-                                                    <input type="hidden" name="album_id" value="${album.albumId}">
-                                                    <button class="btn-floating black" type="submit"><i class="material-icons">info_outline</i></button>
-                                                </form>
+                                                <c:if test="${not sessionScope.user.isAdmin}">
+                                                    <form action="${pageContext.request.contextPath}/controller"
+                                                          method="POST">
+                                                        <input type="hidden" name="command" value="find_album_user">
+                                                        <input type="hidden" name="album_id" value="${album.albumId}">
+                                                        <button class="btn-floating black" type="submit"><i
+                                                                class="material-icons">info_outline</i></button>
+                                                    </form>
+                                                </c:if>
+                                                <c:if test="${sessionScope.user.isAdmin}">
+                                                    <div style="float: left">
+                                                        <form action="${pageContext.request.contextPath}/controller"
+                                                              method="POST">
+                                                            <input type="hidden" name="command"
+                                                                   value="find_album_for_update">
+                                                            <input type="hidden" name="album_id"
+                                                                   value="${album.albumId}">
+                                                            <button class="waves-effect waves-circle waves-light btn-floating black"
+                                                                    type="submit">
+                                                                <i class="material-icons">mode_edit</i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    <div style="float: right">
+                                                        <form action="${pageContext.request.contextPath}/controller"
+                                                              method="POST">
+                                                            <input type="hidden" name="command" value="delete_album">
+                                                            <input type="hidden" name="album_id"
+                                                                   value="${album.albumId}">
+                                                            <button class="waves-effect waves-circle waves-light btn-floating red"
+                                                                    type="submit">
+                                                                <i class="material-icons">delete</i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </c:if>
+
                                             </div>
                                         </li>
                                     </c:forEach>
@@ -158,6 +253,6 @@
 </main>
 
 <c:if test="${requestScope.message != null}">
-    <script> Materialize.toast('${requestScope.message}', 4000);</script>
+    <ctg:message message="${requestScope.message}"/>
 </c:if>
 </body>

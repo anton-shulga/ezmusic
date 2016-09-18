@@ -19,14 +19,17 @@ public class MySqlCommentDAO implements CommentDAO {
     private static final String CREATE_COMMENT_QUERY = "INSERT INTO ezmusicdb.comment (comment_user_id, comment_rating, comment_text, comment_song_id) VALUES (?, ?, ?, ?)";
     private static final String FIND_COMMENT_QUERY = "SELECT comment_id, comment_user_id, comment_rating, comment_text, comment_song_id FROM ezmusicdb.comment WHERE comment_id = ?";
     private static final String DELETE_COMMENT_QUERY = "DELETE FROM ezmusicdb.comment WHERE comment_id = ?";
-    private static final String UPDATE_COMMENT_QUERY ="UPDATE ezmusicdb.comment SET  comment_user_id = ?, comment_rating = ?, comment_text = ?, comment_song_id = ? WHERE comment_id = ?";
+    private static final String UPDATE_COMMENT_QUERY = "UPDATE ezmusicdb.comment SET  comment_user_id = ?, comment_rating = ?, comment_text = ?, comment_song_id = ? WHERE comment_id = ?";
     private static final String FIND_COMMENT_BY_SONG_ID = "SELECT comment_id, comment_user_id, comment_rating, comment_text, comment_song_id FROM ezmusicdb.comment WHERE comment_song_id = ?";
 
     private static final MySqlCommentDAO instance = new MySqlCommentDAO();
 
-    private MySqlCommentDAO(){}
+    private MySqlCommentDAO() {
+    }
 
-    public static MySqlCommentDAO getInstance(){return instance;}
+    public static MySqlCommentDAO getInstance() {
+        return instance;
+    }
 
     @Override
     public Long create(Comment instance) throws DAOException {
@@ -41,12 +44,12 @@ public class MySqlCommentDAO implements CommentDAO {
             statement.setLong(4, instance.getSongId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 generatedId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating comment error", e);
-        }finally {
+            throw new DAOException("Create comment DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -63,7 +66,7 @@ public class MySqlCommentDAO implements CommentDAO {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             User user = null;
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 comment = new Comment();
                 comment.setCommentId(resultSet.getLong(1));
                 user = new User();
@@ -73,10 +76,10 @@ public class MySqlCommentDAO implements CommentDAO {
                 comment.setText(resultSet.getString(4));
                 comment.setSongId(resultSet.getLong(5));
             }
-            
-        }catch (SQLException e){
-            throw new DAOException("Finding comment error", e);
-        }finally {
+
+        } catch (SQLException e) {
+            throw new DAOException("Find comment DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -93,8 +96,8 @@ public class MySqlCommentDAO implements CommentDAO {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting comment error", e);
-        }finally {
+            throw new DAOException("Delete comment DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -113,8 +116,8 @@ public class MySqlCommentDAO implements CommentDAO {
             statement.setLong(5, instance.getCommentId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting comment error");
-        }finally {
+            throw new DAOException("Update comment DAO exception");
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -130,7 +133,7 @@ public class MySqlCommentDAO implements CommentDAO {
             statement.setLong(1, songId);
             ResultSet resultSet = statement.executeQuery();
             User user = null;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Comment comment = new Comment();
                 comment.setCommentId(resultSet.getLong(1));
                 user = new User();
@@ -142,9 +145,9 @@ public class MySqlCommentDAO implements CommentDAO {
                 commentList.add(comment);
             }
 
-        }catch (SQLException e){
-            throw new DAOException("Finding comment error", e);
-        }finally {
+        } catch (SQLException e) {
+            throw new DAOException("Find comments by song id DAO exception", e);
+        } finally {
             closeStatement(statement);
             connection.close();
         }

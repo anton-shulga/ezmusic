@@ -46,7 +46,7 @@ public class MySqlOrderDAO implements OrderDAO{
                 generatedId = resultSet.getLong(1);
             }
         }catch (SQLException e){
-            throw new DAOException("Create order dao exception", e);
+            throw new DAOException("Create order DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -71,7 +71,7 @@ public class MySqlOrderDAO implements OrderDAO{
                 order.setTotalCost(resultSet.getDouble(4));
             }
         }catch (SQLException e){
-            throw new DAOException("Find order dao exception", e);
+            throw new DAOException("Find order DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -88,7 +88,7 @@ public class MySqlOrderDAO implements OrderDAO{
             statement.setLong(1, id);
             statement.executeUpdate();
         }catch (SQLException e){
-            throw new DAOException("Delete order dao exception", e);
+            throw new DAOException("Delete order DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -107,7 +107,7 @@ public class MySqlOrderDAO implements OrderDAO{
             statement.setLong(4, instance.getOrderId());
             statement.executeUpdate();
         }catch (SQLException e){
-            throw new DAOException("Update order dao exception", e);
+            throw new DAOException("Update order DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -133,7 +133,7 @@ public class MySqlOrderDAO implements OrderDAO{
                 orderList.add(order);
             }
         } catch (SQLException e) {
-            throw new DAOException("Find orders dao exception", e);
+            throw new DAOException("Find orders by user id DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -158,7 +158,7 @@ public class MySqlOrderDAO implements OrderDAO{
                 order.setTotalCost(resultSet.getDouble(4));
             }
         }catch (SQLException e){
-            throw new DAOException("Find orders dao exception", e);
+            throw new DAOException("Find cart by user id DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();

@@ -24,7 +24,7 @@ import java.util.Date;
 /**
  * Created by Антон on 10.08.2016.
  */
-public class CreateAlbumCommand implements Command{
+public class CreateAlbumCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
@@ -48,16 +48,17 @@ public class CreateAlbumCommand implements Command{
                     album = new Album();
                     album.setName(name);
                     album.setYear(ParameterParser.parseInt(year));
-
                     try {
-                        if (request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream().available() != 0){
+                        if (request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream().available() != 0) {
                             String imagePath = loadImage(request);
-                            if(imagePath != null){
+                            if (imagePath != null) {
                                 album.setImageFilePath(imagePath);
+                            }else {
+                                album.setImageFilePath(FilePath.DEFAULT_ALBUM_PHOTO);
                             }
                         }
                     } catch (IOException | ServletException e) {
-                            album.setImageFilePath(FilePath.DEFAULT_ALBUM_PHOTO);
+                        album.setImageFilePath(FilePath.DEFAULT_ALBUM_PHOTO);
                     }
 
                     generatedId = CreateAlbumService.create(album, ParameterParser.parseLongArray(selectedSongIds), ParameterParser.parseLongArray(authorIds));
@@ -102,7 +103,7 @@ public class CreateAlbumCommand implements Command{
         }
 
         String imageName = Double.toString(new Date().getTime()) + FileExtention.JPG;
-        File file = new File(filePath + File.separator +  imageName);
+        File file = new File(filePath + File.separator + imageName);
 
         try {
             file.createNewFile();
@@ -110,11 +111,10 @@ public class CreateAlbumCommand implements Command{
             throw new CommandException("Can't load image", e);
         }
 
-        try(
+        try (
                 InputStream inputStream = request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream();
                 FileOutputStream outputStream = new FileOutputStream(file)
-        )
-        {
+        ) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = inputStream.read(buffer)) > 0) {
@@ -128,12 +128,12 @@ public class CreateAlbumCommand implements Command{
 
     }
 
-    private boolean f5Pressed(String sessionToken, String requestToken){
-        if(sessionToken != null){
-            if(requestToken != null){
+    private boolean f5Pressed(String sessionToken, String requestToken) {
+        if (sessionToken != null) {
+            if (requestToken != null) {
                 return sessionToken.equals(requestToken);
             }
-        }else {
+        } else {
             return false;
         }
         return false;

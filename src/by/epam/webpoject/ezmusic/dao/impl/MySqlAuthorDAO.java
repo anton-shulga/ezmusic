@@ -28,9 +28,9 @@ public class MySqlAuthorDAO implements AuthorDAO {
     private static final String CREATE_AUTHOR_SONG_QUERY = "INSERT INTO ezmusicdb.author_song (id_author, id_song) VALUES (?, ?)";
     private static final String DELETE_AUTHOR_ALBUM_QUERY = "DELETE FROM ezmusicdb.album_author WHERE id_author = ?";
     private static final String DELETE_AUTHOR_SONG_QUERY = "DELETE FROM ezmusicdb.author_song WHERE id_author = ?";
+    private static final String FIND_AUTHOR_BY_SEARCH_REQUEST_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author WHERE author_name LIKE ?";
 
     private static final MySqlAuthorDAO instance = new MySqlAuthorDAO();
-    private static final String FIND_AUTHOR_BY_SEARCH_REQUEST_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author WHERE author_name LIKE ?";
 
     private MySqlAuthorDAO(){}
 
@@ -54,7 +54,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
                 generatedId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating author error", e);
+            throw new DAOException("Create author DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -79,7 +79,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
                 author.setPhotoPath(resultSet.getString(4));
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding author error", e);
+            throw new DAOException("Find author DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -96,7 +96,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting author error", e);
+            throw new DAOException("Delete author DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -115,7 +115,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             statement.setLong(4, instance.getAuthorId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Updating author error", e);
+            throw new DAOException("Update author DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -140,7 +140,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
                 authorList.add(author);
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding author error", e);
+            throw new DAOException("Find all authors DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -167,7 +167,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
                 authorList.add(author);
             }
         } catch (SQLException e) {
-            throw new DAOException("Finding author error", e);
+            throw new DAOException("Find authors by song id DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -194,7 +194,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
                 authorList.add(author);
             }
         } catch (SQLException e) {
-            throw new CommandException("Finding author error", e);
+            throw new CommandException("Find authors by album id DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -217,7 +217,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
                generateId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating author album error", e);
+            throw new DAOException("Create author album DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -240,7 +240,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
                 generateId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
-            throw new DAOException("Creating author song error", e);
+            throw new DAOException("Create author song DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -257,7 +257,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             statement.setLong(1, authorId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting author album error", e);
+            throw new DAOException("Delete author album DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();
@@ -273,7 +273,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             statement.setLong(1, authorId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Deleting author album error", e);
+            throw new DAOException("Delete author song DAO exception", e);
         }finally {
             closeStatement(statement);
             connection.close();

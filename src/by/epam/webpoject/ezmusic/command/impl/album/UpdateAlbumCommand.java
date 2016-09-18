@@ -38,19 +38,19 @@ public class UpdateAlbumCommand implements Command {
         String year = request.getParameter(RequestParameter.ALBUM_YEAR);
 
         boolean isValidRequest = AlbumParametersValidator.validateUpdateParameters(albumId, songIds, authorIds, name, year);
-        if(isValidRequest) {
+        if (isValidRequest) {
             album = new Album();
             album.setAlbumId(ParameterParser.parseLong(albumId));
             album.setName(name);
             album.setYear(ParameterParser.parseInt(year));
 
             try {
-                if (request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream().available() != 0){
+                if (request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream().available() != 0) {
                     String imagePath = loadImage(request);
-                    if(imagePath != null){
+                    if (imagePath != null) {
                         album.setImageFilePath(imagePath);
                     }
-                }else {
+                } else {
                     album.setImageFilePath(request.getParameter(RequestParameter.OLD_ALBUM_IMAGE_FILE_PATH));
                 }
             } catch (IOException | ServletException e) {
@@ -67,9 +67,9 @@ public class UpdateAlbumCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Update album command exception", e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data.");
-            page = JspPageName.ADMIN_HOME;
+            page = JspPageName.ADMIN_EDIT_ALBUM;
         }
         return page;
     }
@@ -88,7 +88,7 @@ public class UpdateAlbumCommand implements Command {
         }
 
         String imageName = Double.toString(new Date().getTime()) + FileExtention.JPG;
-        File file = new File(filePath + File.separator +  imageName);
+        File file = new File(filePath + File.separator + imageName);
 
         try {
             file.createNewFile();
@@ -96,11 +96,10 @@ public class UpdateAlbumCommand implements Command {
             throw new CommandException("Can't load image", e);
         }
 
-        try(
+        try (
                 InputStream inputStream = request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream();
                 FileOutputStream outputStream = new FileOutputStream(file)
-        )
-        {
+        ) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = inputStream.read(buffer)) > 0) {

@@ -24,7 +24,7 @@ import java.util.Date;
 /**
  * Created by Антон on 19.08.2016.
  */
-public class UpdateAuthorCommand implements Command{
+public class UpdateAuthorCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
 
@@ -32,25 +32,25 @@ public class UpdateAuthorCommand implements Command{
         Author author = null;
 
         String authorId = request.getParameter(RequestParameter.AUTHOR_ID);
-        String[] albumIds =request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
+        String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
         String[] songIds = request.getParameterValues(RequestParameter.SELECTED_SONGS);
         String name = request.getParameter(RequestParameter.AUTHOR_NAME);
         String country = request.getParameter(RequestParameter.AUTHOR_COUNTRY);
 
         boolean isValidRequest = AuthorParametersValidator.validateUpdateParameters(authorId, albumIds, songIds, name, country);
-        if(isValidRequest) {
+        if (isValidRequest) {
             author = new Author();
             author.setAuthorId(ParameterParser.parseLong(authorId));
             author.setName(name);
             author.setCountry(country);
 
             try {
-                if (request.getPart(RequestParameter.AUTHOR_PHOTO_PATH).getInputStream().available() != 0){
+                if (request.getPart(RequestParameter.AUTHOR_PHOTO_PATH).getInputStream().available() != 0) {
                     String imagePath = loadImage(request);
-                    if(imagePath != null){
+                    if (imagePath != null) {
                         author.setPhotoPath(imagePath);
                     }
-                }else {
+                } else {
                     author.setPhotoPath(request.getParameter(RequestParameter.OLD_AUTHOR_PHOTO_PATH));
                 }
             } catch (IOException | ServletException e) {
@@ -67,9 +67,9 @@ public class UpdateAuthorCommand implements Command{
             } catch (ServiceException e) {
                 throw new CommandException("Update author command exception", e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
-            page = JspPageName.ADMIN_HOME;
+            page = JspPageName.ADMIN_EDIT_AUTHOR;
         }
 
         return page;
@@ -89,7 +89,7 @@ public class UpdateAuthorCommand implements Command{
         }
 
         String imageName = Double.toString(new Date().getTime()) + FileExtention.JPG;
-        File file = new File(filePath + File.separator +  imageName);
+        File file = new File(filePath + File.separator + imageName);
 
         try {
             file.createNewFile();
@@ -97,11 +97,10 @@ public class UpdateAuthorCommand implements Command{
             throw new CommandException("Can't load image", e);
         }
 
-        try(
+        try (
                 InputStream inputStream = request.getPart(RequestParameter.AUTHOR_PHOTO_PATH).getInputStream();
                 FileOutputStream outputStream = new FileOutputStream(file)
-        )
-        {
+        ) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = inputStream.read(buffer)) > 0) {
