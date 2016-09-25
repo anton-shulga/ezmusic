@@ -6,6 +6,7 @@ import by.epam.webpoject.ezmusic.exception.CommandException;
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by Антон on 09.08.2016.
@@ -15,7 +16,8 @@ public class ChangeLocaleCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
 
         String locale = request.getParameter(RequestParameter.LOCALE);
-        request.getSession().setAttribute(RequestParameter.LOCALE, locale);
+        HttpSession session = request.getSession(false);
+        session.setAttribute(RequestParameter.LOCALE, locale);
         return new Gson().toJson(locale);
     }
 }

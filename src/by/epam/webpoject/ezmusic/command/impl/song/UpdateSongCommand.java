@@ -1,10 +1,7 @@
 package by.epam.webpoject.ezmusic.command.impl.song;
 
 import by.epam.webpoject.ezmusic.command.Command;
-import by.epam.webpoject.ezmusic.constant.ContextParameter;
-import by.epam.webpoject.ezmusic.constant.FileExtention;
-import by.epam.webpoject.ezmusic.constant.JspPageName;
-import by.epam.webpoject.ezmusic.constant.RequestParameter;
+import by.epam.webpoject.ezmusic.constant.*;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
@@ -90,14 +87,14 @@ public class UpdateSongCommand implements Command {
                 UpdateSongService.update(song);
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
-                request.setAttribute(RequestParameter.MESSAGE, "Successfully updated song");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.UPDATED);
                 page = JspPageName.ADMIN_ALL_SONGS;
             } catch (ServiceException e) {
                 throw new CommandException("Update song command exception", e);
             }
         }
         else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_EDIT_SONG;
         }
 

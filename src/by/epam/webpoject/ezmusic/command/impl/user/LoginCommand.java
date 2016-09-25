@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.user;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.User;
@@ -42,14 +43,14 @@ public class LoginCommand implements Command {
                         page = JspPageName.USER_HOME;
                     }
                 }else {
-                    request.setAttribute(RequestParameter.MESSAGE, "The username or password you entered is incorrect");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.AUTH_ERROR);
                     page = JspPageName.LOGIN;
                 }
             } catch (ServiceException e) {
                 throw new CommandException(e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.LOGIN;
         }
 

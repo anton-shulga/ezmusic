@@ -58,7 +58,8 @@
     </div>
 </main>
 <c:if test="${requestScope.message != null}">
-    <ctg:message message="${requestScope.message}"/>
+    <c:set var="message"><fmt:message key="${requestScope.message}"/></c:set>
+    <ctg:message message="${message}"/>
 </c:if>
 </body>
 </html>

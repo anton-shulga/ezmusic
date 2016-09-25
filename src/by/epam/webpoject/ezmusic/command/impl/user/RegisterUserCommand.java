@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.user;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.CommandException;
@@ -42,17 +43,17 @@ public class RegisterUserCommand implements Command {
             try {
                 generatedId = RegisterUserService.register(user);
                 if (generatedId != null) {
-                    request.setAttribute(RequestParameter.MESSAGE, "Registration completed successfully");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.REGISTERED);
                     page = JspPageName.LOGIN;
                 } else {
-                    request.setAttribute(RequestParameter.MESSAGE, "Login is already exist");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.LOGIN_EXIST);
                     page = JspPageName.REGISTER;
                 }
             } catch (ServiceException e) {
                 throw new CommandException("Register user command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.REGISTER;
         }
 

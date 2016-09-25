@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.author;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.exception.CommandException;
@@ -31,13 +32,13 @@ public class DeleteAuthorCommand implements Command {
                 DeleteAuthorService.delete(ParameterParser.parseLong(authorId));
                 ArrayList<Author> allAuthors = FindAllAuthorsService.find();
                 request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-                request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted author");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.DELETED);
                 page = JspPageName.ADMIN_ALL_AUTHORS;
             } catch (ServiceException e) {
                 throw new CommandException("Delete author command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_HOME;
         }
         return page;

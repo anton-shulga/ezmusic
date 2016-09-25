@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.album;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.exception.CommandException;
@@ -31,13 +32,13 @@ public class DeleteAlbumCommand implements Command {
                 DeleteAlbumService.delete(ParameterParser.parseLong(albumId));
                 ArrayList<Album> allAlbums = FindAllAlbumsService.find();
                 request.setAttribute(RequestParameter.ALL_ALBUMS, allAlbums);
-                request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted album");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.DELETED);
                 page = JspPageName.ADMIN_ALL_ALBUMS;
             } catch (ServiceException e) {
                 throw new CommandException("Delete album command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_ALL_ALBUMS;
         }
 

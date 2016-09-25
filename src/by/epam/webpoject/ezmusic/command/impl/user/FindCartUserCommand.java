@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.user;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.User;
@@ -27,7 +28,7 @@ public class FindCartUserCommand implements Command {
             cart = FindCartByUserIdService.find(user.getUserId());
 
             if(cart.getSongList().isEmpty()){
-                request.setAttribute(RequestParameter.MESSAGE, "Your cart is empty");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.CART_EMPTY);
             }
             request.getSession().setAttribute(RequestParameter.CART, cart);
             page = JspPageName.USER_CART;

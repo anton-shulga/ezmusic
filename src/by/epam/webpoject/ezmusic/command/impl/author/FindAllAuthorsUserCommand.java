@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.author;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.exception.CommandException;
@@ -26,12 +27,12 @@ public class FindAllAuthorsUserCommand implements Command {
 
             if(authorList != null){
                 if(authorList.isEmpty()){
-                    request.setAttribute(RequestParameter.MESSAGE, "Not found any authors");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.NOT_FOUND);
                 }
                 request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
                 page = JspPageName.USER_ALL_AUTHORS;
             }else {
-                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                 page = JspPageName.USER_HOME;
             }
         } catch (ServiceException e) {

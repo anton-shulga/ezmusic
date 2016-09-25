@@ -90,7 +90,7 @@
                                         <li class="collection-item avatar">
                                             <img src="${pageContext.request.contextPath}/img/song-image.jpg"
                                                  alt="song"
-                                                 class="circle"/> <span class="title"><b>Name: </b>${song.name}</span>
+                                                 class="circle"/> <span class="title"><b><fmt:message key="title.name"/></b>${song.name}</span>
                                             <p>
                                                 <b><fmt:message key="title.authors"/></b>
                                                 <c:forEach items="${song.authorList}" var="author">
@@ -133,7 +133,8 @@
     </div>
 </main>
 <c:if test="${requestScope.message != null}">
-    <ctg:message message="${requestScope.message}"/>
+    <c:set var="message"><fmt:message key="${requestScope.message}"/></c:set>
+    <ctg:message message="${message}"/>
 </c:if>
 
 </body>

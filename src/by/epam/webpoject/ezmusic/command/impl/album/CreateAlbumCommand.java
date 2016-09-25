@@ -66,15 +66,15 @@ public class CreateAlbumCommand implements Command {
                     if (generatedId != null) {
                         ArrayList<Album> albumList = FindAllAlbumsService.find();
                         request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
-                        request.setAttribute(RequestParameter.MESSAGE, "Successfully created album " + name);
+                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.CREATED + name);
                         page = JspPageName.ADMIN_ALL_ALBUMS;
                     } else {
-                        request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                         page = JspPageName.ADMIN_EDIT_ALBUM;
                     }
 
                 } else {
-                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
                     page = JspPageName.ADMIN_EDIT_ALBUM;
                 }
             } else {

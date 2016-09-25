@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.user;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.User;
@@ -31,15 +32,15 @@ public class PayForOrderCommand implements Command{
             if(isValidRequest) {
                 boolean isPaid = PayForOrderService.pay(user, cart);
                 if (isPaid) {
-                    request.setAttribute(RequestParameter.MESSAGE, "Order successfully paid");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.ORDER_PAID);
                     page = JspPageName.USER_HOME;
                     request.getSession().removeAttribute(RequestParameter.CART);
                 } else {
-                    request.setAttribute(RequestParameter.MESSAGE, "You do not have enough money. Please, add funds");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.NO_MONEY);
                     page = JspPageName.USER_CART;
                 }
             }else {
-                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
                 page = JspPageName.USER_HOME;
             }
         }else {

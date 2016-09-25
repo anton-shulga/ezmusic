@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.song;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Order;
 import by.epam.webpoject.ezmusic.entity.User;
@@ -34,13 +35,13 @@ public class DeleteSongFromCartCommand implements Command {
 
                 cart = FindCartByUserIdService.find(user.getUserId());
                 request.getSession().setAttribute(RequestParameter.CART, cart);
-                request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted song from cart");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.DELETED);
                 page = JspPageName.USER_CART;
             } catch (ServiceException e) {
                 throw new CommandException("Delete song from cart command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.USER_HOME;
         }
         return page;

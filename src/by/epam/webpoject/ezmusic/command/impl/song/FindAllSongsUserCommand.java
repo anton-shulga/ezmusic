@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.song;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.CommandException;
@@ -26,12 +27,12 @@ public class FindAllSongsUserCommand implements Command {
 
             if(songList != null ){
                 if(songList.isEmpty()){
-                    request.setAttribute(RequestParameter.MESSAGE, "Not found any songs.");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.NOT_FOUND);
                 }
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 page = JspPageName.USER_ALL_SONGS;
             }else {
-                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                 page = JspPageName.USER_HOME;
             }
         } catch (ServiceException e) {

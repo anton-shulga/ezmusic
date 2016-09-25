@@ -68,12 +68,12 @@ public class ConnectionPool {
                 }
             }
             if(createdConnectionNumber <= DEFAULT_POOL_SIZE){
-                LOGGER.fatal("Database connection fatal error");
+                LOGGER.fatal("Database connection error");
                 throw new RuntimeException("Database connection error");
             }
         } catch (ClassNotFoundException | MissingResourceException e) {
             LOGGER.fatal("Database connection error");
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
 
     }

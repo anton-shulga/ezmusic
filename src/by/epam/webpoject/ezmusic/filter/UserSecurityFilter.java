@@ -1,6 +1,7 @@
 package by.epam.webpoject.ezmusic.filter;
 
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.User;
 
@@ -23,15 +24,18 @@ public class UserSecurityFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession();
-        User currentUser = (User) session.getAttribute(RequestParameter.USER);
+        HttpSession session = request.getSession(false);
+        User currentUser = null;
+        if(session != null) {
+            currentUser = (User) session.getAttribute(RequestParameter.USER);
+        }
         if(currentUser == null){
-            request.setAttribute(RequestParameter.MESSAGE, "You have to log in to your account as user to access this page.");
-            request.getSession().getServletContext().getRequestDispatcher(JspPageName.LOGIN).forward(request, response);
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.USER_LOGIN);
+            request.getServletContext().getRequestDispatcher(JspPageName.LOGIN).forward(request, response);
         }else {
             if(currentUser.getIsAdmin()){
-                request.setAttribute(RequestParameter.MESSAGE, "You have to log in to your account as user to access this page.");
-                request.getSession().getServletContext().getRequestDispatcher(JspPageName.LOGIN).forward(request, response);
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.USER_LOGIN);
+                request.getServletContext().getRequestDispatcher(JspPageName.LOGIN).forward(request, response);
             }else {
                 filterChain.doFilter(servletRequest, servletResponse);
             }

@@ -66,15 +66,15 @@ public class CreateAuthorCommand implements Command {
                     if (generatedId != null) {
                         ArrayList<Author> allAuthors = FindAllAuthorsService.find();
                         request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-                        request.setAttribute(RequestParameter.MESSAGE, "Successfully created author " + name);
+                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.CREATED + name);
                         page = JspPageName.ADMIN_ALL_AUTHORS;
                     } else {
-                        request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                         page = JspPageName.ADMIN_HOME;
                     }
 
                 } else {
-                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check input parameters");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
                     page = JspPageName.ADMIN_HOME;
                 }
             } else {

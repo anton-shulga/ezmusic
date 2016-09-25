@@ -1,10 +1,7 @@
 package by.epam.webpoject.ezmusic.command.impl.song;
 
 import by.epam.webpoject.ezmusic.command.Command;
-import by.epam.webpoject.ezmusic.constant.ContextParameter;
-import by.epam.webpoject.ezmusic.constant.FileExtention;
-import by.epam.webpoject.ezmusic.constant.JspPageName;
-import by.epam.webpoject.ezmusic.constant.RequestParameter;
+import by.epam.webpoject.ezmusic.constant.*;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
@@ -58,11 +55,15 @@ public class CreateSongCommand implements Command {
                     song.setCost(Double.parseDouble(cost));
 
                     try {
-                        if (request.getPart(RequestParameter.SONG_FILE_PATH).getInputStream().available() != 0){
+                        if (request.getPart(RequestParameter.SONG_FILE_PATH).getInputStream().available() != 0) {
                             String filePath = loadImage(request);
-                            if(filePath != null){
+                            if (filePath != null) {
                                 song.setFilePath(filePath);
+                            } else {
+                                song.setFilePath(FilePath.DEFAULT_SONG_FILE);
                             }
+                        } else {
+                            song.setFilePath(FilePath.DEFAULT_SONG_FILE);
                         }
                     } catch (IOException | ServletException e) {
                         throw new CommandException("Create song command exception", e);
@@ -96,18 +97,18 @@ public class CreateSongCommand implements Command {
                     if (generatedId != null) {
                         ArrayList<Song> songList = FindAllSongsService.find();
                         request.setAttribute(RequestParameter.ALL_SONGS, songList);
-                        request.setAttribute(RequestParameter.MESSAGE, "Successfully created song " + name);
+                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.CREATED + name);
                         page = JspPageName.ADMIN_ALL_SONGS;
                     } else {
-                        request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                         page = JspPageName.ADMIN_HOME;
                     }
 
                 } else {
-                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
                     page = JspPageName.ADMIN_EDIT_SONG;
                 }
-            }else {
+            } else {
                 ArrayList<Song> songList = FindAllSongsService.find();
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 page = JspPageName.ADMIN_ALL_SONGS;
@@ -132,8 +133,8 @@ public class CreateSongCommand implements Command {
             throw new CommandException("Can't create directory for album image", e);
         }
 
-        String imageName = Double.toString(new Date().getTime()) + FileExtention.MP3;
-        File file = new File(filePath + File.separator +  imageName);
+        String songName = Double.toString(new Date().getTime()) + FileExtention.MP3;
+        File file = new File(filePath + File.separator + songName);
 
         try {
             file.createNewFile();
@@ -141,11 +142,10 @@ public class CreateSongCommand implements Command {
             throw new CommandException("Can't load image", e);
         }
 
-        try(
+        try (
                 InputStream inputStream = request.getPart(RequestParameter.SONG_FILE_PATH).getInputStream();
                 FileOutputStream outputStream = new FileOutputStream(file)
-        )
-        {
+        ) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = inputStream.read(buffer)) > 0) {
@@ -155,16 +155,16 @@ public class CreateSongCommand implements Command {
             throw new CommandException("Can't copy image", e);
         }
 
-        return songFileDirectory + File.separator + imageName;
+        return songFileDirectory + File.separator + songName;
 
     }
 
-    private boolean f5Pressed(String sessionToken, String requestToken){
-        if(sessionToken != null){
-            if(requestToken != null){
+    private boolean f5Pressed(String sessionToken, String requestToken) {
+        if (sessionToken != null) {
+            if (requestToken != null) {
                 return sessionToken.equals(requestToken);
             }
-        }else {
+        } else {
             return false;
         }
         return false;

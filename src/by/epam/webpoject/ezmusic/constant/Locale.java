@@ -5,6 +5,4 @@ package by.epam.webpoject.ezmusic.constant;
  */
 public class Locale {
     public static final String DEFAULT = "default";
-    public static final String RU_LANGUAGE = "ru";
-    public static final String RU_COUNTRY = "RU";
 }

@@ -38,7 +38,7 @@
 <body>
 <footer class="page-footer black">
     <span class="center-align white-text"><fmt:message key="footer.copyright"/> </span>
-    <select id="id-locale" class="right white-text">
+    <select id="id-locale" name="locale" class="right white-text">
         <option value="" disabled selected><fmt:message key="option.language"/></option>
         <option value="ru_RU">Русский</option>
         <option value="default">English</option>

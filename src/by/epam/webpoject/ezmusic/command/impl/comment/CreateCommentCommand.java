@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.comment;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Comment;
 import by.epam.webpoject.ezmusic.entity.Song;
@@ -51,7 +52,7 @@ public class CreateCommentCommand implements Command {
                     }
 
                 } else {
-                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
                     page = JspPageName.USER_HOME;
                 }
             }else {

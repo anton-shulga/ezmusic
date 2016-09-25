@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.song;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.entity.Author;
@@ -46,7 +47,7 @@ public class FindSongForUpdateCommand implements Command {
                     request.setAttribute(RequestParameter.SONG, song);
                     page = JspPageName.ADMIN_EDIT_SONG;
                 }else {
-                    request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                     page = JspPageName.ADMIN_HOME;
                 }
             } catch (ServiceException e) {
@@ -54,7 +55,7 @@ public class FindSongForUpdateCommand implements Command {
             }
 
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_HOME;
         }
 

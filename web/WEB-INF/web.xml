@@ -86,10 +86,6 @@
         <listener-class>by.epam.webpoject.ezmusic.listener.ContextListener</listener-class>
     </listener>
 
-    <listener>
-        <listener-class>by.epam.webpoject.ezmusic.listener.FileLocationContextListener</listener-class>
-    </listener>
-
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/jsp/error.jsp</location>

@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Album;
 import by.epam.webpoject.ezmusic.entity.Author;
@@ -30,11 +31,15 @@ public class SearchCommand implements Command{
             ArrayList<Album> albumList = FindAlbumsBySearchRequestService.find(searchRequest);
             ArrayList<Author> authorList = FIndAuthorsBySearchRequestService.find(searchRequest);
             ArrayList<Song> songList = FindSongsBySearchRequestService.find(searchRequest);
-            request.setAttribute(RequestParameter.MESSAGE, "Songs : " + songList.size() + ", authors : " + authorList.size() + ", albums : " + albumList.size());
-            request.setAttribute(RequestParameter.ALL_SONGS, songList);
-            request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
-            request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
-            page = JspPageName.USER_SEARCH_RESULT;
+            if(albumList.isEmpty() && authorList.isEmpty() && songList.isEmpty()){
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.NOT_FOUND);
+                page = JspPageName.USER_SEARCH_RESULT;
+            }else {
+                request.setAttribute(RequestParameter.ALL_SONGS, songList);
+                request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
+                request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
+                page = JspPageName.USER_SEARCH_RESULT;
+            }
         } catch (ServiceException e) {
             throw new CommandException("Search command exception", e);
         }

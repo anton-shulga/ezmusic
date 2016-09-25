@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.song;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.CommandException;
@@ -33,19 +34,19 @@ public class DeleteSongCommand implements Command {
                     DeleteSongService.delete(Long.parseLong(songId));
                     ArrayList<Song> songList = FindAllSongsService.find();
                     request.setAttribute(RequestParameter.ALL_SONGS, songList);
-                    request.setAttribute(RequestParameter.MESSAGE, "Successfully deleted song");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.DELETED);
                     page = JspPageName.ADMIN_ALL_SONGS;
                 }else {
                     ArrayList<Song> songList = FindAllSongsService.find();
                     request.setAttribute(RequestParameter.ALL_SONGS, songList);
-                    request.setAttribute(RequestParameter.MESSAGE, "You can't delete this song");
+                    request.setAttribute(RequestParameter.MESSAGE, MessageKey.CANT_DELETE_SONG);
                     page = JspPageName.ADMIN_ALL_SONGS;
                 }
             } catch (ServiceException e) {
                 throw new CommandException("Delete song command exception", e);
             }
         }else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_HOME;
         }
         return page;

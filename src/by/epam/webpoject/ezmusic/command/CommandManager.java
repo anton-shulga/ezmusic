@@ -19,13 +19,13 @@ public class CommandManager {
     private static HashMap<CommandName, Command> availableCommands = new HashMap<>();
     private static ArrayList<Command> adminCommands = new ArrayList<>();
     private static ArrayList<Command> userCommands = new ArrayList<>();
+
     static {
         availableCommands.put(CommandName.GO_HOME, new GoHomeCommand());
         availableCommands.put(CommandName.TO_LOGIN, new ToLoginCommand());
         availableCommands.put(CommandName.TO_REGISTER, new ToRegisterCommand());
         availableCommands.put(CommandName.LOGIN, new LoginCommand());
         availableCommands.put(CommandName.REGISTER, new RegisterUserCommand());
-        availableCommands.put(CommandName.UPDATE_USER, new UpdateUserCommand());
         availableCommands.put(CommandName.CHECK_LOGIN_AVAILABILITY, new CheckLoginAvailabilityCommand());
         availableCommands.put(CommandName.CHANGE_LOCALE, new ChangeLocaleCommand());
         availableCommands.put(CommandName.FIND_ALL_SONGS_ADMIN, new FindAllSongsCommand());
@@ -89,6 +89,7 @@ public class CommandManager {
         adminCommands.add(availableCommands.get(CommandName.FIND_ALBUM_FOR_CREATE));
         adminCommands.add(availableCommands.get(CommandName.FIND_ALBUM_FOR_UPDATE));
         adminCommands.add(availableCommands.get(CommandName.FIND_AUTHOR_ALBUMS_JSON));
+        adminCommands.add(availableCommands.get(CommandName.SEARCH));
 
         userCommands.add(availableCommands.get(CommandName.HOME_USER));
         userCommands.add(availableCommands.get(CommandName.FIND_ALL_SONGS_USER));
@@ -103,20 +104,21 @@ public class CommandManager {
         userCommands.add(availableCommands.get(CommandName.FIND_ALBUM_USER));
         userCommands.add(availableCommands.get(CommandName.FIND_SONG_USER));
         userCommands.add(availableCommands.get(CommandName.FIND_AUTHOR_USER));
+        userCommands.add(availableCommands.get(CommandName.SEARCH));
     }
 
-    public static boolean isAdminCommand(Command command){
-        for (Command adminCommand : adminCommands){
-            if(adminCommand.getClass() == command.getClass()){
+    public static boolean isAdminCommand(Command command) {
+        for (Command adminCommand : adminCommands) {
+            if (adminCommand.getClass() == command.getClass()) {
                 return true;
             }
         }
-       return false;
+        return false;
     }
 
-    public static boolean isUserCommand(Command command){
-        for (Command userCommand : userCommands){
-            if(userCommand.getClass() == command.getClass()){
+    public static boolean isUserCommand(Command command) {
+        for (Command userCommand : userCommands) {
+            if (userCommand.getClass() == command.getClass()) {
                 return true;
             }
         }
@@ -124,15 +126,15 @@ public class CommandManager {
     }
 
     public static Command getCommand(String commandName) throws CommandException {
-        if(commandName != null) {
+        if (commandName != null) {
             if (!commandName.isEmpty()) {
                 try {
                     CommandName name = CommandName.valueOf(commandName.toUpperCase());
                     return availableCommands.get(name);
-                }catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     throw new CommandException("Invalid command", e);
                 }
             } else throw new CommandException("Invalid command");
-        }else return availableCommands.get(CommandName.GO_HOME);
+        } else return availableCommands.get(CommandName.GO_HOME);
     }
 }

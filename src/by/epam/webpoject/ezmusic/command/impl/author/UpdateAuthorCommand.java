@@ -61,14 +61,14 @@ public class UpdateAuthorCommand implements Command {
                 UpdateAuthorService.update(author, ParameterParser.parseLongArray(albumIds), ParameterParser.parseLongArray(songIds));
 
                 ArrayList<Author> authorList = FindAllAuthorsService.find();
-                request.setAttribute(RequestParameter.MESSAGE, "Successfully updated author");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.UPDATED);
                 request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
                 page = JspPageName.ADMIN_ALL_AUTHORS;
             } catch (ServiceException e) {
                 throw new CommandException("Update author command exception", e);
             }
         } else {
-            request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong. Check the input data");
+            request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_EDIT_AUTHOR;
         }
 

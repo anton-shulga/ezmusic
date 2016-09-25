@@ -1,6 +1,7 @@
 package by.epam.webpoject.ezmusic.command.impl.user;
 
 import by.epam.webpoject.ezmusic.command.Command;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
@@ -26,9 +27,9 @@ public class CheckLoginAvailabilityCommand implements Command {
             try {
                 boolean isLoginExist = CheckLoginAvailabilityService.isLoginExist(login);
                 if (isLoginExist) {
-                    output = "Login " + login + " is already exist.";
+                    output =  MessageKey.LOGIN + login + MessageKey.EXIST;
                 } else {
-                    output = "Login " + login + " is available.";
+                    output = MessageKey.LOGIN + login + MessageKey.AVAILABLE;
                 }
             } catch (ServiceException e) {
                 throw new CommandException(e);

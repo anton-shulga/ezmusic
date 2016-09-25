@@ -2,6 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.album;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
+import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
@@ -33,7 +34,7 @@ public class FindAlbumForCreateCommand implements Command {
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 page = JspPageName.ADMIN_EDIT_ALBUM;
             }else {
-                request.setAttribute(RequestParameter.MESSAGE, "Oops! Something is wrong");
+                request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
             }
         } catch (ServiceException e) {
             throw new CommandException("Find album for create command exception", e);
