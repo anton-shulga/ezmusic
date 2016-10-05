@@ -19,10 +19,10 @@ public class FindAllSongsService {
 
         ArrayList<Song> allSongs = null;
 
-        SongDAO dao = (SongDAO) DAOFactory.createSongDAO();
+        SongDAO songDAO = (SongDAO) DAOFactory.createSongDAO();
 
         try {
-            allSongs = dao.findAll();
+            allSongs = songDAO.findAll();
 
             for(Song song : allSongs){
                 song.setAuthorList(FindAuthorsBySongIdService.find(song.getSongId()));

@@ -16,27 +16,27 @@ import java.util.Date;
 public class UpdateSongService {
     public static void update(Song instance) throws ServiceException {
 
-        SongDAO dao = (SongDAO) DAOFactory.createSongDAO();
+        SongDAO songDAO = (SongDAO) DAOFactory.createSongDAO();
 
         try {
             Date javaDate = new Date();
             instance.setPublicationDate(new java.sql.Date(javaDate.getTime()));
 
-            dao.update(instance);
+            songDAO.update(instance);
 
-            dao.deleteSongAlbum(instance.getSongId());
+            songDAO.deleteSongAlbum(instance.getSongId());
 
             if(instance.getAlbumList() != null) {
                 for (Album album : instance.getAlbumList()) {
-                    dao.createSongAlbum(instance.getSongId(), album.getAlbumId());
+                    songDAO.createSongAlbum(instance.getSongId(), album.getAlbumId());
                 }
             }
 
-            dao.deleteSongAuthor(instance.getSongId());
+            songDAO.deleteSongAuthor(instance.getSongId());
 
             if(instance.getAuthorList() != null) {
                 for (Author author : instance.getAuthorList()) {
-                    dao.createSongAuthor(instance.getSongId(), author.getAuthorId());
+                    songDAO.createSongAuthor(instance.getSongId(), author.getAuthorId());
                 }
             }
 

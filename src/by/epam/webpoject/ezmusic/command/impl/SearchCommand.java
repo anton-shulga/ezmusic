@@ -33,12 +33,12 @@ public class SearchCommand implements Command{
             ArrayList<Song> songList = FindSongsBySearchRequestService.find(searchRequest);
             if(albumList.isEmpty() && authorList.isEmpty() && songList.isEmpty()){
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.NOT_FOUND);
-                page = JspPageName.USER_SEARCH_RESULT;
+                page = JspPageName.SEARCH_RESULT;
             }else {
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
                 request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
-                page = JspPageName.USER_SEARCH_RESULT;
+                page = JspPageName.SEARCH_RESULT;
             }
         } catch (ServiceException e) {
             throw new CommandException("Search command exception", e);

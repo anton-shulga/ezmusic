@@ -20,7 +20,7 @@ public class FindAllOrdersByUserIdService {
         ArrayList<Order> orderList = null;
         try {
             orderList = orderDAO.findByUserId(userId);
-            for(Order order : orderList){
+            for (Order order : orderList) {
                 order.setSongList(FindSongsByOrderIdService.find(order.getOrderId()));
             }
         } catch (DAOException e) {

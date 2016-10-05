@@ -4,7 +4,7 @@ import by.epam.webpoject.ezmusic.connection.DBManager;
 import by.epam.webpoject.ezmusic.connection.DBParameter;
 import by.epam.webpoject.ezmusic.dao.AbstractDAO;
 import by.epam.webpoject.ezmusic.dao.impl.*;
-import by.epam.webpoject.ezmusic.enumeration.type.DBType;
+import by.epam.webpoject.ezmusic.enumeration.DBType;
 
 /**
  * Created by Антон on 21.07.2016.

@@ -20,10 +20,10 @@ public class PayForOrderService {
         double userBalance = user.getBalance();
         double cartTotalCost = cart.getTotalCost();
 
-        if(userBalance < cartTotalCost){
+        if (userBalance < cartTotalCost) {
             return false;
-        }else {
-            user.setBalance(userBalance-cartTotalCost);
+        } else {
+            user.setBalance(userBalance - cartTotalCost);
             cart.setPaid(true);
             try {
                 userDAO.update(user);

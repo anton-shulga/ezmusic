@@ -12,10 +12,10 @@ import by.epam.webpoject.ezmusic.exception.ServiceException;
 public class CreateCommentService {
     public static Long create(Comment instance) throws ServiceException {
 
-        CommentDAO dao = (CommentDAO) DAOFactory.createCommentDAO();
+        CommentDAO commentDAO = (CommentDAO) DAOFactory.createCommentDAO();
 
         try {
-            return dao.create(instance);
+            return commentDAO.create(instance);
         } catch (DAOException e) {
             throw new ServiceException("Create comment service exception", e);
         }

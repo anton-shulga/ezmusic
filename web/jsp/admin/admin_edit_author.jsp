@@ -32,7 +32,7 @@
                 var selectedAlbums = $('#id-albums').val();
                 $.ajax({
                     url: 'jsoncontroller',
-                    type: 'post',
+                    type: 'get',
                     dataType: 'json',
                     data: {selected_albums: selectedAlbums, command: "find_album_songs_json"},
                     success: function (json) {

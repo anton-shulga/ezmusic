@@ -37,12 +37,24 @@
 </head>
 <body>
 <footer class="page-footer black">
-    <span class="center-align white-text"><fmt:message key="footer.copyright"/> </span>
-    <select id="id-locale" name="locale" class="right white-text">
-        <option value="" disabled selected><fmt:message key="option.language"/></option>
-        <option value="ru_RU">Русский</option>
-        <option value="default">English</option>
-    </select>
+    <div class="container">
+        <div class="row">
+            <div class="col s2 offset-s5">
+                <select id="id-locale" name="locale" class="center white-text">
+                    <option value="" disabled selected><fmt:message key="option.language"/></option>
+                    <option value="ru_RU">Русский</option>
+                    <option value="default">English</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright black">
+        <div class="white-text center-align">
+            <span class="white-text "><fmt:message key="footer.copyright"/></span>
+        </div>
+
+    </div>
 </footer>
+
 </body>
 </html>

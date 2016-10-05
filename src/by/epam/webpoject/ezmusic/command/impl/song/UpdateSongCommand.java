@@ -7,7 +7,7 @@ import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
-import by.epam.webpoject.ezmusic.parser.ParameterParser;
+import by.epam.webpoject.ezmusic.util.ParameterParser;
 import by.epam.webpoject.ezmusic.service.song.FindAllSongsService;
 import by.epam.webpoject.ezmusic.service.song.UpdateSongService;
 import by.epam.webpoject.ezmusic.validator.SongParametersValidator;

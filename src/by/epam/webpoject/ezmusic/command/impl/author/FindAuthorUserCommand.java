@@ -8,7 +8,7 @@ import by.epam.webpoject.ezmusic.entity.Author;
 import by.epam.webpoject.ezmusic.entity.Song;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
-import by.epam.webpoject.ezmusic.parser.ParameterParser;
+import by.epam.webpoject.ezmusic.util.ParameterParser;
 import by.epam.webpoject.ezmusic.service.album.FindAlbumsByAuthorIdService;
 import by.epam.webpoject.ezmusic.service.author.FindAuthorByIdService;
 import by.epam.webpoject.ezmusic.service.song.FindSongsByAuthorIdService;
@@ -28,12 +28,12 @@ public class FindAuthorUserCommand implements Command {
         String authorId = request.getParameter(RequestParameter.AUTHOR_ID);
 
         boolean isValidRequest = AuthorParametersValidator.validateFindParameters(authorId);
-        if(isValidRequest){
+        if (isValidRequest) {
             try {
                 Author author = FindAuthorByIdService.find(ParameterParser.parseLong(authorId));
                 ArrayList<Album> authorAlbums = null;
                 ArrayList<Song> authorSongs = null;
-                if(author != null){
+                if (author != null) {
                     authorAlbums = FindAlbumsByAuthorIdService.find(ParameterParser.parseLong(authorId));
                     authorSongs = FindSongsByAuthorIdService.find(ParameterParser.parseLong(authorId));
                 }

@@ -38,7 +38,7 @@ public class LoginCommand implements Command {
                         page = JspPageName.ADMIN_HOME;
                     }else {
                         Order cart = FindCartByUserIdService.find(user.getUserId());
-                        request.getSession(true).setAttribute(RequestParameter.CART, cart);
+                        request.getSession().setAttribute(RequestParameter.CART, cart);
                         request.getSession().setAttribute(RequestParameter.USER, user);
                         page = JspPageName.USER_HOME;
                     }

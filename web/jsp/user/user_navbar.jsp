@@ -31,7 +31,7 @@
                 },
                 success: function (data) {
                     var $balance = $('#id-balance');
-                    $balance.text(data + " BYR");
+                    $balance.text(data);
                 }
             });
         }
@@ -41,15 +41,16 @@
 <ul id="slide-out" class="side-nav">
     <li>
         <div class="userView">
-            <a href="#"><img src="${sessionScope.user.photoPath}" alt="" class="circle"/></a>
-            <span class="black-text">${sessionScope.login}</span>
-            <br>
-            <span id="id-balance" class="black-text">Balance: ${sessionScope.user.balance}</span>
+            <div class="black-text center-align">
+                <span class="black-text center">${sessionScope.user.login}</span>
+                <br>
+                <span id="id-balance" class="black-text">${sessionScope.user.balance}</span>
+            </div>
             <div class="row">
-                <div class="input-field col s6 required">
+                <div class="input-field col s12 required">
                     <input id="id-money-amount" name=type="text" required>
                 </div>
-                <button class="btn col s6\" onclick="addFunds()">
+                <button class="btn col s12" onclick="addFunds()">
                     <i class="material-icons">add</i>
                 </button>
             </div>

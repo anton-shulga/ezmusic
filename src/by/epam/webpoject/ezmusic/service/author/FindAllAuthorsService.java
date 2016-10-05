@@ -14,10 +14,10 @@ import java.util.ArrayList;
 public class FindAllAuthorsService {
     public static ArrayList<Author> find() throws ServiceException {
 
-        AuthorDAO dao = (AuthorDAO) DAOFactory.createAuthorDAO();
+        AuthorDAO authorDAO = (AuthorDAO) DAOFactory.createAuthorDAO();
 
         try {
-            return dao.findAll();
+            return authorDAO.findAll();
         } catch (DAOException e) {
             throw new ServiceException("Find all authors service exception", e);
         }

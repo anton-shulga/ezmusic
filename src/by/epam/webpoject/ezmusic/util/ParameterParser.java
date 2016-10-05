@@ -1,4 +1,4 @@
-package by.epam.webpoject.ezmusic.parser;
+package by.epam.webpoject.ezmusic.util;
 
 /**
  * Created by Антон on 17.08.2016.

@@ -34,7 +34,7 @@ public class FindCartByUserIdService {
             cart.setSongList(songList);
 
             double totalCost = 0;
-            for(Song song : cart.getSongList()){
+            for (Song song : cart.getSongList()) {
                 totalCost += song.getCost();
             }
             cart.setTotalCost(totalCost);

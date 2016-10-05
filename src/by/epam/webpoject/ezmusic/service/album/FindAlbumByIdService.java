@@ -12,10 +12,10 @@ import by.epam.webpoject.ezmusic.exception.ServiceException;
 public class FindAlbumByIdService {
     public static Album find(Long albumId) throws ServiceException {
 
-        AlbumDAO dao = (AlbumDAO) DAOFactory.createAlbumDAO();
+        AlbumDAO albumDAO = (AlbumDAO) DAOFactory.createAlbumDAO();
 
         try {
-            return dao.find(albumId);
+            return albumDAO.find(albumId);
         } catch (DAOException e) {
             throw new ServiceException("Find album by id service exception", e);
         }

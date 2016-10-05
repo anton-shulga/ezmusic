@@ -53,7 +53,6 @@ public class ConnectionPool {
                 poolSize = DEFAULT_POOL_SIZE;
             }
 
-
             Class.forName(driverName);
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
             int createdConnectionNumber = 0;
@@ -67,6 +66,7 @@ public class ConnectionPool {
                     LOGGER.error("Create database connection error", e);
                 }
             }
+
             if(createdConnectionNumber <= DEFAULT_POOL_SIZE){
                 LOGGER.fatal("Database connection error");
                 throw new RuntimeException("Database connection error");

@@ -14,10 +14,10 @@ import java.util.ArrayList;
 public class FindAuthorsBySongIdService {
     public static ArrayList<Author> find(Long songId) throws ServiceException {
 
-        AuthorDAO dao = (AuthorDAO) DAOFactory.createAuthorDAO();
+        AuthorDAO authorDAO = (AuthorDAO) DAOFactory.createAuthorDAO();
 
         try {
-            return dao.findBySongId(songId);
+            return authorDAO.findBySongId(songId);
         } catch (DAOException e) {
             throw new ServiceException("Find authors by song id service exception", e);
         }

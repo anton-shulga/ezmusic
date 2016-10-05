@@ -30,7 +30,7 @@
                 <div class="col s8 offset-s2">
                     <div class="card z-depth-4">
                         <div class="card-content">
-                            <span class="card-title"><fmt:message key="title.all_songs"/> </span>
+                            <span class="card-title"><fmt:message key="title.all_songs"/></span>
                             <c:if test="${not empty requestScope.all_songs}">
                                 <ul class="collection">
                                     <c:forEach items="${requestScope.all_songs}" var="song">

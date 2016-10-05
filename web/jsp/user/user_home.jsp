@@ -30,7 +30,9 @@
 </head>
 <body>
 <c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
-<c:import url="${pageContext.request.contextPath}/jsp/user/user_navbar.jsp"/>
+<c:if test="${not empty sessionScope.user}">
+    <c:import url="${pageContext.request.contextPath}/jsp/user/user_navbar.jsp"/>
+</c:if>
 <main>
     <div id="index-banner" class="parallax-container">
         <div class="section no-pad-bot">
@@ -74,7 +76,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </main>

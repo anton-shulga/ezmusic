@@ -21,7 +21,14 @@
 <body>
 <ul id="slide-out" class="side-nav">
     <li>
-        <ctg:hello user="${sessionScope.user}"/>
+        <div class="userView">
+            <div class="black-text center-align">
+                <span class="black-text center">${sessionScope.user.login}</span>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="divider"></div>
     </li>
     <li>
         <form name="homeForm" action="${pageContext.request.contextPath}/controller" method="POST">

@@ -12,10 +12,10 @@ import by.epam.webpoject.ezmusic.exception.ServiceException;
 public class FindAuthorByIdService {
     public static Author find(Long authorId) throws ServiceException {
 
-        AuthorDAO dao = (AuthorDAO) DAOFactory.createAuthorDAO();
+        AuthorDAO authorDAO = (AuthorDAO) DAOFactory.createAuthorDAO();
 
         try {
-            return dao.find(authorId);
+            return authorDAO.find(authorId);
         } catch (DAOException e) {
             throw new ServiceException("Find author by id service exception", e);
         }

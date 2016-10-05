@@ -89,7 +89,6 @@ public class CommandManager {
         adminCommands.add(availableCommands.get(CommandName.FIND_ALBUM_FOR_CREATE));
         adminCommands.add(availableCommands.get(CommandName.FIND_ALBUM_FOR_UPDATE));
         adminCommands.add(availableCommands.get(CommandName.FIND_AUTHOR_ALBUMS_JSON));
-        adminCommands.add(availableCommands.get(CommandName.SEARCH));
 
         userCommands.add(availableCommands.get(CommandName.HOME_USER));
         userCommands.add(availableCommands.get(CommandName.FIND_ALL_SONGS_USER));
@@ -104,7 +103,6 @@ public class CommandManager {
         userCommands.add(availableCommands.get(CommandName.FIND_ALBUM_USER));
         userCommands.add(availableCommands.get(CommandName.FIND_SONG_USER));
         userCommands.add(availableCommands.get(CommandName.FIND_AUTHOR_USER));
-        userCommands.add(availableCommands.get(CommandName.SEARCH));
     }
 
     public static boolean isAdminCommand(Command command) {

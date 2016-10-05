@@ -12,10 +12,10 @@ import by.epam.webpoject.ezmusic.exception.ServiceException;
 public class UpdateUserService {
     public static void update(User instance) throws ServiceException {
 
-        UserDAO dao = (UserDAO) DAOFactory.createUserDAO();
+        UserDAO userDAO = (UserDAO) DAOFactory.createUserDAO();
 
         try {
-            dao.update(instance);
+            userDAO.update(instance);
         } catch (DAOException e) {
             throw new ServiceException("Update user service exception", e);
         }

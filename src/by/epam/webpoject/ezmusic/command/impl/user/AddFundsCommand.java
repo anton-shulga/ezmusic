@@ -5,7 +5,7 @@ import by.epam.webpoject.ezmusic.constant.RequestParameter;
 import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
-import by.epam.webpoject.ezmusic.parser.ParameterParser;
+import by.epam.webpoject.ezmusic.util.ParameterParser;
 import by.epam.webpoject.ezmusic.service.user.UpdateUserService;
 import by.epam.webpoject.ezmusic.validator.UserParametersValidator;
 import com.google.gson.Gson;

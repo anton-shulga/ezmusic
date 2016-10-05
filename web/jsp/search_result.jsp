@@ -14,6 +14,7 @@
 <html>
 <head>
     <title><fmt:message key="title.search_result"/></title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css"
           media="screen,projection"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -41,12 +42,17 @@
 </head>
 <body>
 <c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
-<c:if test="${sessionScope.user.isAdmin}">
-    <c:import url="${pageContext.request.contextPath}/jsp/admin/admin_navbar.jsp"/>
-</c:if>
-<c:if test="${not sessionScope.user.isAdmin}">
-    <c:import url="${pageContext.request.contextPath}/jsp/user/user_navbar.jsp"/>
-</c:if>
+<c:choose>
+    <c:when test="${not empty sessionScope.user}">
+        <c:if test="${sessionScope.user.isAdmin}">
+            <c:import url="${pageContext.request.contextPath}/jsp/admin/admin_navbar.jsp"/>
+        </c:if>
+        <c:if test="${not sessionScope.user.isAdmin}">
+            <c:import url="${pageContext.request.contextPath}/jsp/user/user_navbar.jsp"/>
+        </c:if>
+    </c:when>
+</c:choose>
+
 <main>
     <div class="wrapper">
         <div class="container">

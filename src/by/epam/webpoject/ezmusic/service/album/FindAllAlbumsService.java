@@ -13,9 +13,9 @@ import java.util.ArrayList;
  */
 public class FindAllAlbumsService {
     public static ArrayList<Album> find() throws ServiceException {
-        AlbumDAO dao = (AlbumDAO) DAOFactory.createAlbumDAO();
+        AlbumDAO albumDAO = (AlbumDAO) DAOFactory.createAlbumDAO();
         try {
-            return dao.findAll();
+            return albumDAO.findAll();
         } catch (DAOException e) {
             throw new ServiceException("Find all albums service exception", e);
         }

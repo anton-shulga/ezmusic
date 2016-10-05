@@ -12,24 +12,24 @@ import by.epam.webpoject.ezmusic.exception.ServiceException;
 public class UpdateAuthorService {
     public static void update(Author instance, Long[] albumIds, Long[] songIds) throws ServiceException {
 
-        AuthorDAO dao = (AuthorDAO) DAOFactory.createAuthorDAO();
+        AuthorDAO authorDAO = (AuthorDAO) DAOFactory.createAuthorDAO();
 
         try {
-            dao.update(instance);
+            authorDAO.update(instance);
 
-            dao.deleteAuthorAlbum(instance.getAuthorId());
+            authorDAO.deleteAuthorAlbum(instance.getAuthorId());
 
             if(albumIds != null){
                 for(Long albumId : albumIds){
-                    dao.createAuthorAlbum(instance.getAuthorId(), albumId);
+                    authorDAO.createAuthorAlbum(instance.getAuthorId(), albumId);
                 }
             }
 
-            dao.deleteAuthorSong(instance.getAuthorId());
+            authorDAO.deleteAuthorSong(instance.getAuthorId());
 
             if(songIds != null){
                 for(Long songId : songIds){
-                    dao.createAuthorSong(instance.getAuthorId(), songId);
+                    authorDAO.createAuthorSong(instance.getAuthorId(), songId);
                 }
             }
         } catch (DAOException e) {

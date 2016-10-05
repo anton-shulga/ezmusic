@@ -16,15 +16,15 @@ import java.util.ArrayList;
 public class FindCommentsBySongIdService {
     public static ArrayList<Comment> find(Long songId) throws ServiceException {
 
-        CommentDAO dao = (CommentDAO) DAOFactory.createCommentDAO();
+        CommentDAO commentDAO = (CommentDAO) DAOFactory.createCommentDAO();
         UserDAO userDAO = (UserDAO) DAOFactory.createUserDAO();
 
         ArrayList<Comment> commentList = null;
 
         try {
-            commentList =  dao.findBySongId(songId);
+            commentList = commentDAO.findBySongId(songId);
 
-            for (Comment comment : commentList){
+            for (Comment comment : commentList) {
                 User user = userDAO.find(comment.getUser().getUserId());
                 comment.setUser(user);
             }

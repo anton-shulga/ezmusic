@@ -79,18 +79,18 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="input-field col s12 required">
+                                    <div class="input-field col s9 required">
                                         <i class="material-icons prefix">lock</i>
                                         <input id="id-user-password" name="user_password" type="password" required
                                                minlength="3">
                                         <label for="id-user-password" class=""><fmt:message
                                                 key="label.password"/></label>
+                                    </div>
 
-                                        <div class="right">
-                                            <input id="id-show-password" type="checkbox"
-                                                   onchange="document.getElementById('id-user-password').type = this.checked ? 'text' : 'password'"/>
-                                            <label for="id-show-password">Show password</label>
-                                        </div>
+                                    <div class="col s3 show-password">
+                                        <input id="id-show-password" type="checkbox"
+                                               onchange="document.getElementById('id-user-password').type = this.checked ? 'text' : 'password'"/>
+                                        <label for="id-show-password"><fmt:message key="title.show_password"/></label>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -119,7 +119,8 @@
                                 <div class="card-action">
                                     <div class="row">
                                         <button id="id-submit" class="col s12 waves-effect waves-light btn black"
-                                                type="submit"><fmt:message key="button.sign_up"/></button>
+                                                type="submit"><fmt:message key="button.sign_up"/>
+                                        </button>
                                     </div>
                                 </div>
                             </form>

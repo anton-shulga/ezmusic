@@ -16,8 +16,8 @@ public class LogoutCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
         HttpSession session = request.getSession(false);
-        if (session != null) {
-           session.removeAttribute(RequestParameter.USER);
+        if (session != null && session.getAttribute(RequestParameter.USER) != null) {
+           session.invalidate();
             page = JspPageName.INDEX;
         } else {
             page = JspPageName.INDEX;

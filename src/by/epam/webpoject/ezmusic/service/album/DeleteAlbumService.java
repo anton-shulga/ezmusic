@@ -11,10 +11,10 @@ import by.epam.webpoject.ezmusic.exception.ServiceException;
 public class DeleteAlbumService {
     public static void delete(Long albumId) throws ServiceException {
 
-        AlbumDAO dao = (AlbumDAO) DAOFactory.createAlbumDAO();
+        AlbumDAO albumDAO = (AlbumDAO) DAOFactory.createAlbumDAO();
 
         try {
-            dao.delete(albumId);
+            albumDAO.delete(albumId);
         } catch (DAOException e) {
             throw new ServiceException("Delete album service exception", e);
         }

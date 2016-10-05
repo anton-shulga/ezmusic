@@ -19,7 +19,7 @@ public class AddSongToOrderService {
         try {
             song = FindSongByIdService.find(songId);
 
-            if(!cart.getSongList().contains(song)){
+            if (!cart.getSongList().contains(song)) {
                 songDAO.createSongOrder(songId, cart.getOrderId());
             }
         } catch (DAOException e) {

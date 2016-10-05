@@ -33,7 +33,7 @@
                 var selectedAuthors = $('#id-authors').val();
                 $.ajax({
                     url: 'jsoncontroller',
-                    type: 'post',
+                    type: 'get',
                     dataType: 'json',
                     data: {selected_authors: selectedAuthors, command: "find_author_songs_json"},
                     success: function (json) {

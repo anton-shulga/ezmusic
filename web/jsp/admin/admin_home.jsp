@@ -29,59 +29,60 @@
 </head>
 <body>
 <c:import url="${pageContext.request.contextPath}/jsp/header.jsp"/>
-<c:import url="${pageContext.request.contextPath}/jsp/admin/admin_navbar.jsp"/>
+<c:if test="${sessionScope.user.isAdmin}">
+    <c:import url="${pageContext.request.contextPath}/jsp/admin/admin_navbar.jsp"/>
+</c:if>
 <main>
-    <main>
-        <div id="index-banner" class="parallax-container">
-            <div class="section no-pad-bot">
-                <div class="container">
-                    <br><br>
-                    <h1 class="header center teal-text black-text"><fmt:message key="logo"/></h1>
-                    <div class="row center">
-                        <h5 class="header col s12 black-text"><fmt:message key="slogan"/></h5>
-                    </div>
-                    <br><br>
+    <div id="index-banner" class="parallax-container">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <br><br>
+                <h1 class="header center teal-text black-text"><fmt:message key="logo"/></h1>
+                <div class="row center">
+                    <h5 class="header col s12 black-text"><fmt:message key="slogan"/></h5>
                 </div>
+                <br><br>
             </div>
-            <div class="parallax"><img src="${pageContext.request.contextPath}/img/paralax-user.jpg" alt="guitar"></div>
         </div>
+        <div class="parallax"><img src="${pageContext.request.contextPath}/img/paralax-user.jpg" alt="guitar"></div>
+    </div>
 
-        <div class="container">
-            <div class="section">
-                <div class="row">
-                    <div class="col s12 m4">
-                        <div class="icon-block">
-                            <h2 class="center black-text"><i class="material-icons small">playlist_add</i></h2>
-                            <h5 class="center"><fmt:message key="admin.home.add.short"/></h5>
-                            <p class="light"><fmt:message key="admin.home.add"/></p>
-                        </div>
-                    </div>
-
-                    <div class="col s12 m4">
-                        <div class="icon-block">
-                            <h2 class="center black-text"><i class="material-icons small">edit</i></h2>
-                            <h5 class="center"><fmt:message key="admin.home.edit.short"/></h5>
-                            <p class="light"><fmt:message key="admin.home.edit"/></p>
-                        </div>
-                    </div>
-
-                    <div class="col s12 m4">
-                        <div class="icon-block">
-                            <h2 class="center black-text"><i class="material-icons small">delete</i></h2>
-                            <h5 class="center"><fmt:message key="admin.home.delete.short"/></h5>
-
-                            <p class="light"><fmt:message key="admin.home.delete"/></p>
-                        </div>
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <h2 class="center black-text"><i class="material-icons small">playlist_add</i></h2>
+                        <h5 class="center"><fmt:message key="admin.home.add.short"/></h5>
+                        <p class="light"><fmt:message key="admin.home.add"/></p>
                     </div>
                 </div>
 
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <h2 class="center black-text"><i class="material-icons small">edit</i></h2>
+                        <h5 class="center"><fmt:message key="admin.home.edit.short"/></h5>
+                        <p class="light"><fmt:message key="admin.home.edit"/></p>
+                    </div>
+                </div>
+
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <h2 class="center black-text"><i class="material-icons small">delete</i></h2>
+                        <h5 class="center"><fmt:message key="admin.home.delete.short"/></h5>
+
+                        <p class="light"><fmt:message key="admin.home.delete"/></p>
+                    </div>
+                </div>
             </div>
+
         </div>
-    </main>
-    <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
-    <c:if test="${requestScope.message != null}">
-        <c:set var="message"><fmt:message key="${requestScope.message}"/></c:set>
-        <ctg:message message="${message}"/>
-    </c:if>
+    </div>
+</main>
+<c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+<c:if test="${requestScope.message != null}">
+    <c:set var="message"><fmt:message key="${requestScope.message}"/></c:set>
+    <ctg:message message="${message}"/>
+</c:if>
 </body>
 </html>

@@ -18,7 +18,28 @@
 <body>
 
 <nav class="nav-wrapper black">
-    <a href="#" class="brand-logo center"><fmt:message key="logo"/></a>
+    <c:choose>
+        <c:when test="${not empty sessionScope.user}">
+            <c:if test="${sessionScope.user.isAdmin}">
+                <form name="adminHome" action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="home_admin">
+                    <a class="brand-logo center" href="javascript:document.adminHome.submit()"><fmt:message key="logo"/></a>
+                </form>
+            </c:if>
+            <c:if test="${not sessionScope.user.isAdmin}">
+                <form name="userHome" action="${pageContext.request.contextPath}/controller" method="POST">
+                    <input type="hidden" name="command" value="home_user">
+                    <a class="brand-logo center" href="javascript:document.userHome.submit()"><fmt:message key="logo"/></a>
+                </form>
+            </c:if>
+        </c:when>
+        <c:otherwise>
+            <form name="home" action="${pageContext.request.contextPath}/controller" method="POST">
+                <input type="hidden" name="command" value="go_home">
+                <a class="brand-logo center" href="javascript:document.home.submit()"><fmt:message key="logo"/></a>
+            </form>
+        </c:otherwise>
+    </c:choose>
     <ul class="right hide-on-med-and-down">
         <li>
             <form action="${pageContext.request.contextPath}/controller" method="GET">
@@ -33,16 +54,16 @@
             <c:if test="${empty sessionScope.user }">
                 <form name="toLoginForm" action="${pageContext.request.contextPath}/controller" method="POST">
                     <input type="hidden" name="command" value="to_login">
-                    <a href="javascript:document.toLoginForm.submit()"><img
-                            src="${pageContext.request.contextPath}/img/logo/login-logo.png"></a>
+                        <a class="login-logo" href="javascript:document.toLoginForm.submit()"><i class="material-icons white-text small">power_settings_new</i>
+                        </a>
                 </form>
-
             </c:if>
             <c:if test="${not empty sessionScope.user }">
                 <form name="logoutForm" action="${pageContext.request.contextPath}/controller" method="POST">
                     <input type="hidden" name="command" value="logout">
                     <a href="javascript:document.logoutForm.submit()"><img
-                            src="${pageContext.request.contextPath}/img/logo/login-logo.png"></a>
+                        src="${pageContext.request.contextPath}/img/logo/login-logo.png">
+                    </a>
                 </form>
             </c:if>
         </li>

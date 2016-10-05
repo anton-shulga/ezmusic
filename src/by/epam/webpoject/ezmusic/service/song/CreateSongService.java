@@ -18,22 +18,22 @@ public class CreateSongService {
 
         Long generatedId = null;
 
-        SongDAO dao = (SongDAO) DAOFactory.createSongDAO();
+        SongDAO songDAO = (SongDAO) DAOFactory.createSongDAO();
 
         try {
             Date javaDate = new Date();
             instance.setPublicationDate(new java.sql.Date(javaDate.getTime()));
 
-            generatedId = dao.create(instance);
+            generatedId = songDAO.create(instance);
 
             if(instance.getAlbumList() != null) {
                 for (Album album : instance.getAlbumList()) {
-                    dao.createSongAlbum(generatedId, album.getAlbumId());
+                    songDAO.createSongAlbum(generatedId, album.getAlbumId());
                 }
             }
             if(instance.getAuthorList() != null) {
                 for (Author author : instance.getAuthorList()   ) {
-                    dao.createSongAuthor(generatedId, author.getAuthorId());
+                    songDAO.createSongAuthor(generatedId, author.getAuthorId());
                 }
             }
         } catch (DAOException e) {

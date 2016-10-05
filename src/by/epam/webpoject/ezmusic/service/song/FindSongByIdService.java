@@ -14,10 +14,10 @@ import by.epam.webpoject.ezmusic.service.comment.FindCommentsBySongIdService;
  */
 public class FindSongByIdService  {
     public static Song find(Long songId) throws ServiceException {
-        SongDAO songDao = (SongDAO) DAOFactory.createSongDAO();
+        SongDAO songDAO = (SongDAO) DAOFactory.createSongDAO();
         Song song = null;
         try {
-            song = songDao.find(songId);
+            song = songDAO.find(songId);
             song.setAlbumList(FindAlbumsBySongIdService.find(songId));
             song.setAuthorList(FindAuthorsBySongIdService.find(songId));
             song.setCommentList(FindCommentsBySongIdService.find(songId));
