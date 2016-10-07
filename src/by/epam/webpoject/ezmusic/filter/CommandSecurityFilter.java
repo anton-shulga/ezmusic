@@ -27,7 +27,7 @@ public class CommandSecurityFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpSession session = ((HttpServletRequest) req).getSession(false);
         User user = null;
-        if(session != null) {
+        if (session != null) {
             user = (User) session.getAttribute(RequestParameter.USER);
         }
         Command command = null;

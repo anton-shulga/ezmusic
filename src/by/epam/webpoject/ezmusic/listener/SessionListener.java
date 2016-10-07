@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSessionListener;
 public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-            httpSessionEvent.getSession().setAttribute(RequestParameter.LOCALE, Locale.DEFAULT);
+        httpSessionEvent.getSession().setAttribute(RequestParameter.LOCALE, Locale.DEFAULT);
     }
 
     @Override

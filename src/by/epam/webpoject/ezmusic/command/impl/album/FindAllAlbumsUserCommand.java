@@ -20,17 +20,18 @@ public class FindAllAlbumsUserCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
 
         String page = null;
+
         ArrayList<Album> albumList = null;
 
         try {
             albumList = FindAllAlbumsService.find();
             if (albumList != null) {
-                if(albumList.isEmpty()){
+                if (albumList.isEmpty()) {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.NOT_FOUND);
                 }
                 request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
                 page = JspPageName.USER_ALL_ALBUMS;
-            }else {
+            } else {
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                 page = JspPageName.USER_HOME;
             }

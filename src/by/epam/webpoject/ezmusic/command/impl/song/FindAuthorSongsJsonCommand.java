@@ -27,13 +27,13 @@ public class FindAuthorSongsJsonCommand implements Command {
         String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS + "[]");
 
         boolean isValidRequest = SongParametersValidator.validateFindJsonParameters(authorIds);
-        if(isValidRequest) {
+        if (isValidRequest) {
             authorSongs = new HashSet<>();
 
             try {
-                if(authorIds == null){
+                if (authorIds == null) {
                     authorSongs.addAll(FindAllSongsService.find());
-                }else {
+                } else {
                     Long[] longAuthorIds = ParameterParser.parseLongArray(authorIds);
                     for (Long authorId : longAuthorIds) {
                         authorSongs.addAll(FindSongsByAuthorIdService.find(authorId));

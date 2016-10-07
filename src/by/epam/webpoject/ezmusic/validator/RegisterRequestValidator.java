@@ -4,7 +4,7 @@ package by.epam.webpoject.ezmusic.validator;
  * Created by Антон on 02.08.2016.
  */
 public class RegisterRequestValidator {
-    public static boolean validate(String login, String password, String username, String surname, String email, String phone){
-       return true;
+    public static boolean validate(String login, String password, String username, String surname, String email, String phone) {
+        return true;
     }
 }

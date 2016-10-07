@@ -13,32 +13,32 @@ public class SongParametersValidator {
                     Long.parseLong(authorId);
                 }
             }
-            if(albumIds != null){
+            if (albumIds != null) {
                 for (String albumId : albumIds) {
                     Long.parseLong(albumId);
                 }
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
-        if(name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             return false;
         }
-        if(year == null){
+        if (year == null) {
             return false;
-        }else {
-            try{
+        } else {
+            try {
                 Integer.parseInt(year);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
-        if(cost == null){
+        if (cost == null) {
             return false;
-        }else {
+        } else {
             try {
                 Double.parseDouble(cost);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
@@ -47,25 +47,25 @@ public class SongParametersValidator {
     }
 
     public static boolean validateDeleteParameters(String songId) {
-        if(songId != null){
+        if (songId != null) {
             try {
                 Long.parseLong(songId);
                 return true;
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
 
     public static boolean validateFindJsonParameters(String[] albumIds) {
-        if(albumIds != null){
-            try{
+        if (albumIds != null) {
+            try {
                 for (String albumId : albumIds) {
                     Long.parseLong(albumId);
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
@@ -73,25 +73,25 @@ public class SongParametersValidator {
     }
 
     public static boolean validateFindParameters(String songId) {
-        if(songId != null){
+        if (songId != null) {
             try {
                 Long.parseLong(songId);
                 return true;
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
 
-    public static boolean validateUpdateParameters(String[] albumIds, String[] authorIds, String songId, String name, String year,  String cost) {
-        if(songId == null){
+    public static boolean validateUpdateParameters(String[] albumIds, String[] authorIds, String songId, String name, String year, String cost) {
+        if (songId == null) {
             return false;
-        }else {
+        } else {
             try {
                 Long.parseLong(songId);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
@@ -101,32 +101,32 @@ public class SongParametersValidator {
                     Long.parseLong(authorId);
                 }
             }
-            if(albumIds != null){
+            if (albumIds != null) {
                 for (String albumId : albumIds) {
                     Long.parseLong(albumId);
                 }
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
-        if(name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             return false;
         }
-        if(year == null){
+        if (year == null) {
             return false;
-        }else {
-            try{
+        } else {
+            try {
                 Integer.parseInt(year);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
-        if(cost == null){
+        if (cost == null) {
             return false;
-        }else {
+        } else {
             try {
                 Double.parseDouble(cost);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
@@ -134,7 +134,7 @@ public class SongParametersValidator {
     }
 
     public static boolean validateDeleteFromCartParameters(String songId, Order cart) {
-        if(songId != null) {
+        if (songId != null) {
             try {
                 Long.parseLong(songId);
                 return true;
@@ -142,9 +142,9 @@ public class SongParametersValidator {
                 return false;
             }
         }
-        if(cart != null){
+        if (cart != null) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }

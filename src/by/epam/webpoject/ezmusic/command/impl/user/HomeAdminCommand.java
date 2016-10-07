@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by Антон on 29.08.2016.
  */
-public class HomeAdminCommand implements Command{
+public class HomeAdminCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         return JspPageName.ADMIN_HOME;

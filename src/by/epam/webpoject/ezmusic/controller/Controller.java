@@ -26,13 +26,13 @@ public class Controller extends HttpServlet {
         String commandName = req.getParameter(RequestParameter.COMMAND);
         try {
             Command command = CommandManager.getCommand(commandName);
-            if(command !=null) {
+            if (command != null) {
                 page = command.execute(req);
-            }else {
+            } else {
                 page = JspPageName.INDEX;
             }
         } catch (CommandException e) {
-           page = JspPageName.ERROR;
+            page = JspPageName.ERROR;
         }
         req.getRequestDispatcher(page).forward(req, resp);
 
@@ -45,9 +45,9 @@ public class Controller extends HttpServlet {
         String commandName = req.getParameter(RequestParameter.COMMAND);
         try {
             Command command = CommandManager.getCommand(commandName);
-            if(command !=null) {
+            if (command != null) {
                 page = command.execute(req);
-            }else {
+            } else {
                 page = JspPageName.INDEX;
             }
         } catch (CommandException e) {

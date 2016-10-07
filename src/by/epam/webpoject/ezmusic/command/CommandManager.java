@@ -14,6 +14,9 @@ import java.util.HashMap;
 /**
  * Created by Антон on 15.07.2016.
  */
+/**
+ * Class for handling commands and command names
+ */
 public class CommandManager {
 
     private static HashMap<CommandName, Command> availableCommands = new HashMap<>();
@@ -123,6 +126,12 @@ public class CommandManager {
         return false;
     }
 
+    /**
+     * Method for returning instance of Command by user request
+     * May produce exception if command for command type doesn't exist
+     * @param commandName string that contains command type
+     * @return instance of needed Command
+     */
     public static Command getCommand(String commandName) throws CommandException {
         if (commandName != null) {
             if (!commandName.isEmpty()) {

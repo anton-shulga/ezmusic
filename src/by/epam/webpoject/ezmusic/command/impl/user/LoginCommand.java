@@ -28,28 +28,28 @@ public class LoginCommand implements Command {
         String password = request.getParameter(RequestParameter.USER_PASSWORD);
 
         boolean isValidRequest = UserParametersValidator.validateLoginParameters(login, password);
-        if(isValidRequest) {
+        if (isValidRequest) {
             try {
                 user = LoginUserService.execute(login, password);
 
-                if(user != null) {
-                    if(user.getIsAdmin()){
+                if (user != null) {
+                    if (user.getIsAdmin()) {
                         request.getSession(true).setAttribute(RequestParameter.USER, user);
                         page = JspPageName.ADMIN_HOME;
-                    }else {
+                    } else {
                         Order cart = FindCartByUserIdService.find(user.getUserId());
                         request.getSession().setAttribute(RequestParameter.CART, cart);
                         request.getSession().setAttribute(RequestParameter.USER, user);
                         page = JspPageName.USER_HOME;
                     }
-                }else {
+                } else {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.AUTH_ERROR);
                     page = JspPageName.LOGIN;
                 }
             } catch (ServiceException e) {
                 throw new CommandException(e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.LOGIN;
         }

@@ -2,7 +2,7 @@ package by.epam.webpoject.ezmusic.service.user;
 
 import by.epam.webpoject.ezmusic.dao.UserDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
-import by.epam.webpoject.ezmusic.encryptor.MD5Encryptor;
+import by.epam.webpoject.ezmusic.util.MD5Encryptor;
 import by.epam.webpoject.ezmusic.entity.User;
 import by.epam.webpoject.ezmusic.exception.DAOException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;

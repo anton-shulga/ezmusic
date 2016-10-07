@@ -41,27 +41,27 @@ public class UpdateSongCommand implements Command {
         String cost = request.getParameter(RequestParameter.SONG_COST);
 
         boolean isValidRequest = SongParametersValidator.validateUpdateParameters(albumIds, authorIds, songId, name, year, cost);
-        if(isValidRequest) {
+        if (isValidRequest) {
             song = new Song();
             song.setSongId(Long.parseLong(songId));
             song.setName(name);
             song.setYear(Integer.parseInt(year));
             try {
-                if (request.getPart(RequestParameter.SONG_FILE_PATH).getInputStream().available() != 0){
+                if (request.getPart(RequestParameter.SONG_FILE_PATH).getInputStream().available() != 0) {
                     String filePath = loadImage(request);
-                    if(filePath != null){
+                    if (filePath != null) {
                         song.setFilePath(filePath);
                     }
-                }else {
+                } else {
                     song.setFilePath(request.getParameter(RequestParameter.OLD_SONG_FILE_PATH));
                 }
             } catch (IOException | ServletException e) {
-               song.setFilePath(request.getParameter(RequestParameter.OLD_SONG_FILE_PATH));
+                song.setFilePath(request.getParameter(RequestParameter.OLD_SONG_FILE_PATH));
             }
 
             song.setCost(Double.parseDouble(cost));
 
-            if(albumIds != null) {
+            if (albumIds != null) {
                 Album album = null;
                 ArrayList<Album> albums = new ArrayList<>();
                 for (Long albumId : ParameterParser.parseLongArray(albumIds)) {
@@ -72,7 +72,7 @@ public class UpdateSongCommand implements Command {
                 song.setAlbumList(albums);
             }
 
-            if(authorIds != null) {
+            if (authorIds != null) {
                 Author author = null;
                 ArrayList<Author> authors = new ArrayList<>();
                 for (Long authorId : ParameterParser.parseLongArray(authorIds)) {
@@ -92,8 +92,7 @@ public class UpdateSongCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Update song command exception", e);
             }
-        }
-        else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_EDIT_SONG;
         }
@@ -114,8 +113,8 @@ public class UpdateSongCommand implements Command {
             throw new CommandException("Can't create directory for album image", e);
         }
 
-        String imageName = Double.toString(new Date().getTime()) + FileExtention.MP3;
-        File file = new File(filePath + File.separator +  imageName);
+        String imageName = Double.toString(new Date().getTime()) + FileExtension.MP3;
+        File file = new File(filePath + File.separator + imageName);
 
         try {
             file.createNewFile();
@@ -123,11 +122,10 @@ public class UpdateSongCommand implements Command {
             throw new CommandException("Can't load image", e);
         }
 
-        try(
+        try (
                 InputStream inputStream = request.getPart(RequestParameter.SONG_FILE_PATH).getInputStream();
                 FileOutputStream outputStream = new FileOutputStream(file)
-        )
-        {
+        ) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = inputStream.read(buffer)) > 0) {

@@ -23,7 +23,7 @@ public class FindSongsByOrderIdService {
 
         try {
             songList = songDAO.findByOrderId(orderId);
-            for(Song song : songList){
+            for (Song song : songList) {
                 song.setAlbumList(FindAlbumsBySongIdService.find(song.getSongId()));
                 song.setAuthorList(FindAuthorsBySongIdService.find(song.getSongId()));
                 song.setCommentList(FindCommentsBySongIdService.find(song.getSongId()));

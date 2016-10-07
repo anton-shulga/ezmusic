@@ -13,8 +13,8 @@ public class DAOFactory {
 
     private final static DBType DB_TYPE = DBType.valueOf(DBManager.getInstance().getValue(DBParameter.DB_TYPE).toUpperCase());
 
-    public static AbstractDAO createUserDAO(){
-        switch (DB_TYPE){
+    public static AbstractDAO createUserDAO() {
+        switch (DB_TYPE) {
             case MYSQL:
                 return MySqlUserDAO.getInstance();
             //case ORACLE:...
@@ -23,8 +23,8 @@ public class DAOFactory {
         }
     }
 
-    public static AbstractDAO createSongDAO(){
-        switch (DB_TYPE){
+    public static AbstractDAO createSongDAO() {
+        switch (DB_TYPE) {
             case MYSQL:
                 return MySqlSongDAO.getInstance();
             default:
@@ -32,8 +32,8 @@ public class DAOFactory {
         }
     }
 
-    public static AbstractDAO createAlbumDAO(){
-        switch (DB_TYPE){
+    public static AbstractDAO createAlbumDAO() {
+        switch (DB_TYPE) {
             case MYSQL:
                 return MySqlAlbumDAO.getInstance();
             default:
@@ -41,8 +41,8 @@ public class DAOFactory {
         }
     }
 
-    public static AbstractDAO createCommentDAO(){
-        switch (DB_TYPE){
+    public static AbstractDAO createCommentDAO() {
+        switch (DB_TYPE) {
             case MYSQL:
                 return MySqlCommentDAO.getInstance();
             default:
@@ -50,8 +50,8 @@ public class DAOFactory {
         }
     }
 
-    public static AbstractDAO createAuthorDAO(){
-        switch (DB_TYPE){
+    public static AbstractDAO createAuthorDAO() {
+        switch (DB_TYPE) {
             case MYSQL:
                 return MySqlAuthorDAO.getInstance();
             default:
@@ -60,7 +60,7 @@ public class DAOFactory {
     }
 
     public static AbstractDAO createOrderDAO() {
-        switch (DB_TYPE){
+        switch (DB_TYPE) {
             case MYSQL:
                 return MySqlOrderDAO.getInstance();
             default:

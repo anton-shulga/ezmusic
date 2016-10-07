@@ -11,26 +11,27 @@ import java.util.concurrent.Executor;
 /**
  * Created by Антон on 21.07.2016.
  */
-public class ProxyConnection implements Connection{
+public class ProxyConnection implements Connection {
     private static final Logger LOGGER = LogManager.getLogger(ProxyConnection.class);
     private final Connection connection;
 
-    ProxyConnection(Connection connection){
+    ProxyConnection(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public void close(){
+    public void close() {
         ConnectionPool.getInstance().returnConnection(this);
     }
 
-    void closeConnection(){
+    void closeConnection() {
         try {
             connection.close();
         } catch (SQLException e) {
             LOGGER.error("Connection close error", e);
         }
     }
+
     @Override
     public Statement createStatement() throws SQLException {
         return connection.createStatement();

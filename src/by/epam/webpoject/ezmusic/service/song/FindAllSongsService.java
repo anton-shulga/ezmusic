@@ -24,7 +24,7 @@ public class FindAllSongsService {
         try {
             allSongs = songDAO.findAll();
 
-            for(Song song : allSongs){
+            for (Song song : allSongs) {
                 song.setAuthorList(FindAuthorsBySongIdService.find(song.getSongId()));
                 song.setAlbumList(FindAlbumsBySongIdService.find(song.getSongId()));
                 song.setCommentList(FindCommentsBySongIdService.find(song.getSongId()));

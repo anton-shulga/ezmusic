@@ -27,7 +27,7 @@ public class FindCartUserCommand implements Command {
         try {
             cart = FindCartByUserIdService.find(user.getUserId());
 
-            if(cart.getSongList().isEmpty()){
+            if (cart.getSongList().isEmpty()) {
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.CART_EMPTY);
             }
             request.getSession().setAttribute(RequestParameter.CART, cart);

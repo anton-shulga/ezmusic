@@ -1,4 +1,4 @@
-package by.epam.webpoject.ezmusic.encryptor;
+package by.epam.webpoject.ezmusic.util;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -18,8 +18,7 @@ public class MD5Encryptor {
                 hashText = "0" + hashText;
             }
             return hashText;
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }

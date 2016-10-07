@@ -4,30 +4,30 @@ package by.epam.webpoject.ezmusic.validator;
  * Created by Антон on 21.08.2016.
  */
 public class AlbumParametersValidator {
-    public static boolean validateCreateParameters(String[] selectedSongIds, String[] selectedAuthorIds, String name, String year){
+    public static boolean validateCreateParameters(String[] selectedSongIds, String[] selectedAuthorIds, String name, String year) {
         try {
             if (selectedSongIds != null) {
                 for (String songId : selectedSongIds) {
                     Long.parseLong(songId);
                 }
             }
-            if(selectedAuthorIds != null){
+            if (selectedAuthorIds != null) {
                 for (String authorId : selectedAuthorIds) {
                     Long.parseLong(authorId);
                 }
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
-        if(name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             return false;
         }
-        if(year == null){
+        if (year == null) {
             return false;
-        }else {
-            try{
+        } else {
+            try {
                 Integer.parseInt(year);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
@@ -35,38 +35,38 @@ public class AlbumParametersValidator {
     }
 
     public static boolean validateDeleteParameters(String albumId) {
-        if(albumId != null){
+        if (albumId != null) {
             try {
                 Long.parseLong(albumId);
                 return true;
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
 
     public static boolean validateFindParameters(String albumId) {
-        if(albumId != null){
+        if (albumId != null) {
             try {
                 Long.parseLong(albumId);
                 return true;
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
 
     public static boolean validateFindJsonParameters(String[] authorIds) {
-        if(authorIds != null){
-            try{
+        if (authorIds != null) {
+            try {
                 for (String authorId : authorIds) {
                     Long.parseLong(authorId);
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
@@ -74,12 +74,12 @@ public class AlbumParametersValidator {
     }
 
     public static boolean validateUpdateParameters(String albumId, String[] selectedAuthorIds, String[] selectedSongIds, String name, String year) {
-        if(albumId == null){
+        if (albumId == null) {
             return false;
-        }else {
+        } else {
             try {
                 Long.parseLong(albumId);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
@@ -89,23 +89,23 @@ public class AlbumParametersValidator {
                     Long.parseLong(songId);
                 }
             }
-            if(selectedAuthorIds != null){
+            if (selectedAuthorIds != null) {
                 for (String authorId : selectedAuthorIds) {
                     Long.parseLong(authorId);
                 }
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
-        if(name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             return false;
         }
-        if(year == null){
+        if (year == null) {
             return false;
-        }else {
-            try{
+        } else {
+            try {
                 Integer.parseInt(year);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }

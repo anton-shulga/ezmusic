@@ -28,15 +28,15 @@ public class DeleteSongCommand implements Command {
         String songId = request.getParameter(RequestParameter.SONG_ID);
 
         boolean isValidRequest = SongParametersValidator.validateDeleteParameters(songId);
-        if(isValidRequest){
+        if (isValidRequest) {
             try {
-                if(!IsOrderedSongService.isOrdered(ParameterParser.parseLong(songId))) {
+                if (!IsOrderedSongService.isOrdered(ParameterParser.parseLong(songId))) {
                     DeleteSongService.delete(Long.parseLong(songId));
                     ArrayList<Song> songList = FindAllSongsService.find();
                     request.setAttribute(RequestParameter.ALL_SONGS, songList);
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.DELETED);
                     page = JspPageName.ADMIN_ALL_SONGS;
-                }else {
+                } else {
                     ArrayList<Song> songList = FindAllSongsService.find();
                     request.setAttribute(RequestParameter.ALL_SONGS, songList);
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.CANT_DELETE_SONG);
@@ -45,7 +45,7 @@ public class DeleteSongCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Delete song command exception", e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_HOME;
         }

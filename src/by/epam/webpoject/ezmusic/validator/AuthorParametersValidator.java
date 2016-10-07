@@ -11,56 +11,56 @@ public class AuthorParametersValidator {
                     Long.parseLong(albumId);
                 }
             }
-            if(songIds != null){
+            if (songIds != null) {
                 for (String songId : songIds) {
                     Long.parseLong(songId);
                 }
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
-        if(name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             return false;
         }
-        if(country == null || country.isEmpty()){
+        if (country == null || country.isEmpty()) {
             return false;
         }
         return true;
     }
 
     public static boolean validateDeleteParameters(String authorId) {
-        if(authorId != null){
+        if (authorId != null) {
             try {
                 Long.parseLong(authorId);
                 return true;
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
 
     public static boolean validateFindParameters(String authorId) {
-        if(authorId != null){
+        if (authorId != null) {
             try {
                 Long.parseLong(authorId);
                 return true;
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
     }
 
     public static boolean validateUpdateParameters(String authorId, String[] albumIds, String[] songIds, String name, String country) {
-        if(authorId == null){
+        if (authorId == null) {
             return false;
-        }else {
+        } else {
             try {
                 Long.parseLong(authorId);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
@@ -70,19 +70,19 @@ public class AuthorParametersValidator {
                     Long.parseLong(songId);
                 }
             }
-            if(albumIds != null){
+            if (albumIds != null) {
                 for (String albumId : albumIds) {
                     Long.parseLong(albumId);
                 }
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
-        if(name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             return false;
         }
 
-        if(country == null || country.isEmpty()){
+        if (country == null || country.isEmpty()) {
             return false;
         }
         return true;

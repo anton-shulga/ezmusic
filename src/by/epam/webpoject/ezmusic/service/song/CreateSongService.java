@@ -26,13 +26,13 @@ public class CreateSongService {
 
             generatedId = songDAO.create(instance);
 
-            if(instance.getAlbumList() != null) {
+            if (instance.getAlbumList() != null) {
                 for (Album album : instance.getAlbumList()) {
                     songDAO.createSongAlbum(generatedId, album.getAlbumId());
                 }
             }
-            if(instance.getAuthorList() != null) {
-                for (Author author : instance.getAuthorList()   ) {
+            if (instance.getAuthorList() != null) {
+                for (Author author : instance.getAuthorList()) {
                     songDAO.createSongAuthor(generatedId, author.getAuthorId());
                 }
             }

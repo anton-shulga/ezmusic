@@ -37,12 +37,12 @@ public class FindAlbumForUpdateCommand implements Command {
         String albumId = request.getParameter(RequestParameter.ALBUM_ID);
 
         boolean isValidRequest = AlbumParametersValidator.validateFindParameters(albumId);
-        if(isValidRequest) {
+        if (isValidRequest) {
             try {
                 Long longAlbumId = ParameterParser.parseLong(albumId);
                 album = FindAlbumByIdService.find(longAlbumId);
 
-                if(album != null) {
+                if (album != null) {
                     authorList = FindAllAuthorsService.find();
                     songList = FindAllSongsService.find();
                     albumSongs = FindSongsByAlbumIdService.find(longAlbumId);
@@ -53,14 +53,14 @@ public class FindAlbumForUpdateCommand implements Command {
                     request.setAttribute(RequestParameter.ALBUM_AUTHORS, albumAuthors);
                     request.setAttribute(RequestParameter.ALBUM_SONGS, albumSongs);
                     page = JspPageName.ADMIN_EDIT_ALBUM;
-                }else {
+                } else {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                     page = JspPageName.ADMIN_HOME;
                 }
             } catch (ServiceException e) {
                 throw new CommandException("Find album for update command exception", e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_HOME;
         }

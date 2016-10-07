@@ -97,7 +97,7 @@ public class CreateSongCommand implements Command {
                     if (generatedId != null) {
                         ArrayList<Song> songList = FindAllSongsService.find();
                         request.setAttribute(RequestParameter.ALL_SONGS, songList);
-                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.CREATED + name);
+                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.CREATED);
                         page = JspPageName.ADMIN_ALL_SONGS;
                     } else {
                         request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
@@ -133,7 +133,7 @@ public class CreateSongCommand implements Command {
             throw new CommandException("Can't create directory for album image", e);
         }
 
-        String songName = Double.toString(new Date().getTime()) + FileExtention.MP3;
+        String songName = Double.toString(new Date().getTime()) + FileExtension.MP3;
         File file = new File(filePath + File.separator + songName);
 
         try {

@@ -28,6 +28,7 @@ public class CreateAlbumCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         Long generatedId = null;
         Album album = null;
@@ -53,7 +54,7 @@ public class CreateAlbumCommand implements Command {
                             String imagePath = loadImage(request);
                             if (imagePath != null) {
                                 album.setImageFilePath(imagePath);
-                            }else {
+                            } else {
                                 album.setImageFilePath(FilePath.DEFAULT_ALBUM_PHOTO);
                             }
                         }
@@ -66,7 +67,7 @@ public class CreateAlbumCommand implements Command {
                     if (generatedId != null) {
                         ArrayList<Album> albumList = FindAllAlbumsService.find();
                         request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
-                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.CREATED + name);
+                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.CREATED);
                         page = JspPageName.ADMIN_ALL_ALBUMS;
                     } else {
                         request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
@@ -102,7 +103,7 @@ public class CreateAlbumCommand implements Command {
             throw new CommandException("Can't create directory for album image", e);
         }
 
-        String imageName = Double.toString(new Date().getTime()) + FileExtention.JPG;
+        String imageName = Double.toString(new Date().getTime()) + FileExtension.JPG;
         File file = new File(filePath + File.separator + imageName);
 
         try {

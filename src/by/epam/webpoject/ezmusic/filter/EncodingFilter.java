@@ -10,6 +10,7 @@ import java.io.IOException;
  */
 public class EncodingFilter implements Filter {
     private String encoding;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         encoding = filterConfig.getInitParameter(FilterParameter.ENCODING);

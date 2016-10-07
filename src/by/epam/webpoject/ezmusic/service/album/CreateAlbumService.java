@@ -17,13 +17,13 @@ public class CreateAlbumService {
         AlbumDAO albumDAO = (AlbumDAO) DAOFactory.createAlbumDAO();
 
         try {
-            generatedId =  albumDAO.create(instance);
-            if(songIds != null) {
+            generatedId = albumDAO.create(instance);
+            if (songIds != null) {
                 for (Long songId : songIds) {
                     albumDAO.createAlbumSong(generatedId, songId);
                 }
             }
-            if(authorIds != null) {
+            if (authorIds != null) {
                 for (Long authorId : authorIds) {
                     albumDAO.createAlbumAuthor(generatedId, authorId);
                 }

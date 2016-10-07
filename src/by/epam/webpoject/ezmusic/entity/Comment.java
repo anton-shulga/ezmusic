@@ -10,7 +10,8 @@ public class Comment {
     private int rating;
     private String text;
 
-    public Comment(){}
+    public Comment() {
+    }
 
     public long getCommentId() {
         return commentId;

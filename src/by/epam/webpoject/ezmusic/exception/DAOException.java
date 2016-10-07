@@ -3,7 +3,7 @@ package by.epam.webpoject.ezmusic.exception;
 /**
  * Created by Антон on 20.07.2016.
  */
-public class DAOException extends Exception{
+public class DAOException extends Exception {
     public DAOException() {
     }
 

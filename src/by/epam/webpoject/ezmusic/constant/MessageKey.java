@@ -19,6 +19,5 @@ public class MessageKey {
     public static final String LOGIN_EXIST = "message.login_exist";
     public static final String ADMIN_LOGIN = "message.admin_login";
     public static final String USER_LOGIN = "message.user_login";
-    public static final String LOGIN_AVAILABLE = "message.login_available";
 
 }

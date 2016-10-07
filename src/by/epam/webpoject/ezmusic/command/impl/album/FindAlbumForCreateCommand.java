@@ -29,11 +29,11 @@ public class FindAlbumForCreateCommand implements Command {
             authorList = FindAllAuthorsService.find();
             songList = FindAllSongsService.find();
 
-            if(authorList != null && songList != null) {
+            if (authorList != null && songList != null) {
                 request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 page = JspPageName.ADMIN_EDIT_ALBUM;
-            }else {
+            } else {
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
             }
         } catch (ServiceException e) {

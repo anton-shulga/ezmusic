@@ -20,7 +20,7 @@ public class FindSongsBySearchRequestService {
         ArrayList<Song> songList = null;
         try {
             songList = songDAO.findBySearchRequest(searchRequest);
-            for (Song song : songList){
+            for (Song song : songList) {
                 song.setAuthorList(FindAuthorsBySongIdService.find(song.getSongId()));
                 song.setAlbumList(FindAlbumsBySongIdService.find(song.getSongId()));
                 song.setCommentList(FindCommentsBySongIdService.find(song.getSongId()));

@@ -9,7 +9,8 @@ public class Author {
     private String country;
     private String photoPath;
 
-    public Author(){}
+    public Author() {
+    }
 
     public Long getAuthorId() {
         return authorId;

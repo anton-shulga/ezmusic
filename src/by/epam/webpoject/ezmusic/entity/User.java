@@ -16,7 +16,8 @@ public class User {
     private boolean isAdmin;
     private boolean isBanned;
 
-    public User(){}
+    public User() {
+    }
 
     public long getUserId() {
         return userId;

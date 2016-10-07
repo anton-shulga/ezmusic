@@ -27,7 +27,7 @@ public class FindAlbumSongsJsonCommand implements Command {
         String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS + "[]");
 
         boolean isValidRequest = SongParametersValidator.validateFindJsonParameters(albumIds);
-        if(isValidRequest) {
+        if (isValidRequest) {
             try {
                 albumSongs = new HashSet<>();
 

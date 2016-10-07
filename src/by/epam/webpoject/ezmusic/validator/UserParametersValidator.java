@@ -21,51 +21,51 @@ public class UserParametersValidator {
     }
 
     public static boolean validateCheckLoginAvailabilityParameters(String login) {
-        if(login != null && !login.isEmpty()){
+        if (login != null && !login.isEmpty()) {
             return true;
-        }else {
+        } else {
             return false;
         }
 
     }
 
     public static boolean validateLoginParameters(String login, String password) {
-        if(login == null || login.isEmpty()) {
+        if (login == null || login.isEmpty()) {
             return false;
         }
-        if(password == null || password.isEmpty()){
+        if (password == null || password.isEmpty()) {
             return false;
         }
         return true;
     }
 
     public static boolean validateRegisterParameters(String login, String password, String firstName, String surname, String email, String phone) {
-        if(login == null || login.isEmpty()){
+        if (login == null || login.isEmpty()) {
             return false;
         }
-        if(password == null || password.isEmpty()){
+        if (password == null || password.isEmpty()) {
             return false;
         }
-        if(firstName == null || password.isEmpty()){
+        if (firstName == null || password.isEmpty()) {
             return false;
         }
-        if(surname == null || surname.isEmpty()){
+        if (surname == null || surname.isEmpty()) {
             return false;
         }
-        if(email == null || email.isEmpty()){
+        if (email == null || email.isEmpty()) {
             return false;
         }
-        if(phone == null || phone.isEmpty()){
+        if (phone == null || phone.isEmpty()) {
             return false;
         }
         return true;
     }
 
     public static boolean validatePayForOrderParameters(User user, Order cart) {
-        if(user == null){
+        if (user == null) {
             return false;
         }
-        if (cart == null){
+        if (cart == null) {
             return false;
         }
         return true;

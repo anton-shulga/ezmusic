@@ -37,12 +37,12 @@ public class FindAuthorForUpdateCommand implements Command {
         String authorId = request.getParameter(RequestParameter.AUTHOR_ID);
 
         boolean isValidRequest = AuthorParametersValidator.validateFindParameters(authorId);
-        if(isValidRequest) {
+        if (isValidRequest) {
             try {
                 Long longAuthorId = ParameterParser.parseLong(authorId);
                 author = FindAuthorByIdService.find(longAuthorId);
 
-                if (author != null ) {
+                if (author != null) {
                     songList = FindAllSongsService.find();
                     albumList = FindAllAlbumsService.find();
                     authorSongs = FindSongsByAuthorIdService.find(longAuthorId);
@@ -60,7 +60,7 @@ public class FindAuthorForUpdateCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Find author for update command exception", e);
             }
-        }else{
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_HOME;
         }

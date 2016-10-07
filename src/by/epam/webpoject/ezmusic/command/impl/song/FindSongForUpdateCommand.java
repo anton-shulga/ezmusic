@@ -32,21 +32,21 @@ public class FindSongForUpdateCommand implements Command {
         String songId = request.getParameter(RequestParameter.SONG_ID);
 
         boolean isValidRequest = SongParametersValidator.validateFindParameters(songId);
-        if(isValidRequest){
+        if (isValidRequest) {
             try {
                 song = FindSongByIdService.find(Long.parseLong(songId));
 
                 albumList = FindAllAlbumsService.find();
                 authorList = FindAllAuthorsService.find();
 
-                if(song != null  && authorList != null && albumList != null){
+                if (song != null && authorList != null && albumList != null) {
                     request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
                     request.setAttribute(RequestParameter.SONG_AUTHORS, song.getAuthorList());
                     request.setAttribute(RequestParameter.SONG_ALBUMS, song.getAlbumList());
                     request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
                     request.setAttribute(RequestParameter.SONG, song);
                     page = JspPageName.ADMIN_EDIT_SONG;
-                }else {
+                } else {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                     page = JspPageName.ADMIN_HOME;
                 }
@@ -54,7 +54,7 @@ public class FindSongForUpdateCommand implements Command {
                 throw new CommandException("Find song command exception", e);
             }
 
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_HOME;
         }

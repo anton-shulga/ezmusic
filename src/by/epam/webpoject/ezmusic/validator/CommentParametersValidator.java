@@ -5,16 +5,16 @@ package by.epam.webpoject.ezmusic.validator;
  */
 public class CommentParametersValidator {
     public static boolean validateCreateParameters(String songId, String text) {
-        if(songId == null){
+        if (songId == null) {
             return false;
-        }else {
-            try{
+        } else {
+            try {
                 Long.parseLong(songId);
-            }catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 return false;
             }
         }
-        if(text == null || text.isEmpty()){
+        if (text == null || text.isEmpty()) {
             return false;
         }
         return true;

@@ -28,7 +28,7 @@ public class ConnectionPool {
     private int poolSize;
 
 
-    private ConnectionPool(){
+    private ConnectionPool() {
         initialize();
     }
 
@@ -46,17 +46,17 @@ public class ConnectionPool {
 
             try {
                 poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
-                if(poolSize < DEFAULT_POOL_SIZE){
+                if (poolSize < DEFAULT_POOL_SIZE) {
                     poolSize = DEFAULT_POOL_SIZE;
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 poolSize = DEFAULT_POOL_SIZE;
             }
 
             Class.forName(driverName);
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
             int createdConnectionNumber = 0;
-            for(int i = 0; i < poolSize; i++){
+            for (int i = 0; i < poolSize; i++) {
                 try {
                     Connection connection = DriverManager.getConnection(url, username, password);
                     ProxyConnection proxyConnection = new ProxyConnection(connection);
@@ -67,7 +67,7 @@ public class ConnectionPool {
                 }
             }
 
-            if(createdConnectionNumber <= DEFAULT_POOL_SIZE){
+            if (createdConnectionNumber <= DEFAULT_POOL_SIZE) {
                 LOGGER.fatal("Database connection error");
                 throw new RuntimeException("Database connection error");
             }
@@ -78,8 +78,8 @@ public class ConnectionPool {
 
     }
 
-    public static ConnectionPool getInstance(){
-        if(!instanceCreated.get()) {
+    public static ConnectionPool getInstance() {
+        if (!instanceCreated.get()) {
             lock.lock();
             try {
                 if (instance == null) {
@@ -103,12 +103,12 @@ public class ConnectionPool {
         return connection;
     }
 
-    public void returnConnection(ProxyConnection connection){
-            connectionQueue.offer(connection);
+    public void returnConnection(ProxyConnection connection) {
+        connectionQueue.offer(connection);
     }
 
-    public void closePool(){
-        for (ProxyConnection connection: connectionQueue) {
+    public void closePool() {
+        for (ProxyConnection connection : connectionQueue) {
             connection.closeConnection();
         }
     }

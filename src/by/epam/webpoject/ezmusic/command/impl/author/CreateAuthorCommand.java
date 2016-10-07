@@ -54,7 +54,7 @@ public class CreateAuthorCommand implements Command {
                             if (imagePath != null) {
                                 author.setPhotoPath(imagePath);
                             }
-                        }else {
+                        } else {
                             author.setPhotoPath(FilePath.DEFAULT_AUTHOR_PHOTO);
                         }
                     } catch (IOException | ServletException e) {
@@ -66,7 +66,7 @@ public class CreateAuthorCommand implements Command {
                     if (generatedId != null) {
                         ArrayList<Author> allAuthors = FindAllAuthorsService.find();
                         request.setAttribute(RequestParameter.ALL_AUTHORS, allAuthors);
-                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.CREATED + name);
+                        request.setAttribute(RequestParameter.MESSAGE, MessageKey.CREATED);
                         page = JspPageName.ADMIN_ALL_AUTHORS;
                     } else {
                         request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
@@ -103,7 +103,7 @@ public class CreateAuthorCommand implements Command {
             throw new CommandException("Can't create directory for album image", e);
         }
 
-        String imageName = Double.toString(new Date().getTime()) + FileExtention.JPG;
+        String imageName = Double.toString(new Date().getTime()) + FileExtension.JPG;
         File file = new File(filePath + File.separator + imageName);
 
         try {

@@ -11,10 +11,11 @@ import by.epam.webpoject.ezmusic.service.order.PayForOrderService;
 import by.epam.webpoject.ezmusic.validator.UserParametersValidator;
 
 import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by Антон on 02.09.2016.
  */
-public class PayForOrderCommand implements Command{
+public class PayForOrderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
 
@@ -26,10 +27,10 @@ public class PayForOrderCommand implements Command{
         String sessionToken = (String) request.getSession().getAttribute(RequestParameter.TOKEN);
         String requestToken = request.getParameter(RequestParameter.TOKEN);
 
-        if(!f5Pressed(sessionToken, requestToken)) {
+        if (!f5Pressed(sessionToken, requestToken)) {
             request.getSession().setAttribute(RequestParameter.TOKEN, requestToken);
             boolean isValidRequest = UserParametersValidator.validatePayForOrderParameters(user, cart);
-            if(isValidRequest) {
+            if (isValidRequest) {
                 boolean isPaid = PayForOrderService.pay(user, cart);
                 if (isPaid) {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.ORDER_PAID);
@@ -39,22 +40,22 @@ public class PayForOrderCommand implements Command{
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.NO_MONEY);
                     page = JspPageName.USER_CART;
                 }
-            }else {
+            } else {
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
                 page = JspPageName.USER_HOME;
             }
-        }else {
+        } else {
             page = JspPageName.USER_CART;
         }
         return page;
     }
 
-    private boolean f5Pressed(String sessionToken, String requestToken){
-        if(sessionToken != null){
-            if(requestToken != null){
+    private boolean f5Pressed(String sessionToken, String requestToken) {
+        if (sessionToken != null) {
+            if (requestToken != null) {
                 return sessionToken.equals(requestToken);
             }
-        }else {
+        } else {
             return false;
         }
         return false;

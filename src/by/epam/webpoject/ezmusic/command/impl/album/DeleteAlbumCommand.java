@@ -22,12 +22,12 @@ public class DeleteAlbumCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
 
-        String  page = null;
+        String page = null;
 
         String albumId = request.getParameter(RequestParameter.ALBUM_ID);
 
         boolean isValidRequest = AlbumParametersValidator.validateDeleteParameters(albumId);
-        if(isValidRequest) {
+        if (isValidRequest) {
             try {
                 DeleteAlbumService.delete(ParameterParser.parseLong(albumId));
                 ArrayList<Album> allAlbums = FindAllAlbumsService.find();
@@ -37,7 +37,7 @@ public class DeleteAlbumCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Delete album command exception", e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_ALL_ALBUMS;
         }

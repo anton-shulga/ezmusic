@@ -24,12 +24,12 @@ public class DeleteSongFromCartCommand implements Command {
 
         String page = null;
 
-        String  songId = request.getParameter(RequestParameter.SONG_ID);
+        String songId = request.getParameter(RequestParameter.SONG_ID);
         User user = (User) request.getSession().getAttribute(RequestParameter.USER);
         Order cart = (Order) request.getSession().getAttribute(RequestParameter.CART);
 
         boolean isValidRequest = SongParametersValidator.validateDeleteFromCartParameters(songId, cart);
-        if(isValidRequest) {
+        if (isValidRequest) {
             try {
                 DeleteSongFromCartService.delete(ParameterParser.parseLong(songId), cart);
 
@@ -40,7 +40,7 @@ public class DeleteSongFromCartCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Delete song from cart command exception", e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.USER_HOME;
         }

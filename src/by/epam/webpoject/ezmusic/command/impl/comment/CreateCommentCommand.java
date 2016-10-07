@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CreateCommentCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
         Long generatedId = null;
         Comment comment = null;
@@ -55,24 +56,24 @@ public class CreateCommentCommand implements Command {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
                     page = JspPageName.USER_HOME;
                 }
-            }else {
+            } else {
                 Song song = FindSongByIdService.find(ParameterParser.parseLong(songId));
                 request.setAttribute(RequestParameter.SONG, song);
                 page = JspPageName.USER_SONG;
             }
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             throw new CommandException("Create comment command exception", e);
         }
 
         return page;
     }
 
-    private boolean f5Pressed(String sessionToken, String requestToken){
-        if(sessionToken != null){
-            if(requestToken != null){
+    private boolean f5Pressed(String sessionToken, String requestToken) {
+        if (sessionToken != null) {
+            if (requestToken != null) {
                 return sessionToken.equals(requestToken);
             }
-        }else {
+        } else {
             return false;
         }
         return false;

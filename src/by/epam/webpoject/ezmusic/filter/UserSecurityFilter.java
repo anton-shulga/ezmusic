@@ -26,17 +26,17 @@ public class UserSecurityFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
         User currentUser = null;
-        if(session != null) {
+        if (session != null) {
             currentUser = (User) session.getAttribute(RequestParameter.USER);
         }
-        if(currentUser == null){
+        if (currentUser == null) {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.USER_LOGIN);
             request.getServletContext().getRequestDispatcher(JspPageName.LOGIN).forward(request, response);
-        }else {
-            if(currentUser.getIsAdmin()){
+        } else {
+            if (currentUser.getIsAdmin()) {
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.USER_LOGIN);
                 request.getServletContext().getRequestDispatcher(JspPageName.LOGIN).forward(request, response);
-            }else {
+            } else {
                 filterChain.doFilter(servletRequest, servletResponse);
             }
         }

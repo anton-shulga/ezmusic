@@ -23,17 +23,18 @@ import java.util.ArrayList;
 public class FindAlbumUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
 
         String albumId = request.getParameter(RequestParameter.ALBUM_ID);
 
         boolean isValidRequest = AlbumParametersValidator.validateFindParameters(albumId);
-        if(isValidRequest){
+        if (isValidRequest) {
             try {
                 Album album = FindAlbumByIdService.find(ParameterParser.parseLong(albumId));
                 ArrayList<Author> albumAuthors = null;
                 ArrayList<Song> albumSongs = null;
-                if(album != null){
+                if (album != null) {
                     albumAuthors = FindAuthorsByAlbumIdService.find(ParameterParser.parseLong(albumId));
                     albumSongs = FindSongsByAlbumIdService.find(ParameterParser.parseLong(albumId));
                 }

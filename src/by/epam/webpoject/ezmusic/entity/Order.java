@@ -12,7 +12,8 @@ public class Order {
     private Double totalCost;
     private boolean isPaid;
 
-    public Order(){}
+    public Order() {
+    }
 
     public Long getOrderId() {
         return orderId;

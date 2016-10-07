@@ -5,7 +5,8 @@ package by.epam.webpoject.ezmusic.connection;
  */
 public class DBParameter {
 
-    private DBParameter(){}
+    private DBParameter() {
+    }
 
     static final String DB_DRIVER = "db.driver";
     static final String DB_URL = "db.url";

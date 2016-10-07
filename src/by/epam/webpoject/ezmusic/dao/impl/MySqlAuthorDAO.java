@@ -20,7 +20,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
     private static final String CREATE_AUTHOR_QUERY = "INSERT INTO ezmusicdb.author (author_name, author_country, author_image_path) VALUES (?,?,?)";
     private static final String FIND_AUTHOR_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author WHERE author_id = ?";
     private static final String DELETE_AUTHOR_QUERY = "DELETE FROM ezmusicdb.author WHERE author_id = ?";
-    private static final String  UPDATE_AUTHOR_QUERY = "UPDATE ezmusicdb.author SET author_name = ?, author_country = ?, author_image_path = ? WHERE author_id = ?";
+    private static final String UPDATE_AUTHOR_QUERY = "UPDATE ezmusicdb.author SET author_name = ?, author_country = ?, author_image_path = ? WHERE author_id = ?";
     private static final String FIND_ALL_AUTHORS_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author";
     private static final String FIND_AUTHOR_BY_SONG_ID_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author AS a INNER JOIN ezmusicdb.author_song AS a_s ON a.author_id = a_s.id_author WHERE a_s.id_song = ?";
     private static final String FIND_AUTHOR_BY_ALBUM_ID_QUERY = "SELECT author_id, author_name, author_country, author_image_path FROM ezmusicdb.author as a INNER JOIN ezmusicdb.album_author as a_a ON a.author_id = a_a.id_author WHERE a_a.id_album = ?";
@@ -32,9 +32,10 @@ public class MySqlAuthorDAO implements AuthorDAO {
 
     private static final MySqlAuthorDAO instance = new MySqlAuthorDAO();
 
-    private MySqlAuthorDAO(){}
+    private MySqlAuthorDAO() {
+    }
 
-    public static MySqlAuthorDAO getInstance(){
+    public static MySqlAuthorDAO getInstance() {
         return instance;
     }
 
@@ -50,12 +51,12 @@ public class MySqlAuthorDAO implements AuthorDAO {
             statement.setString(3, instance.getPhotoPath());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 generatedId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
             throw new DAOException("Create author DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -80,7 +81,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Find author DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -91,13 +92,13 @@ public class MySqlAuthorDAO implements AuthorDAO {
     public void delete(Long id) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        try{
+        try {
             statement = connection.prepareStatement(DELETE_AUTHOR_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Delete author DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -116,7 +117,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Update author DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -131,7 +132,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(FIND_ALL_AUTHORS_QUERY);
             Author author = null;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 author = new Author();
                 author.setAuthorId(resultSet.getLong(1));
                 author.setName(resultSet.getString(2));
@@ -141,7 +142,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Find all authors DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -153,12 +154,12 @@ public class MySqlAuthorDAO implements AuthorDAO {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         ArrayList<Author> authorList = new ArrayList<>();
-        try{
+        try {
             statement = connection.prepareStatement(FIND_AUTHOR_BY_SONG_ID_QUERY);
             statement.setLong(1, songId);
             ResultSet resultSet = statement.executeQuery();
             Author author = null;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 author = new Author();
                 author.setAuthorId(resultSet.getLong(1));
                 author.setName(resultSet.getString(2));
@@ -168,7 +169,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Find authors by song id DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -179,13 +180,13 @@ public class MySqlAuthorDAO implements AuthorDAO {
     public ArrayList<Author> findByAlbumId(Long albumId) throws CommandException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        ArrayList<Author> authorList =  new ArrayList<>();
-        try{
+        ArrayList<Author> authorList = new ArrayList<>();
+        try {
             statement = connection.prepareStatement(FIND_AUTHOR_BY_ALBUM_ID_QUERY);
             statement.setLong(1, albumId);
             ResultSet resultSet = statement.executeQuery();
             Author author = null;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 author = new Author();
                 author.setAuthorId(resultSet.getLong(1));
                 author.setName(resultSet.getString(2));
@@ -195,7 +196,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             }
         } catch (SQLException e) {
             throw new CommandException("Find authors by album id DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -207,18 +208,18 @@ public class MySqlAuthorDAO implements AuthorDAO {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         Long generateId = null;
-        try{
+        try {
             statement = connection.prepareStatement(CREATE_AUTHOR_ALBUM_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, authorId);
             statement.setLong(2, albumId);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()){
-               generateId = resultSet.getLong(1);
+            if (resultSet.next()) {
+                generateId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
             throw new DAOException("Create author album DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -230,18 +231,18 @@ public class MySqlAuthorDAO implements AuthorDAO {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         Long generateId = null;
-        try{
+        try {
             statement = connection.prepareStatement(CREATE_AUTHOR_SONG_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, authorId);
             statement.setLong(2, songId);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 generateId = resultSet.getLong(1);
             }
         } catch (SQLException e) {
             throw new DAOException("Create author song DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -252,13 +253,13 @@ public class MySqlAuthorDAO implements AuthorDAO {
     public void deleteAuthorAlbum(Long authorId) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        try{
+        try {
             statement = connection.prepareStatement(DELETE_AUTHOR_ALBUM_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, authorId);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Delete author album DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -268,13 +269,13 @@ public class MySqlAuthorDAO implements AuthorDAO {
     public void deleteAuthorSong(Long authorId) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        try{
+        try {
             statement = connection.prepareStatement(DELETE_AUTHOR_SONG_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, authorId);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Delete author song DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -285,12 +286,12 @@ public class MySqlAuthorDAO implements AuthorDAO {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         ArrayList<Author> authorList = new ArrayList<>();
-        try{
+        try {
             statement = connection.prepareStatement(FIND_AUTHOR_BY_SEARCH_REQUEST_QUERY);
             statement.setString(1, "%" + searchRequest + "%");
             ResultSet resultSet = statement.executeQuery();
             Author author = null;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 author = new Author();
                 author.setAuthorId(resultSet.getLong(1));
                 author.setName(resultSet.getString(2));
@@ -300,7 +301,7 @@ public class MySqlAuthorDAO implements AuthorDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Find author by search request DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }

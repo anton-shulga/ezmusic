@@ -10,6 +10,7 @@ import javax.servlet.ServletContextListener;
  */
 public class ContextListener implements ServletContextListener {
     private ConnectionPool connectionPool = null;
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         connectionPool = ConnectionPool.getInstance();
@@ -17,7 +18,7 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        if(connectionPool != null){
+        if (connectionPool != null) {
             connectionPool.closePool();
         }
     }

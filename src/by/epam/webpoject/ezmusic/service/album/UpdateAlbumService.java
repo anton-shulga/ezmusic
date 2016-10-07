@@ -19,7 +19,7 @@ public class UpdateAlbumService {
 
             albumDAO.deleteAlbumSong(instance.getAlbumId());
 
-            if(songIds != null) {
+            if (songIds != null) {
                 for (Long songId : songIds) {
                     albumDAO.createAlbumSong(instance.getAlbumId(), songId);
                 }
@@ -27,7 +27,7 @@ public class UpdateAlbumService {
 
             albumDAO.deleteAlbumAuthor(instance.getAlbumId());
 
-            if(authorIds != null) {
+            if (authorIds != null) {
                 for (Long authorId : authorIds) {
                     albumDAO.createAlbumAuthor(instance.getAlbumId(), authorId);
                 }

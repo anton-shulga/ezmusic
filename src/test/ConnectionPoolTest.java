@@ -3,6 +3,7 @@ package test;
 import by.epam.webpoject.ezmusic.connection.ConnectionPool;
 import by.epam.webpoject.ezmusic.connection.ProxyConnection;
 import org.junit.Test;
+
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -10,13 +11,14 @@ import static org.junit.Assert.assertNotNull;
  */
 public class ConnectionPoolTest {
     @Test
-    public void getConnectionTest(){
+    public void getConnectionTest() {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         ProxyConnection connection = connectionPool.getConnection();
         assertNotNull(connection);
     }
+
     @Test
-    public void getInstanceTest(){
+    public void getInstanceTest() {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         assertNotNull(connectionPool);
     }

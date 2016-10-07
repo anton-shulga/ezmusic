@@ -27,7 +27,7 @@ public class DeleteAuthorCommand implements Command {
         String authorId = request.getParameter(RequestParameter.AUTHOR_ID);
 
         boolean isValidRequest = AuthorParametersValidator.validateDeleteParameters(authorId);
-        if(isValidRequest) {
+        if (isValidRequest) {
             try {
                 DeleteAuthorService.delete(ParameterParser.parseLong(authorId));
                 ArrayList<Author> allAuthors = FindAllAuthorsService.find();
@@ -37,7 +37,7 @@ public class DeleteAuthorCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Delete author command exception", e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.ADMIN_HOME;
         }

@@ -14,20 +14,20 @@ import java.util.ArrayList;
 /**
  * Created by Антон on 21.08.2016.
  */
-public class MySqlOrderDAO implements OrderDAO{
+public class MySqlOrderDAO implements OrderDAO {
     private static final String CREATE_ORDER_QUERY = "INSERT INTO ezmusicdb.order (user_id, order_is_paid) VALUES (? ,?)";
     private static final MySqlOrderDAO instance = new MySqlOrderDAO();
     private static final String FIND_ORDER_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE order_id = ?";
     private static final String DELETE_ORDER_QUERY = "DELETE FROM ezmusicdb.order WHERE order_id = ?";
-    private static final String  UPDATE_ORDER_QUERY = "UPDATE ezmusicdb.order SET user_id = ?, order_is_paid = ?, order_total_cost = ? WHERE order_id = ?";
+    private static final String UPDATE_ORDER_QUERY = "UPDATE ezmusicdb.order SET user_id = ?, order_is_paid = ?, order_total_cost = ? WHERE order_id = ?";
     private static final String FIND_PAID_ORDERS_BY_USER_ID_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE user_id = ? AND order_is_paid = TRUE";
     private static final String FIND_UNPAID_ORDER_BY_USER_ID_QUERY = "SELECT order_id, user_id, order_is_paid, order_total_cost FROM ezmusicdb.order WHERE user_id = ? AND order_is_paid = FALSE";
 
 
+    private MySqlOrderDAO() {
+    }
 
-    private MySqlOrderDAO(){}
-
-    public static MySqlOrderDAO getInstance(){
+    public static MySqlOrderDAO getInstance() {
         return instance;
     }
 
@@ -36,18 +36,18 @@ public class MySqlOrderDAO implements OrderDAO{
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         Long generatedId = null;
-        try{
+        try {
             statement = connection.prepareStatement(CREATE_ORDER_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setLong(1, instance.getUserId());
             statement.setBoolean(2, instance.isPaid());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 generatedId = resultSet.getLong(1);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new DAOException("Create order DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -59,20 +59,20 @@ public class MySqlOrderDAO implements OrderDAO{
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         Order order = null;
-        try{
+        try {
             statement = connection.prepareStatement(FIND_ORDER_QUERY);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 order = new Order();
                 order.setOrderId(resultSet.getLong(1));
                 order.setUserId(resultSet.getLong(2));
                 order.setPaid(resultSet.getBoolean(3));
                 order.setTotalCost(resultSet.getDouble(4));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new DAOException("Find order DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -83,13 +83,13 @@ public class MySqlOrderDAO implements OrderDAO{
     public void delete(Long id) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        try{
+        try {
             statement = connection.prepareStatement(DELETE_ORDER_QUERY);
             statement.setLong(1, id);
             statement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new DAOException("Delete order DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -99,16 +99,16 @@ public class MySqlOrderDAO implements OrderDAO{
     public void update(Order instance) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        try{
+        try {
             statement = connection.prepareStatement(UPDATE_ORDER_QUERY);
             statement.setLong(1, instance.getUserId());
             statement.setBoolean(2, instance.isPaid());
             statement.setDouble(3, instance.getTotalCost());
             statement.setLong(4, instance.getOrderId());
             statement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new DAOException("Update order DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -119,12 +119,12 @@ public class MySqlOrderDAO implements OrderDAO{
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         ArrayList<Order> orderList = new ArrayList<>();
-        try{
+        try {
             statement = connection.prepareStatement(FIND_PAID_ORDERS_BY_USER_ID_QUERY);
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             Order order = null;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 order = new Order();
                 order.setOrderId(resultSet.getLong(1));
                 order.setUserId(resultSet.getLong(2));
@@ -134,7 +134,7 @@ public class MySqlOrderDAO implements OrderDAO{
             }
         } catch (SQLException e) {
             throw new DAOException("Find orders by user id DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }
@@ -146,20 +146,20 @@ public class MySqlOrderDAO implements OrderDAO{
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         Order order = null;
-        try{
+        try {
             statement = connection.prepareStatement(FIND_UNPAID_ORDER_BY_USER_ID_QUERY);
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 order = new Order();
                 order.setOrderId(resultSet.getLong(1));
                 order.setUserId(resultSet.getLong(2));
                 order.setPaid(resultSet.getBoolean(3));
                 order.setTotalCost(resultSet.getDouble(4));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new DAOException("Find cart by user id DAO exception", e);
-        }finally {
+        } finally {
             closeStatement(statement);
             connection.close();
         }

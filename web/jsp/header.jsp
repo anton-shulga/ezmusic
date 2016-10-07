@@ -23,13 +23,15 @@
             <c:if test="${sessionScope.user.isAdmin}">
                 <form name="adminHome" action="${pageContext.request.contextPath}/controller" method="POST">
                     <input type="hidden" name="command" value="home_admin">
-                    <a class="brand-logo center" href="javascript:document.adminHome.submit()"><fmt:message key="logo"/></a>
+                    <a class="brand-logo center" href="javascript:document.adminHome.submit()"><fmt:message
+                            key="logo"/></a>
                 </form>
             </c:if>
             <c:if test="${not sessionScope.user.isAdmin}">
                 <form name="userHome" action="${pageContext.request.contextPath}/controller" method="POST">
                     <input type="hidden" name="command" value="home_user">
-                    <a class="brand-logo center" href="javascript:document.userHome.submit()"><fmt:message key="logo"/></a>
+                    <a class="brand-logo center" href="javascript:document.userHome.submit()"><fmt:message
+                            key="logo"/></a>
                 </form>
             </c:if>
         </c:when>
@@ -54,15 +56,15 @@
             <c:if test="${empty sessionScope.user }">
                 <form name="toLoginForm" action="${pageContext.request.contextPath}/controller" method="POST">
                     <input type="hidden" name="command" value="to_login">
-                        <a class="login-logo" href="javascript:document.toLoginForm.submit()"><i class="material-icons white-text small">power_settings_new</i>
-                        </a>
+                    <a href="javascript:document.toLoginForm.submit()"><i
+                            class="material-icons white-text small">power_settings_new</i>
+                    </a>
                 </form>
             </c:if>
             <c:if test="${not empty sessionScope.user }">
                 <form name="logoutForm" action="${pageContext.request.contextPath}/controller" method="POST">
                     <input type="hidden" name="command" value="logout">
-                    <a href="javascript:document.logoutForm.submit()"><img
-                        src="${pageContext.request.contextPath}/img/logo/login-logo.png">
+                    <a href="javascript:document.logoutForm.submit()"><i class="material-icons white-text small">power_settings_new</i>
                     </a>
                 </form>
             </c:if>

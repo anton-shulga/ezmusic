@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by Антон on 15.09.2016.
  */
-public class SearchCommand implements Command{
+public class SearchCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
@@ -31,10 +31,10 @@ public class SearchCommand implements Command{
             ArrayList<Album> albumList = FindAlbumsBySearchRequestService.find(searchRequest);
             ArrayList<Author> authorList = FIndAuthorsBySearchRequestService.find(searchRequest);
             ArrayList<Song> songList = FindSongsBySearchRequestService.find(searchRequest);
-            if(albumList.isEmpty() && authorList.isEmpty() && songList.isEmpty()){
+            if (albumList.isEmpty() && authorList.isEmpty() && songList.isEmpty()) {
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.NOT_FOUND);
                 page = JspPageName.SEARCH_RESULT;
-            }else {
+            } else {
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
                 request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);

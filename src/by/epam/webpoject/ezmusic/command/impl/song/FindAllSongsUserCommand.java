@@ -25,13 +25,13 @@ public class FindAllSongsUserCommand implements Command {
         try {
             songList = FindAllSongsService.find();
 
-            if(songList != null ){
-                if(songList.isEmpty()){
+            if (songList != null) {
+                if (songList.isEmpty()) {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.NOT_FOUND);
                 }
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 page = JspPageName.USER_ALL_SONGS;
-            }else {
+            } else {
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                 page = JspPageName.USER_HOME;
             }

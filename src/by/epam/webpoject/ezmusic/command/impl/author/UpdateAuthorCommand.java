@@ -88,7 +88,7 @@ public class UpdateAuthorCommand implements Command {
             throw new CommandException("Can't create directory for album image", e);
         }
 
-        String imageName = Double.toString(new Date().getTime()) + FileExtention.JPG;
+        String imageName = Double.toString(new Date().getTime()) + FileExtension.JPG;
         File file = new File(filePath + File.separator + imageName);
 
         try {

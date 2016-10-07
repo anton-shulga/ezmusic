@@ -26,21 +26,21 @@ public class FindSongUserCommand implements Command {
         String songId = request.getParameter(RequestParameter.SONG_ID);
 
         boolean isValidRequest = SongParametersValidator.validateFindParameters(songId);
-        if(isValidRequest){
+        if (isValidRequest) {
             try {
                 song = FindSongByIdService.find(ParameterParser.parseLong(songId));
 
-                if(song != null) {
+                if (song != null) {
                     request.setAttribute(RequestParameter.SONG, song);
                     page = JspPageName.USER_SONG;
-                }else {
+                } else {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                     page = JspPageName.USER_HOME;
                 }
             } catch (ServiceException e) {
                 throw new CommandException("Find song user command exception", e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.USER_HOME;
         }

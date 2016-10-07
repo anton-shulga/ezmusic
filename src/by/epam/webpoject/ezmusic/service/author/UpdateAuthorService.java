@@ -19,16 +19,16 @@ public class UpdateAuthorService {
 
             authorDAO.deleteAuthorAlbum(instance.getAuthorId());
 
-            if(albumIds != null){
-                for(Long albumId : albumIds){
+            if (albumIds != null) {
+                for (Long albumId : albumIds) {
                     authorDAO.createAuthorAlbum(instance.getAuthorId(), albumId);
                 }
             }
 
             authorDAO.deleteAuthorSong(instance.getAuthorId());
 
-            if(songIds != null){
-                for(Long songId : songIds){
+            if (songIds != null) {
+                for (Long songId : songIds) {
                     authorDAO.createAuthorSong(instance.getAuthorId(), songId);
                 }
             }

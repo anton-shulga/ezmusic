@@ -29,11 +29,11 @@ public class FindAuthorForCreateCommand implements Command {
             songList = FindAllSongsService.find();
             albumList = FindAllAlbumsService.find();
 
-            if(songList != null && albumList != null){
+            if (songList != null && albumList != null) {
                 request.setAttribute(RequestParameter.ALL_SONGS, songList);
                 request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
                 page = JspPageName.ADMIN_EDIT_AUTHOR;
-            }else {
+            } else {
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                 page = JspPageName.ADMIN_HOME;
             }

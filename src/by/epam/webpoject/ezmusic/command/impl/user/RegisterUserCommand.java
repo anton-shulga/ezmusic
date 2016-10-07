@@ -52,7 +52,7 @@ public class RegisterUserCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Register user command exception", e);
             }
-        }else {
+        } else {
             request.setAttribute(RequestParameter.MESSAGE, MessageKey.INPUT);
             page = JspPageName.REGISTER;
         }

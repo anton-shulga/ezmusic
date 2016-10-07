@@ -19,14 +19,14 @@ public class CreateAuthorService {
         try {
             generatedId = authorDAO.create(instance);
 
-            if(albumIds != null){
-                for(Long albumId:albumIds){
+            if (albumIds != null) {
+                for (Long albumId : albumIds) {
                     authorDAO.createAuthorAlbum(generatedId, albumId);
                 }
             }
 
-            if(songIds != null){
-                for(Long songId:songIds){
+            if (songIds != null) {
+                for (Long songId : songIds) {
                     authorDAO.createAuthorSong(generatedId, songId);
                 }
             }

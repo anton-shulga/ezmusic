@@ -12,7 +12,7 @@ import by.epam.webpoject.ezmusic.service.comment.FindCommentsBySongIdService;
 /**
  * Created by Антон on 10.08.2016.
  */
-public class FindSongByIdService  {
+public class FindSongByIdService {
     public static Song find(Long songId) throws ServiceException {
         SongDAO songDAO = (SongDAO) DAOFactory.createSongDAO();
         Song song = null;

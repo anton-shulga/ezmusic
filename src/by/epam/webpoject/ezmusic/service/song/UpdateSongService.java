@@ -26,7 +26,7 @@ public class UpdateSongService {
 
             songDAO.deleteSongAlbum(instance.getSongId());
 
-            if(instance.getAlbumList() != null) {
+            if (instance.getAlbumList() != null) {
                 for (Album album : instance.getAlbumList()) {
                     songDAO.createSongAlbum(instance.getSongId(), album.getAlbumId());
                 }
@@ -34,7 +34,7 @@ public class UpdateSongService {
 
             songDAO.deleteSongAuthor(instance.getSongId());
 
-            if(instance.getAuthorList() != null) {
+            if (instance.getAuthorList() != null) {
                 for (Author author : instance.getAuthorList()) {
                     songDAO.createSongAuthor(instance.getSongId(), author.getAuthorId());
                 }

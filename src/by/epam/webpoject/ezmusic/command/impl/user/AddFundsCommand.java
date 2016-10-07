@@ -25,7 +25,7 @@ public class AddFundsCommand implements Command {
         String moneyAmount = request.getParameter(RequestParameter.MONEY_AMOUNT);
 
         boolean isValidRequest = UserParametersValidator.validateAddFundsParameters(moneyAmount);
-        if(isValidRequest) {
+        if (isValidRequest) {
             user.setBalance(user.getBalance() + ParameterParser.parseDouble(moneyAmount));
 
             try {
@@ -35,7 +35,7 @@ public class AddFundsCommand implements Command {
             } catch (ServiceException e) {
                 throw new CommandException("Add funds command exception", e);
             }
-        }else {
+        } else {
             output = String.valueOf(user.getBalance());
         }
         return new Gson().toJson(output);

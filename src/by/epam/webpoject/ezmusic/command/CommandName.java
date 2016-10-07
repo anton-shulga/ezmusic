@@ -3,6 +3,9 @@ package by.epam.webpoject.ezmusic.command;
 /**
  * Created by Антон on 16.07.2016.
  */
+/**
+ * Enum of command names
+ */
 public enum CommandName {
     LOGIN,
     LOGOUT,

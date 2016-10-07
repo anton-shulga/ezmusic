@@ -25,13 +25,13 @@ public class FindAllAuthorsUserCommand implements Command {
         try {
             authorList = FindAllAuthorsService.find();
 
-            if(authorList != null){
-                if(authorList.isEmpty()){
+            if (authorList != null) {
+                if (authorList.isEmpty()) {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.NOT_FOUND);
                 }
                 request.setAttribute(RequestParameter.ALL_AUTHORS, authorList);
                 page = JspPageName.USER_ALL_AUTHORS;
-            }else {
+            } else {
                 request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);
                 page = JspPageName.USER_HOME;
             }

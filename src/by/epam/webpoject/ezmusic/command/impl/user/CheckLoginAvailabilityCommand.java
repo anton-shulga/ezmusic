@@ -22,7 +22,7 @@ public class CheckLoginAvailabilityCommand implements Command {
         String login = request.getParameter(RequestParameter.USER_LOGIN);
         boolean isValidRequest = UserParametersValidator.validateCheckLoginAvailabilityParameters(login);
 
-        if(isValidRequest) {
+        if (isValidRequest) {
             try {
                 boolean isLoginExist = CheckLoginAvailabilityService.isLoginExist(login);
                 if (isLoginExist) {

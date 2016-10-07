@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class FindAuthorUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
+
         String page = null;
 
         String authorId = request.getParameter(RequestParameter.AUTHOR_ID);

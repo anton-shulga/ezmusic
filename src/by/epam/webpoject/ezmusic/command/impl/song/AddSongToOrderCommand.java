@@ -28,15 +28,19 @@ public class AddSongToOrderCommand implements Command {
         Order cart = (Order) request.getSession().getAttribute(RequestParameter.CART);
 
         boolean isValidRequest = SongParametersValidator.validateFindParameters(songId);
-        if(isValidRequest){
+        if (isValidRequest) {
             try {
+                if(cart == null){
+                    cart = FindCartByUserIdService.find(user.getUserId());
+                }
                 AddSongToOrderService.add(ParameterParser.parseLong(songId), cart);
 
                 cart = FindCartByUserIdService.find(user.getUserId());
+
                 request.getSession().setAttribute(RequestParameter.CART, cart);
                 output = String.valueOf(cart.getSongList().size());
-            }catch (ServiceException e) {
-              throw new CommandException("Add song to order command exception", e);
+            } catch (ServiceException e) {
+                throw new CommandException("Add song to order command exception", e);
             }
         }
         return new Gson().toJson(output);
