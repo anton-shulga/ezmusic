@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-;
+
 
 /**
  * Created by Антон on 15.07.2016.
@@ -32,7 +32,7 @@ public class Controller extends HttpServlet {
                 page = JspPageName.INDEX;
             }
         } catch (CommandException e) {
-            page = JspPageName.ERROR;
+            throw new ServletException(e);
         }
         req.getRequestDispatcher(page).forward(req, resp);
 

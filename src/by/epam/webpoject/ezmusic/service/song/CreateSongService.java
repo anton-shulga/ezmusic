@@ -2,9 +2,7 @@ package by.epam.webpoject.ezmusic.service.song;
 
 import by.epam.webpoject.ezmusic.dao.SongDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
-import by.epam.webpoject.ezmusic.entity.Album;
-import by.epam.webpoject.ezmusic.entity.Author;
-import by.epam.webpoject.ezmusic.entity.Song;
+import by.epam.webpoject.ezmusic.entity.*;
 import by.epam.webpoject.ezmusic.exception.DAOException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
 
@@ -36,6 +34,19 @@ public class CreateSongService {
                     songDAO.createSongAuthor(generatedId, author.getAuthorId());
                 }
             }
+
+            if(instance.getTagList() != null){
+                for(Tag tag : instance.getTagList()){
+                    songDAO.createTagSong(tag.getTagId(), generatedId);
+                }
+            }
+
+            if(instance.getRewardList() != null){
+                for(Reward reward : instance.getRewardList()) {
+                    songDAO.createRewardSong(reward.getRewardId(), generatedId);
+                }
+            }
+
         } catch (DAOException e) {
             throw new ServiceException("Create song service exception", e);
         }

@@ -126,7 +126,43 @@
                                                 </c:choose>
                                             </c:forEach>
                                         </select>
-                                        <label for="id-songs"><fmt:message key="label.songs"/></label>
+                                        <label for="id-songs"><fmt:message key="title.author_songs"/></label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <select class="icons" id="id-types" name="type_id">
+                                            <c:forEach items="${requestScope.all_author_types}" var="type">
+                                                <c:choose>
+                                                    <c:when test="${author.authorType.authorTypeId == type.authorTypeId}">
+                                                        <option value="${type.authorTypeId}" selected>${type.name}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${type.authorTypeId}">${type.name}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
+                                        <label for="id-songs">Author types</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <select  class="icons" id="id-labels" name="label_id">
+                                            <c:forEach items="${requestScope.all_labels}" var="label">
+                                                <c:choose>
+                                                    <c:when test="${author.label.labelId == label.labelId}">
+                                                        <option value="${label.labelId}" selected>${label.labelName}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${label.labelId}">${label.labelName}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
+                                        <label for="id-songs">Labels</label>
                                     </div>
                                 </div>
 

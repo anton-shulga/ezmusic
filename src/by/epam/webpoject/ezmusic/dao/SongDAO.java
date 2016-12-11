@@ -1,6 +1,9 @@
 package by.epam.webpoject.ezmusic.dao;
 
+import by.epam.webpoject.ezmusic.entity.Genre;
+import by.epam.webpoject.ezmusic.entity.Reward;
 import by.epam.webpoject.ezmusic.entity.Song;
+import by.epam.webpoject.ezmusic.entity.Tag;
 import by.epam.webpoject.ezmusic.exception.DAOException;
 
 import java.util.ArrayList;
@@ -117,5 +120,17 @@ public interface SongDAO extends AbstractDAO<Song, Long> {
      */
     boolean isOrderedSong(Long songId) throws DAOException;
 
+    ArrayList<Tag> findAllTags() throws DAOException;
+    void createTagSong(Long tagId, Long songId) throws DAOException;
+    void deleteTagSong(Long tagId) throws DAOException;
 
+    ArrayList<Reward> findAllSongRewards() throws DAOException;
+    void createRewardSong(Long rewardId, Long songId) throws DAOException;
+
+    void deleteRewardSong(Long songId) throws DAOException;
+
+    ArrayList<Genre> findAllGenres() throws DAOException;
+    ArrayList<Tag> findTagsBySongId(Long songId) throws DAOException;
+
+    ArrayList<Reward> findRewardsBySongId(Long songId) throws DAOException;
 }

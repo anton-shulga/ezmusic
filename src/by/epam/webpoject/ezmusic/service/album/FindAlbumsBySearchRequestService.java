@@ -14,8 +14,14 @@ import java.util.ArrayList;
 public class FindAlbumsBySearchRequestService {
     public static ArrayList<Album> find(String searchRequest) throws ServiceException {
         AlbumDAO albumDAO = (AlbumDAO) DAOFactory.createAlbumDAO();
+        ArrayList<Album> albumList = null;
         try {
-            return albumDAO.findBySearchRequest(searchRequest);
+            albumList = albumDAO.findBySearchRequest(searchRequest);
+            for(Album album : albumList){
+                album.setRewardList(albumDAO.findRewardsByAlbumId(album.getAlbumId()));
+            }
+
+            return albumList;
         } catch (DAOException e) {
             throw new ServiceException("Find albums by search request service exception", e);
         }

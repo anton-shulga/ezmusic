@@ -1,6 +1,8 @@
 package by.epam.webpoject.ezmusic.dao;
 
 import by.epam.webpoject.ezmusic.entity.Album;
+import by.epam.webpoject.ezmusic.entity.AlbumType;
+import by.epam.webpoject.ezmusic.entity.Reward;
 import by.epam.webpoject.ezmusic.exception.DAOException;
 
 import java.util.ArrayList;
@@ -81,5 +83,11 @@ public interface AlbumDAO extends AbstractDAO<Album, Long> {
      * @throws DAOException if database error was detected
      */
     ArrayList<Album> findBySearchRequest(String searchRequest) throws DAOException;
+
+    ArrayList<AlbumType> findAllAlbumTypes() throws DAOException;
+    ArrayList<Reward> findAllAlbumReward() throws DAOException;
+    void deleteRewardAlbum(Long albumId) throws DAOException;
+    void createRewardAlbum(Long rewardId, Long albumId) throws DAOException;
+    ArrayList<Reward> findRewardsByAlbumId(Long albumId) throws DAOException;
 
 }

@@ -27,6 +27,8 @@ public class FindSongsByAuthorIdService {
                 song.setAuthorList(FindAuthorsBySongIdService.find(song.getSongId()));
                 song.setAlbumList(FindAlbumsBySongIdService.find(song.getSongId()));
                 song.setCommentList(FindCommentsBySongIdService.find(song.getSongId()));
+                song.setTagList(songDAO.findTagsBySongId(song.getSongId()));
+                song.setRewardList(songDAO.findRewardsBySongId(song.getSongId()));
             }
         } catch (DAOException e) {
             throw new ServiceException("Find songs by author is service exception", e);

@@ -14,8 +14,14 @@ import java.util.ArrayList;
 public class FindAllAlbumsService {
     public static ArrayList<Album> find() throws ServiceException {
         AlbumDAO albumDAO = (AlbumDAO) DAOFactory.createAlbumDAO();
+        ArrayList<Album> albumList = null;
+
         try {
-            return albumDAO.findAll();
+            albumList =  albumDAO.findAll();
+            for(Album album : albumList){
+                album.setRewardList(albumDAO.findRewardsByAlbumId(album.getAlbumId()));
+            }
+            return albumList;
         } catch (DAOException e) {
             throw new ServiceException("Find all albums service exception", e);
         }

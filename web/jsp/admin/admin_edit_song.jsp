@@ -132,6 +132,64 @@
 
                                 <div class="row">
                                     <div class="input-field col s12">
+                                        <select multiple class="icons" id="id-tags" name="selected_tags">
+                                            <option value="" disabled selected>Select tags</option>
+                                            <c:forEach items="${requestScope.all_tags}" var="tag">
+                                                <c:choose>
+                                                    <c:when test="${fn:contains(requestScope.song_tags, tag)}">
+                                                        <option value="${tag.tagId}" selected>${tag.name}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${tag.tagId}">${tag.name}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
+                                        <label for="id-tags">Song tags</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <select multiple class="icons" id="id-rewards" name="selected_rewards">
+                                            <option value="" disabled selected>Select rewards</option>
+                                            <c:forEach items="${requestScope.all_rewards}" var="reward">
+                                                <c:choose>
+                                                    <c:when test="${fn:contains(requestScope.song_rewards, reward)}">
+                                                        <option value="${reward.rewardId}" selected>${reward.name}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${reward.rewardId}">${reward.name}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
+                                        <label for="id-rewards">Song rewards</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <select  class="icons" id="id-genres" name="genre_id">
+                                            <option value="" disabled selected>Select genres</option>
+                                            <c:forEach items="${requestScope.all_genres}" var="genre">
+                                                <c:choose>
+                                                    <c:when test="${requestScope.song.genre.genreId == genre.genreId}">
+                                                        <option value="${genre.genreId}" selected>${genre.name}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${genre.genreId}">${genre.name}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
+                                        <label for="id-genres">Song genres</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="input-field col s12">
                                         <input id="id-song-cost" type="text" name="song_cost"
                                                value="${requestScope.song.cost}" required pattern="[0-9]*\.?[0-9]*">
                                         <label for="id-song-cost"><fmt:message key="label.cost"/></label>

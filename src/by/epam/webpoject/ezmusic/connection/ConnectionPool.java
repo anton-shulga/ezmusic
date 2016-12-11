@@ -67,7 +67,7 @@ public class ConnectionPool {
                 }
             }
 
-            if (createdConnectionNumber <= DEFAULT_POOL_SIZE) {
+            if (createdConnectionNumber < DEFAULT_POOL_SIZE) {
                 LOGGER.fatal("Database connection error");
                 throw new RuntimeException("Database connection error");
             }

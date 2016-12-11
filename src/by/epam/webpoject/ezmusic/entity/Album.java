@@ -1,5 +1,7 @@
 package by.epam.webpoject.ezmusic.entity;
 
+import java.util.ArrayList;
+
 /**
  * Created by Антон on 28.07.2016.
  */
@@ -8,6 +10,8 @@ public class Album {
     private String name;
     private int year;
     private String imageFilePath;
+    private AlbumType albumType;
+    private ArrayList<Reward> rewardList;
 
     public Album() {
     }
@@ -65,5 +69,21 @@ public class Album {
         result = 31 * result + year;
         result = 31 * result + imageFilePath.hashCode();
         return result;
+    }
+
+    public AlbumType getAlbumType() {
+        return albumType;
+    }
+
+    public void setAlbumType(AlbumType albumType) {
+        this.albumType = albumType;
+    }
+
+    public ArrayList<Reward> getRewardList() {
+        return rewardList;
+    }
+
+    public void setRewardList(ArrayList<Reward> rewardList) {
+        this.rewardList = rewardList;
     }
 }

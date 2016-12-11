@@ -4,11 +4,11 @@ import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.JspPageName;
 import by.epam.webpoject.ezmusic.constant.MessageKey;
 import by.epam.webpoject.ezmusic.constant.RequestParameter;
-import by.epam.webpoject.ezmusic.entity.Album;
-import by.epam.webpoject.ezmusic.entity.Author;
-import by.epam.webpoject.ezmusic.entity.Song;
+import by.epam.webpoject.ezmusic.entity.*;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
+import by.epam.webpoject.ezmusic.service.author.FindAllAuthorTypesService;
+import by.epam.webpoject.ezmusic.service.author.FindAllLabelsService;
 import by.epam.webpoject.ezmusic.util.ParameterParser;
 import by.epam.webpoject.ezmusic.service.album.FindAlbumsByAuthorIdService;
 import by.epam.webpoject.ezmusic.service.album.FindAllAlbumsService;
@@ -33,6 +33,8 @@ public class FindAuthorForUpdateCommand implements Command {
         ArrayList<Album> albumList = null;
         ArrayList<Song> authorSongs = null;
         ArrayList<Album> authorAlbums = null;
+        ArrayList<Label> labelList = null;
+        ArrayList<AuthorType> authorTypeList = null;
 
         String authorId = request.getParameter(RequestParameter.AUTHOR_ID);
 
@@ -45,6 +47,8 @@ public class FindAuthorForUpdateCommand implements Command {
                 if (author != null) {
                     songList = FindAllSongsService.find();
                     albumList = FindAllAlbumsService.find();
+                    labelList = FindAllLabelsService.find();
+                    authorTypeList = FindAllAuthorTypesService.find();
                     authorSongs = FindSongsByAuthorIdService.find(longAuthorId);
                     authorAlbums = FindAlbumsByAuthorIdService.find(longAuthorId);
                     request.setAttribute(RequestParameter.AUTHOR, author);
@@ -52,6 +56,8 @@ public class FindAuthorForUpdateCommand implements Command {
                     request.setAttribute(RequestParameter.AUTHOR_ALBUMS, authorAlbums);
                     request.setAttribute(RequestParameter.ALL_SONGS, songList);
                     request.setAttribute(RequestParameter.ALL_ALBUMS, albumList);
+                    request.setAttribute("all_author_types", authorTypeList);
+                    request.setAttribute("all_labels", labelList);
                     page = JspPageName.ADMIN_EDIT_AUTHOR;
                 } else {
                     request.setAttribute(RequestParameter.MESSAGE, MessageKey.OOPS);

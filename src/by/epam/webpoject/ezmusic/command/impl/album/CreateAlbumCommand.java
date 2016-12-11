@@ -3,6 +3,8 @@ package by.epam.webpoject.ezmusic.command.impl.album;
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.*;
 import by.epam.webpoject.ezmusic.entity.Album;
+import by.epam.webpoject.ezmusic.entity.AlbumType;
+import by.epam.webpoject.ezmusic.entity.Reward;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.util.ParameterParser;
@@ -35,8 +37,10 @@ public class CreateAlbumCommand implements Command {
 
         String[] selectedSongIds = request.getParameterValues(RequestParameter.SELECTED_SONGS);
         String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
+        String[] rewardsIds = request.getParameterValues("selected_rewards");
         String name = request.getParameter(RequestParameter.ALBUM_NAME);
         String year = request.getParameter(RequestParameter.ALBUM_YEAR);
+        String typeId = request.getParameter("type_id");
 
         String sessionToken = (String) request.getSession().getAttribute(RequestParameter.TOKEN);
         String requestToken = request.getParameter(RequestParameter.TOKEN);
@@ -49,6 +53,21 @@ public class CreateAlbumCommand implements Command {
                     album = new Album();
                     album.setName(name);
                     album.setYear(ParameterParser.parseInt(year));
+                    AlbumType albumType = new AlbumType();
+                    albumType.setAlbumTypeId(Long.parseLong(typeId));
+                    album.setAlbumType(albumType);
+
+                    if (rewardsIds != null) {
+                        Reward reward = null;
+                        ArrayList<Reward> rewards = new ArrayList<>();
+                        for (Long rewardId : ParameterParser.parseLongArray(rewardsIds)) {
+                            reward = new Reward();
+                            reward.setRewardId(rewardId);
+                            rewards.add(reward);
+                        }
+                        album.setRewardList(rewards);
+                    }
+
                     try {
                         if (request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream().available() != 0) {
                             String imagePath = loadImage(request);

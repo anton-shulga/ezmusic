@@ -3,6 +3,7 @@ package by.epam.webpoject.ezmusic.service.album;
 import by.epam.webpoject.ezmusic.dao.AlbumDAO;
 import by.epam.webpoject.ezmusic.dao.factory.DAOFactory;
 import by.epam.webpoject.ezmusic.entity.Album;
+import by.epam.webpoject.ezmusic.entity.Reward;
 import by.epam.webpoject.ezmusic.exception.DAOException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
 
@@ -19,6 +20,7 @@ public class UpdateAlbumService {
 
             albumDAO.deleteAlbumSong(instance.getAlbumId());
 
+
             if (songIds != null) {
                 for (Long songId : songIds) {
                     albumDAO.createAlbumSong(instance.getAlbumId(), songId);
@@ -30,6 +32,14 @@ public class UpdateAlbumService {
             if (authorIds != null) {
                 for (Long authorId : authorIds) {
                     albumDAO.createAlbumAuthor(instance.getAlbumId(), authorId);
+                }
+            }
+
+            albumDAO.deleteRewardAlbum(instance.getAlbumId());
+
+            if(instance.getRewardList() != null){
+                for(Reward reward : instance.getRewardList()) {
+                    albumDAO.createRewardAlbum(reward.getRewardId(), instance.getAlbumId());
                 }
             }
         } catch (DAOException e) {

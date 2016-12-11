@@ -8,6 +8,8 @@ public class Author {
     private String name;
     private String country;
     private String photoPath;
+    private AuthorType authorType;
+    private Label label;
 
     public Author() {
     }
@@ -65,5 +67,21 @@ public class Author {
         result = 31 * result + country.hashCode();
         result = 31 * result + photoPath.hashCode();
         return result;
+    }
+
+    public AuthorType getAuthorType() {
+        return authorType;
+    }
+
+    public void setAuthorType(AuthorType authorType) {
+        this.authorType = authorType;
+    }
+
+    public Label getLabel() {
+        return label;
+    }
+
+    public void setLabel(Label label) {
+        this.label = label;
     }
 }

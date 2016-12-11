@@ -1,6 +1,8 @@
 package by.epam.webpoject.ezmusic.dao;
 
 import by.epam.webpoject.ezmusic.entity.Author;
+import by.epam.webpoject.ezmusic.entity.AuthorType;
+import by.epam.webpoject.ezmusic.entity.Label;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.DAOException;
 
@@ -83,5 +85,8 @@ public interface AuthorDAO extends AbstractDAO<Author, Long> {
      * @throws DAOException if database error was detected
      */
     ArrayList<Author> findBySearchRequest(String searchRequest) throws DAOException;
+
+    ArrayList<AuthorType> findAllAuthorTypes() throws DAOException;
+    ArrayList<Label> findAllLabels() throws DAOException;
 
 }

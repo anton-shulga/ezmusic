@@ -3,6 +3,8 @@ package by.epam.webpoject.ezmusic.command.impl.album;
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.*;
 import by.epam.webpoject.ezmusic.entity.Album;
+import by.epam.webpoject.ezmusic.entity.AlbumType;
+import by.epam.webpoject.ezmusic.entity.Reward;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.util.ParameterParser;
@@ -36,6 +38,8 @@ public class UpdateAlbumCommand implements Command {
         String albumId = request.getParameter(RequestParameter.ALBUM_ID);
         String name = request.getParameter(RequestParameter.ALBUM_NAME);
         String year = request.getParameter(RequestParameter.ALBUM_YEAR);
+        String[] rewardsIds = request.getParameterValues("selected_rewards");
+        String typeId = request.getParameter("type_id");
 
         boolean isValidRequest = AlbumParametersValidator.validateUpdateParameters(albumId, songIds, authorIds, name, year);
         if (isValidRequest) {
@@ -43,6 +47,9 @@ public class UpdateAlbumCommand implements Command {
             album.setAlbumId(ParameterParser.parseLong(albumId));
             album.setName(name);
             album.setYear(ParameterParser.parseInt(year));
+            AlbumType albumType = new AlbumType();
+            albumType.setAlbumTypeId(Long.parseLong(typeId));
+            album.setAlbumType(albumType);
 
             try {
                 if (request.getPart(RequestParameter.ALBUM_IMAGE_FILE_PATH).getInputStream().available() != 0) {
@@ -57,6 +64,16 @@ public class UpdateAlbumCommand implements Command {
                 album.setImageFilePath(request.getParameter(RequestParameter.OLD_ALBUM_IMAGE_FILE_PATH));
             }
 
+            if (rewardsIds != null) {
+                Reward reward = null;
+                ArrayList<Reward> rewards = new ArrayList<>();
+                for (Long rewardId : ParameterParser.parseLongArray(rewardsIds)) {
+                    reward = new Reward();
+                    reward.setRewardId(rewardId);
+                    rewards.add(reward);
+                }
+                album.setRewardList(rewards);
+            }
 
             try {
                 UpdateAlbumService.update(album, ParameterParser.parseLongArray(songIds), ParameterParser.parseLongArray(authorIds));

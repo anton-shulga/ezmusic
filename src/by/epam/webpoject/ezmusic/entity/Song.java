@@ -17,6 +17,17 @@ public class Song {
     private ArrayList<Author> authorList;
     private ArrayList<Album> albumList;
     private ArrayList<Comment> commentList;
+    private ArrayList<Reward> rewardList;
+    private Genre genre;
+    private ArrayList<Tag> tagList;
+
+    public ArrayList<Reward> getRewardList() {
+        return rewardList;
+    }
+
+    public void setRewardList(ArrayList<Reward> rewardList) {
+        this.rewardList = rewardList;
+    }
 
     public long getSongId() {
         return songId;
@@ -124,5 +135,21 @@ public class Song {
         result = 31 * result + albumList.hashCode();
         result = 31 * result + commentList.hashCode();
         return result;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
+    public ArrayList<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(ArrayList<Tag> tagList) {
+        this.tagList = tagList;
     }
 }

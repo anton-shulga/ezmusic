@@ -128,6 +128,44 @@
                                         <label for="id-songs"><fmt:message key="label.songs"/></label>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <select  class="icons" id="id-types" name="type_id">
+                                            <c:forEach items="${requestScope.all_album_types}" var="type">
+                                                <c:choose>
+                                                    <c:when test="${album.albumType.albumTypeId == type.albumTypeId}">
+                                                        <option value="${type.albumTypeId}" selected>${type.name}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${type.albumTypeId}">${type.name}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
+                                        <label for="id-types">Album types</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <select multiple class="icons" id="id-rewards" name="selected_rewards">
+                                            <option value="" disabled selected>Select rewards</option>
+                                            <c:forEach items="${requestScope.all_rewards}" var="reward">
+                                                <c:choose>
+                                                    <c:when test="${fn:contains(requestScope.album.rewardList, reward)}">
+                                                        <option value="${reward.rewardId}" selected>${reward.name}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${reward.rewardId}">${reward.name}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </select>
+                                        <label for="id-rewards">Album rewards</label>
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="file-field input-field col s12">
                                         <div class="btn black">

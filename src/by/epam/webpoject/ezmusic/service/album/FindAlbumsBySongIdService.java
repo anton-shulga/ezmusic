@@ -15,9 +15,14 @@ public class FindAlbumsBySongIdService {
     public static ArrayList<Album> find(Long songId) throws ServiceException {
 
         AlbumDAO albumDAO = (AlbumDAO) DAOFactory.createAlbumDAO();
+        ArrayList<Album> albumList =  null;
 
         try {
-            return albumDAO.findBySongId(songId);
+            albumList = albumDAO.findBySongId(songId);
+            for(Album album : albumList){
+                album.setRewardList(albumDAO.findRewardsByAlbumId(album.getAlbumId()));
+            }
+            return albumList;
         } catch (DAOException e) {
             throw new ServiceException("Find albums by song id service exception", e);
         }

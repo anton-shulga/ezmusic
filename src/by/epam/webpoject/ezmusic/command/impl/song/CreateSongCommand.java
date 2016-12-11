@@ -2,9 +2,7 @@ package by.epam.webpoject.ezmusic.command.impl.song;
 
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.*;
-import by.epam.webpoject.ezmusic.entity.Album;
-import by.epam.webpoject.ezmusic.entity.Author;
-import by.epam.webpoject.ezmusic.entity.Song;
+import by.epam.webpoject.ezmusic.entity.*;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.util.ParameterParser;
@@ -36,6 +34,10 @@ public class CreateSongCommand implements Command {
 
         String[] albumIds = request.getParameterValues(RequestParameter.SELECTED_ALBUMS);
         String[] authorIds = request.getParameterValues(RequestParameter.SELECTED_AUTHORS);
+        String[] rewardIds = request.getParameterValues("selected_rewards");
+        String[] tagIds = request.getParameterValues("selected_tags");
+        String genreId = request.getParameter("genre_id");
+
         String name = request.getParameter(RequestParameter.SONG_NAME);
         String year = request.getParameter(RequestParameter.SONG_YEAR);
         String cost = request.getParameter(RequestParameter.SONG_COST);
@@ -53,6 +55,9 @@ public class CreateSongCommand implements Command {
                     song.setName(name);
                     song.setYear(Integer.parseInt(year));
                     song.setCost(Double.parseDouble(cost));
+                    Genre genre = new Genre();
+                    genre.setGenreId(Long.parseLong(genreId));
+                    song.setGenre(genre);
 
                     try {
                         if (request.getPart(RequestParameter.SONG_FILE_PATH).getInputStream().available() != 0) {
@@ -90,6 +95,29 @@ public class CreateSongCommand implements Command {
                             authors.add(author);
                         }
                         song.setAuthorList(authors);
+                    }
+
+                    if (tagIds != null) {
+                        Tag tag = null;
+                        ArrayList<Tag> tags = new ArrayList<>();
+                        for (Long tagId : ParameterParser.parseLongArray(tagIds)) {
+                            tag = new Tag();
+                            tag.setTagId(tagId);
+                            tags.add(tag);
+                        }
+                        song.setTagList(tags);
+                    }
+
+
+                    if (rewardIds != null) {
+                        Reward reward = null;
+                        ArrayList<Reward> rewards = new ArrayList<>();
+                        for (Long rewardId : ParameterParser.parseLongArray(rewardIds)) {
+                            reward = new Reward();
+                            reward.setRewardId(rewardId);
+                            rewards.add(reward);
+                        }
+                        song.setRewardList(rewards);
                     }
 
                     generatedId = CreateSongService.create(song);

@@ -3,6 +3,8 @@ package by.epam.webpoject.ezmusic.command.impl.author;
 import by.epam.webpoject.ezmusic.command.Command;
 import by.epam.webpoject.ezmusic.constant.*;
 import by.epam.webpoject.ezmusic.entity.Author;
+import by.epam.webpoject.ezmusic.entity.AuthorType;
+import by.epam.webpoject.ezmusic.entity.Label;
 import by.epam.webpoject.ezmusic.exception.CommandException;
 import by.epam.webpoject.ezmusic.exception.ServiceException;
 import by.epam.webpoject.ezmusic.util.ParameterParser;
@@ -36,6 +38,8 @@ public class CreateAuthorCommand implements Command {
         String[] songIds = request.getParameterValues(RequestParameter.SELECTED_SONGS);
         String name = request.getParameter(RequestParameter.AUTHOR_NAME);
         String country = request.getParameter(RequestParameter.AUTHOR_COUNTRY);
+        String labelId = request.getParameter("label_id");
+        String typeId = request.getParameter("type_id");
 
         String sessionToken = (String) request.getSession().getAttribute(RequestParameter.TOKEN);
         String requestToken = request.getParameter(RequestParameter.TOKEN);
@@ -47,6 +51,13 @@ public class CreateAuthorCommand implements Command {
                     author = new Author();
                     author.setName(name);
                     author.setCountry(country);
+                    AuthorType authorType = new AuthorType();
+                    authorType.setAuthorTypeId(Long.parseLong(typeId));
+                    author.setAuthorType(authorType);
+
+                    Label label = new Label();
+                    label.setLabelId(Long.parseLong(labelId));
+                    author.setLabel(label);
 
                     try {
                         if (request.getPart(RequestParameter.AUTHOR_PHOTO_PATH).getInputStream().available() != 0) {
